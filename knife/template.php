@@ -23,6 +23,7 @@ if($_POST[template] && !$_POST["switch"]) {
 		"listing" 	=> html2specialchars(stripslashes($_POST[template][listing])),
 		"view" 	=> html2specialchars(stripslashes($_POST[template][view])),
 		"comment" 	=> html2specialchars(stripslashes($_POST[template][comment])),
+		"quote" 	=> html2specialchars(stripslashes($_POST[template][quote])),
 		"commentform" 	=> html2specialchars(stripslashes($_POST[template][commentform])),
 		
 		);		
@@ -65,6 +66,7 @@ if($_POST[changet]) {
 		"listing" 	=> stripslashes($templatebase[listing]),
 		"view" 	=> stripslashes($templatebase[view]),
 		"comment" 	=> stripslashes($templatebase[comment]),
+		"quote" 	=> stripslashes($templatebase[quote]),
 		"commentform" 	=> stripslashes($templatebase[commentform]),
 		);
 		
@@ -135,6 +137,12 @@ $tvars_comment = array(
 	);
 	ksort($tvars_comment);
 	
+$tvars_quote = array(
+	"{name}" => "Name of person being quoted",
+	"{quote}" => "Text being quoted",
+	);
+	ksort($tvars_quote);
+	
 $tvars_commentform = array(
 	"{none}" => "Display nothing",
 	);
@@ -168,6 +176,7 @@ $tvars_commentform = array(
 	$template[listing] = htmlspecialchars($template[listing]);
 	$template[view] = htmlspecialchars($template[view]);
 	$template[comment] = htmlspecialchars($template[comment]);
+	$template[quote] = htmlspecialchars($template[quote]);
 	$template[commentform] = htmlspecialchars($template[commentform]);		
 	$main_content .= '
 			</table>
@@ -202,6 +211,20 @@ $tvars_commentform = array(
 	$main_content .= '
 			</table>
 			<textarea class="tasmall" id="edit_template_comment" name="template[comment]">'.$template[comment].'</textarea>
+			<label for="edit_template_quote"><h3>'.i18n("templates_quote").'</h3></label>
+			<table>';
+
+	foreach ($tvars_quote as $variable => $description) {
+		$main_content .= "
+				<tr>
+					<td><span class=\"vinfo\" title=\"$description\">$variable</span></td>
+					<td>$description</td>
+				</tr>";
+		}
+		
+	$main_content .= '
+			</table>
+			<textarea class="tasmall" id="edit_template_quote" name="template[quote]">'.$template[quote].'</textarea>
 			<label for="edit_template_commentform"><h3>'.i18n("templates_commentform").'</h3></label>
 			<table>';
 	

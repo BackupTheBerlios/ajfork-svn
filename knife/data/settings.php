@@ -39,9 +39,10 @@ Latest comment by: {latestcomment}<br />
 <div class="commentheader">
 Comment posted {date} by <a href="{url}">{author}</a> (<a href="mailto:{mail}">@</a>)
 </div>
-<blockquote>{parentquote}</blockquote>
+{parentquote}
 {comment}
 </div>',
+        'quote' => '<blockquote><p>Quoting <strong>{name}</strong>:</p>{quote}</blockquote>',
         'commentform' => '<h1>Add comment?</h1>
 <input type="text" name="comment[parent]" /> Parent<br />
 <input type="text" name="comment[name]" /> Name<br />

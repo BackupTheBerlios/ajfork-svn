@@ -400,82 +400,6 @@ $array = array (
         'content' => 'Jeg skriver ikke din versjon, jeg skriver den korrekte versjonen, din fyllik ;)',
       ),
     ),
-    1103832211 => 
-    array (
-      1103921797 => 
-      array (
-        'parentcid' => '',
-        'name' => 'andrej',
-        'email' => NULL,
-        'url' => 'http://www.rusty-bus.com',
-        'ip' => '62.101.242.242',
-        'browser' => '',
-        'content' => 'eg fekk vinylspelar! HEILMANUEL... eg frydar meg, eg frydar meg:9',
-      ),
-    ),
-    1103600015 => 
-    array (
-      1103650150 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øystein',
-        'email' => NULL,
-        'url' => 'http://oaasheim.net',
-        'ip' => '80.202.120.67',
-        'browser' => '',
-        'content' => 'Skal du på Iron Maiden konserten?! har du billettar? Eg drøymer om å gå på den konserten... :P',
-      ),
-      1103650726 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '85.89.202.14',
-        'browser' => '',
-        'content' => 'Billetter ja? Selvfølgelig :)',
-      ),
-      1103693281 => 
-      array (
-        'parentcid' => '',
-        'name' => 'phil_c',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '217.79.138.189',
-        'browser' => '',
-        'content' => 'så var jeg her igjen...på loungen i Budapest...de har jo pokker meg nylagede baguetter i kjøleskapet...',
-      ),
-      1103709929 => 
-      array (
-        'parentcid' => '',
-        'name' => 'phil_c',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '81.254.2.39',
-        'browser' => '',
-        'content' => 'Og ploooootselig...så er jeg i loungen i Paris...oh la la som de sier ici en France... Måtte betale 10 f******** € for å få lov til å koble meg på... har riktig nok spist den tredje croissanten min...',
-      ),
-      1103825738 => 
-      array (
-        'parentcid' => '',
-        'name' => 'andrej',
-        'email' => NULL,
-        'url' => 'http://www.rusty-bus.com',
-        'ip' => '62.101.242.242',
-        'browser' => '',
-        'content' => 'eg e kjøpt meg den ultimate after-ski jakka, den e så uhorveleg artig og fin... og dama/jenta som jobba på butikken ved siden av den som Bergseth jobba på hadde en umåteleg fin kropp...berre så dykk veit det',
-      ),
-      1103881769 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Camilla',
-        'email' => 'grrrrh@hotmail.com',
-        'url' => NULL,
-        'ip' => '80.202.228.185',
-        'browser' => '',
-        'content' => 'Jeg vil også se (høre) Damien Rice.. Det er bra musikk det',
-      ),
-    ),
     1103428768 => 
     array (
       1103433081 => 
@@ -1110,99 +1034,6 @@ $array = array (
         'ip' => '80.202.53.31',
         'browser' => '',
         'content' => 'wææ',
-      ),
-    ),
-    1099362909 => 
-    array (
-      1099389353 => 
-      array (
-        'parentcid' => '',
-        'name' => 'LarsPars',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '139.164.157.88',
-        'browser' => '',
-        'content' => 'Sjukt',
-      ),
-      1099425512 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øystein',
-        'email' => NULL,
-        'url' => 'http://oaa.op-web.com',
-        'ip' => '80.202.120.243',
-        'browser' => '',
-        'content' => 'G-e-n-i-a-l-t! :p',
-      ),
-      1099707254 => 
-      array (
-        'parentcid' => '',
-        'name' => 'øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'bare verdens dummeste folk kan ende opp med to møkkamenn i dødtløp-presidentvalg!',
-      ),
-      1099709042 => 
-      array (
-        'parentcid' => '',
-        'name' => 'øivind',
-        'email' => NULL,
-        'url' => 'http://www.google.com',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'test@test.comtest',
-      ),
-      1099710240 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://www.google.com',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Et en cookie!',
-      ),
-      1099710285 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Jaja',
-      ),
-      1099710316 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Jahaja!',
-      ),
-      1099790971 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Danny',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '158.38.93.117',
-        'browser' => '',
-        'content' => 'jeje.. ditta va stili nok:)',
-      ),
-      1100051709 => 
-      array (
-        'parentcid' => '',
-        'name' => 'danemark',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '80.162.241.98',
-        'browser' => '',
-        'content' => 'yaya das ist sehr underligt for jeg prater inte tysk. det er et dkod sprog,, lorte sprok.. scheize sprachen.. eller something.. what med det der AJfork.. where to downlaod that?!',
       ),
     ),
     1099005281 => 
@@ -2013,19 +1844,6 @@ $array = array (
         'content' => 'Faen ta denne lykken din, den gjør deg kortfattet.<br /><br />Det var forresten ikke deg som sto og snakket med den lille Post-mannen utenfor Rema 1000 Kalmargården klokken 12.08 i dag, men som var forsvunnet til jeg kom ut igjen?',
       ),
     ),
-    1095088506 => 
-    array (
-      1095187898 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Huff.. Eksamensinnlevering på fredag. Mye arbeid å gjøøøre!',
-      ),
-    ),
     1095002855 => 
     array (
       1095014675 => 
@@ -2147,6 +1965,17 @@ else in the doc, define the link:
 
   [id]: http://example.com/  "Title"
 ',
+      ),
+      1109126515 => 
+      array (
+        'parentcid' => '1109126309',
+        'name' => 'Øivind',
+        'email' => 'email@email.com',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'Ahhh, so THAT\'s how you do reference-style links  
+using markdown?!',
       ),
     ),
   ),

@@ -207,15 +207,12 @@ if ($_GET[action] == "delete" || $_POST[editlist]) {
 	
 	if ($_GET[action] == "delete") {
 		$id = $_GET[id];
-		$statusmessage = $KAclass->delete($id, false);
-		$statusmessage .= $KCclass->articlecommentsdelete($id);
-		
+		$statusmessage = $KAclass->delete($id, false);		
 		}
 		
 	else {
 		$id = $_POST[id];
 		$statusmessage = $KAclass->delete($id, true);
-		$statusmessage .= $KCclass->articlecommentsdelete($id);
 		}
 }
 

@@ -11,6 +11,12 @@ color: #333;
 background: #fff;
 color: #999;
 }
+blockquote {
+padding: 5px;
+border-left: 5px solid #333;
+margin-left: 20px;
+background: #fff;
+}
 
 </style>
 </head>
@@ -134,10 +140,7 @@ $timestamp = 0;
 		
 		$output = str_replace("[link]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$PHP_SELF?k=$date\">", $output);
         $output = str_replace("[/link]","</a>", $output);    
-		
-#		$output = str_replace("[friendlylink]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$PHP_SELF?k=".urlTitle($article[title])."\">", $output);
-#        $output = str_replace("[/friendlylink]","</a>", $output);
-		
+				
 		$output = str_replace("[friendlylink]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$_SERVER[PHP_SELF]/".urlTitle($article[title])."\">", $output);
         $output = str_replace("[/friendlylink]","</a>", $output);
         

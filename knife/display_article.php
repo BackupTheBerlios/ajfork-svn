@@ -77,7 +77,12 @@
 			$output = str_replace("{number}", $i, $output);
 			
 			if ($comment[parentcid]) {
-				$output = str_replace("{parentquote}", Markdown($articlescomments[$comment[parentcid]][content]), $output);
+				$quotecomment = $articlescomments[$comment[parentcid]];
+				$quoteout = $template[quote];
+				$quoteout = str_replace("{name}", $quotecomment[name], $quoteout);
+				$quoteout = str_replace("{quote}", Markdown($quotecomment[content]), $quoteout);
+				
+				$output = str_replace("{parentquote}", $quoteout, $output);
 				}
 			else { $output = str_replace("{parentquote}", "", $output); }
 			

@@ -8,6 +8,19 @@
 
 class KArticles {
 	
+	
+	function connect() {
+		if (defined("KNIFESQL")) {
+			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
+			mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
+			return $mysql_id;	
+			}
+		
+		else {
+			$dataclass = new ArticleStorage('storage');
+			return $dataclass;
+			}			
+		}
 	#
 	#	Add new article
 	function add($author) {
@@ -37,10 +50,7 @@ class KArticles {
 		#	$data = run_filters('admin-new-savedata', $data);
 			
 		if (defined("KNIFESQL")) {
-		
-			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
-			mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
-			
+			$dataclass = KArticles::connect();			
 			$write_sql = "INSERT INTO articles VALUES ('$data[timestamp]', '$data[category]', '$data[author]', '$data[title]', '$data[content]', '$data[views]')";
 			$result = mysql_query($write_sql) or die('Query failed: ' . mysql_error());
 			$statusmessage = i18n("generic_article"). " &quot;$data[title]&quot; ". i18n("write_published");
@@ -48,7 +58,7 @@ class KArticles {
 			}
 
 		else {
-			$dataclass = new ArticleStorage('storage');
+			$dataclass = KArticles::connect();
 			$dataclass->settings['articles'][$now] = $data;
 			$dataclass->save();
 
@@ -67,16 +77,14 @@ class KArticles {
 		if (!$multiple) {
 			#	This means we're deleting a single entry
 			if (defined("KNIFESQL")) {
-				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
-				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
-			
+				$dataclass = KArticles::connect();			
 				$sql = "DELETE FROM articles WHERE articleid = '$timestamp'";
 				$result = mysql_query($sql) or die ('Query failed: ' . mysql_error());
 				$statusmessage = "Article deleted";
 				return $statusmessage;
 				}
 			else {
-				$dataclass = new ArticleStorage('storage');
+				$dataclass = KArticles::connect();
 				$dataclass->delete($timestamp);
 				$statusmessage = "Article deleted";
 				return $statusmessage;
@@ -85,9 +93,7 @@ class KArticles {
 		else {
 			#	This means we're deleting more than one entry
 			if (defined("KNIFESQL")) {
-				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
-				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
-				
+				$dataclass = KArticles::connect();				
 				foreach ($timestamp as $null => $thisid) {
 					unset($sql);
 					$sql = "DELETE FROM articles WHERE articleid = '$thisid'";
@@ -97,7 +103,7 @@ class KArticles {
 				return $statusmessage;
 				}
 			else {			
-				$dataclass = new ArticleStorage('storage');
+				$dataclass = KArticles::connect();
 				foreach ($timestamp as $null => $thisid) {
 					$dataclass->delete($thisid);
 					}
@@ -110,9 +116,7 @@ class KArticles {
 	#	Construct a list of all available articles
 	function listarticles($limit="FALSE", $from="FALSE") {
 		if (defined("KNIFESQL")) {
-			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
-			mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
-			
+			$dataclass = KArticles::connect();
 			$mysql_query = 'SELECT * FROM `articles`';
 			$result = mysql_query($mysql_query) or die('Query failed: ' . mysql_error());
 			while ($article = mysql_fetch_assoc($result)) {
@@ -122,8 +126,8 @@ class KArticles {
 			return $allarticles;
 			}
 		else {
-			$articledatabase = new ArticleStorage('storage');
-			$allarticles = $articledatabase->settings['articles'];
+			$dataclass = KArticles::connect();
+			$allarticles = $dataclass->settings['articles'];
 			krsort($allarticles);
 			reset($allarticles);
 			if ($from) {
@@ -148,8 +152,7 @@ class KArticles {
 			# this method increments views by one
 			# and returns the current amount of views
 			if (defined("KNIFESQL")) {
-				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
-				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);	
+				$dataclass = KArticles::connect();
 				$mysql_query = "SELECT views FROM articles WHERE articleid = $timestamp";
 				$result = mysql_query($mysql_query) or die("Failed: " . mysql_error());
 				$views = mysql_fetch_assoc($result);
@@ -162,12 +165,12 @@ class KArticles {
 				return $views;
 				}
 			else {
-				$articledatabase = new ArticleStorage('storage');
-				$views = $articledatabase->settings['articles'][$timestamp][views];
+				$dataclass = KArticles::connect();
+				$views = $dataclass->settings['articles'][$timestamp][views];
 				if ($modifier == "update") {
 					$views++;
-					$articledatabase->settings['articles'][$timestamp][views] = $views;
-					$articledatabase->save();
+					$dataclass->settings['articles'][$timestamp][views] = $views;
+					$dataclass->save();
 					}
 				return $views;
 				}

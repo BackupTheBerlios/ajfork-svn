@@ -68,6 +68,7 @@ $lang->templates_commentform	= 'Kommentarskjema';
 $lang->templates_fillnew		= 'Nye maler vil bli basert på den du har valgt over. Fyll inn det nye navnet under:';
 $lang->templates_newtemplate	= 'Lag ny mal';
 $lang->templates_editname		= 'Endre malnavn';
+$lang->templates_quote			= 'Sitat';
 
 $lang->categories_current		= 'Eksisterende kategorier';
 $lang->categories_add			= 'Legg til';
