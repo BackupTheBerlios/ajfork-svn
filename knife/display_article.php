@@ -19,6 +19,7 @@
 			
 			
 		$article = $allarticles[$k];
+		if ($article != "") { $valid = true; }
 		
 		# date can come from two places
 		if ($timestamp) {
@@ -56,9 +57,14 @@
 		
 		echo $output;
 		
-		echo '<div id="commentshere">';
-		$commentsclass = new CommentStorage('comments');
-		$articlescomments = $commentsclass->settings[$date];
+		
+		#
+		#	Start showing comments
+		#
+		
+		echo '<div id="Commentscontainer">';
+		$commentsclass = new KComments;
+		$articlescomments = $commentsclass->articlecomments($date);
 		
 	if (!$articlescomments or $articlescomments == "") {
 		echo "no comments";
@@ -66,25 +72,42 @@
 	else {
 		krsort($articlescomments);
 		reset($articlescomments);
+		$i = 1;
 		foreach ($articlescomments as $commentid => $comment) {
 			$output = $template[comment];
+			$output = str_replace("{number}", $i, $output);
+			
+			if ($comment[parentcid]) {
+				$output = str_replace("{parentquote}", Markdown($articlescomments[$comment[parentcid]][content]), $output);
+				}
+			else { $output = str_replace("{parentquote}", "", $output); }
+			
 			$output = str_replace("{comment}", Markdown($comment[content]), $output);
 			$output = str_replace("{ip}", $comment[ip], $output);
 			$output = str_replace("{author}", $comment[name], $output);
 			$output = str_replace("{date}", date("d/m/y H:i", $commentid), $output);
 			$output = str_replace("{url}", $comment[url], $output);
 			$output = str_replace("{email}", $comment[mail], $output);
-			
 			echo $output;
+			$i++;
 		}
 	}
 		echo '</div>';
 		
-		$output = $template[commentform];
+		#
+		#	Show the comment form
+		#
 		
+		$output = '<form method="post" style="margin-top: 20px; padding: 15px; border: 1px solid #999;">';
+		$output .= $template[commentform];
+		$output .= '</form>';
 		echo $output;
 		
-		if ($_POST[comment]) {
+		#
+		#	If receiving a comment
+		#
+		
+		if ($_POST[comment] && $valid) {
 		
 		$newcommentid = time();
 		$savecomment = array(
@@ -96,7 +119,7 @@
 			'browser' => 'firefox ofcourse',
 			'content' => $_POST[comment][content],
 			);
-			
+		$commentsclass = new CommentStorage('comments');
 		$commentsclass->settings[$date][$newcommentid] = $savecomment;
 		$commentsclass->save();
 		echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}';</script>";

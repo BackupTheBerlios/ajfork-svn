@@ -180,6 +180,26 @@ $array = array (
         'browser' => 'firefox ofcourse',
         'content' => 'And then we add one using knife',
       ),
+      1109112536 => 
+      array (
+        'parentcid' => '1107544931',
+        'name' => 'Øivind',
+        'email' => '',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'Her skal vi quote andreas tror jeg...',
+      ),
+      1109112981 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind',
+        'email' => '',
+        'url' => '',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'En helt vanlig kommentar',
+      ),
     ),
     1107009146 => 
     array (

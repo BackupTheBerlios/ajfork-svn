@@ -24,6 +24,7 @@ color: #999;
 
 	include(KNIFE_PATH.'/config.php');					# load temporary config
 	include(KNIFE_PATH.'/class.articles.php');
+	include(KNIFE_PATH.'/class.comments.php');
 	
 include("inc/functions.php");
 include("plugins/markdown.php");

@@ -7,10 +7,8 @@
 	Fix: Login fix
 	Fix: Configuration abstracted even more
 	Fix: display.articles.php cleaned up alot
-	
-	articleid, parent comment id, comment id, commenter name, commenter url, commenter email, commenter ip, commenter browserstring, comment content, 
-	
-	
+	Fix: Templates displayed are htmlspecialchar()'d
+
 	[tue 15 feb]
 	
 	New: Preview feature foundation in write.php

@@ -2,10 +2,14 @@
 
 
 include(KNIFE_PATH.'/class.articles.php');
+include(KNIFE_PATH.'/class.comments.php');
 
 #
 #	Show edit for for single article
 #
+
+	$KAclass = new KArticles;
+	$KCclass = new KComments;
 
 $menus["sub_edit"] = "
 <ul><li>proof</li><li>of</li><li>concept</li></ul>
@@ -17,8 +21,8 @@ if ($_GET[id] && !$_POST[id] && !$_GET[action]) {
 	$settingsclass = new SettingsStorage('settings');
 	$currentcats = $settingsclass->settings['categories'];
 	
-	$KAclass = new KArticles;
 	$editentry = $KAclass->getarticle($_GET[id]);
+	$comments = $KCclass->articlecomments($_GET[id]);
 	
 	$moduletitle = i18n("edit_module_edit"). " &quot;$editentry[title]&quot;";
 	# form stuff here
@@ -63,7 +67,7 @@ $main_content .= '
 		<p>
 			<input type="submit" value="'.i18n("edit_save").'" />
 		</p>
-	</div>
+	</div>$comments = $KCclass->articlecomments($_GET[id]);
 	
 	<script type="text/javascript" language="JavaScript">
 	<!--
@@ -78,7 +82,16 @@ $main_content .= '
 		</fieldset>
 	</div>
 	</form>
-</div>';
+';
+
+	if ($comments) {
+		$main_content .= "<div class=\"div_normal\"><form><fieldset><legend>Comments</legend><table><tr><th>Date</th><th>Name</th><th>Content</th></tr>";
+		foreach ($comments as $commentid => $comment) {
+			$main_content .= "<tr><td>".date("d/m/y H:i", $commentid)."</td><td>$comment[name]</td><td>$comment[content]</td></tr>";
+			}
+		$main_content .= '</table></fieldset></form></div>';
+		}
+$main_content .= '</div>';
 }
 
 #
@@ -146,6 +159,7 @@ if (!$_GET[id] && !$_POST[editlist]) {
 		<tr>
 			<th>".i18n("generic_title")."</th>
 			<th>".i18n("generic_date")."</th>
+			<th>".i18n("generic_comments")."</th>
 			<th>".i18n("generic_category")."</th>
 			<th>".i18n("generic_author")."</th>
 			<th style=\"text-align: right;\">".i18n("generic_actions")."</th>
@@ -173,6 +187,7 @@ if (!$_GET[id] && !$_POST[editlist]) {
 	$main_content .= "<tr>
 			<td><a href=\"?panel=edit&amp;id=$date\">$one $article[title]</a></td>
 			<td>".date("d/m/y", $date)."</td>
+			<td>".count($KCclass->articlecomments($date))."</td>
 			<td>$catrowcontent</td>
 			<td title=\"".i18n("edit_lastedit")." $article[lastedit]\">$article[author]</td>
 			<td style=\"text-align: right;\"><span class=\"delete\"><a href=\"?panel=edit&amp;id=$date&amp;action=delete\" title=\"".i18n("edit_quickerase")." $article[title] ?\">X</a></span> <input type=\"checkbox\" name=\"id[]\" value=\"$date\" /></td>

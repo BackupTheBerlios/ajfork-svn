@@ -9,9 +9,9 @@ $array = array (
         'content' => '<a href="07_magnet_lay_lady_lay.mp3">høyreklikk, lagre som ;-)</a>',
         'title' => 'Til min kjæreste',
         'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '3',
-        'views' => 12,
+        'lastedit' => 'eruin',
+        'category' => '2, 3, 7',
+        'views' => '12',
       ),
       1108842457 => 
       array (
@@ -36,28 +36,7 @@ Forresten, Philip: Beezewax skal spille i Bergen snart :)
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 1,
-      ),
-      1107397778 => 
-      array (
-        'content' => 'Jeg arbeider som kjent med utvikling av bloggeverktøyet AJ-Fork, opprinnelig som en hjemmebrygget oppdatering av Cutenews, men etterhvert som antallet modifiseringer gikk opp, bestemte jeg meg etter press fra flere på CN-Forumet å publisere godsakene. Det ble mange ustabile utgaver med hyppige oppdateringer av idiotiske feil.
-
-Den tiden er over, og AJ-Fork er nå ute i versjon 2.1 (også kjent i lang tid under navnet 168). Plugin-arkitekturen som ble innført i forrige versjon er utvidet, og en hel drøss nye tillegg som Trackbacks, Menneskevennlige URLs (det er stort sett en myte at disse er mer søkemotorvennlige enn de gamle), Epostvarsling og ymse antispamtiltak som Googles nofollowinitiativ. Omtrent samtidig som min offentliggjøring av siste inkarnasjon AJ-Fork, legger jeg merke til at <a href="http://www.paradoxia.org/arkiv/blogg-relatert/wordpressed/">en</a> del <a href="http://www.bekkelund.net/blogg/2005/02/01/hvordan-konvertere-til-wordpress/">norske</a> <a href="http://kyrres.net/2005/02/01/wordpress-over-alt/">bloggere</a> som tidligere benyttet enten Cutenews eller AJ-Fork har gått over til Wordpress. Ingenting ondt om Wordpress - endel av funksjonaliteten i mitt skript (inkludert deler av plugin-arkitekturen) er lånt fra WP.
-
-Dette setter meg dog i en unik posisjon til å se klager på ting som aldri før har blitt nevnt for meg av andre, og som til en viss grad allerede har blitt ordnet opp i siste versjon. RSSfeeds nevnes, og jeg har sørget for å ha en meget mye bedre RSS2-funksjonalitet nå enn det som fantes før. Noen vil ha Trackbacks, og dette er som sagt også inne. MySQL er nevnt, og selv om dette ikke er en slik gudegitt hastighetsgave som endel mennesker av en eller annen grunn tror, er dette allerede godt på plass og vil dukke opp i neste versjon - det vil si - om det faktisk blir en neste versjon.
-
-Jeg innser nemlig (for andre gang) at selve kjernen i AJ-Fork - Cutenews - er gammeldags og vanskelig å håndtere. HTML-koden skrevet av Cutenews\' forfatter Flexer har jeg ryddet mer og mer opp i fra dag èn, men den prosessen er <strong>enda</strong> ikke helt ferdig. Jeg har abstrahert funksjoner i hytt og pine, men føler likevel at det er en god del overflødig kode jeg sitter og jobber med. Jeg har allerede tidvis jobbet med mitt eget bloggscript - eget fra grunnen av, men det har aldri tatt av. Det er nemlig ikke så gøy å jobbe med samme problemstillinger som man har løst (om enn på en ikke helt tilfredsstillende måte) i et eksisterende skript.
-
-Det jeg nå sysler med er kodet først og fremst med tanke på sikkerhet, og deretter med tanke på lagringsabstraksjon - det vil si at det skal være enkelt å bytte mellom f.eks MySQL, PostgreSQL og Vanlige flate filer. Admin-systemet skal være _mye_ enklere oppbygd enn det som nå finnes i AJ-Fork - det skal være lett å skinne via CSS, og det skal rett og slett være det beste der ute. Jeg regner med jeg får med meg et par av de som har vært med under utviklingen av AJ-Fork 2.1 på dette oppdraget, nå som jeg har ordnet meget nyttige funksjoner som SVN, etc ved hjelp av berlios.de (en forbedret utgave av sourceforge). Spørsmålet er om det er vits i. Jeg kunne jo alltids satt meg ned med Wordpress (som var det jeg brukte før jeg kom til Cutenews), men det er visse essensielle ting med Wordpress jeg absolutt ikke liker, selv hvor fint systemet er oppbygd. Det største jeg har å utsette på WP er akkurat dèt som gjør wordpress så enkelt å kode for - nemlig at det kontrollerer alle aspekter ved siten det ligger på. Dette var og er den store grunnen til at jeg ikke bruker WP. Jeg vil ha noe mer fleksibelt enn som så. Jeg liker måten Cutenews vokser sammen med PHP-kunnskapene mine - jeg vet akkurat hvordan jeg skal få all den funksjonalitet jeg trenger - det er mye, MYE udokumentert funksjonalitet som ligger begravd mellom all den arkaiske HTML-koden i alle de .mdu-filene...
-
-Med 2.1 av AJ-Fork har jeg bevist hva jeg kan. Jeg har bygd et knallbra bloggesystem med den selvsagte UTF-8støtten. Spørsmålet er hva jeg skal videre. Selv trenger jeg egentlig ikke mer enn det jeg akkurat nå sitter og skriver gjennom, men jeg har likevel lyst til å holde all den kunnskap jeg har ervervet meg under utviklingen ved like.
-
-Spørsmålet er bare hvordan... Jeg er lei av å svare på spørsmål om AJ-Fork fra folk som ikke engang gidder å lese den medfølgende readme-filen - dèt er iallefall helt sikkert.',
-        'title' => 'Cutenews og Flyktninger',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '9',
-        'views' => 1,
+        'views' => 2,
       ),
       1107206795 => 
       array (
@@ -68,16 +47,7 @@ Det var to år siden. Juli 2003. Jeg var på min to måneder lange sommerferie f
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 16,
-      ),
-      1107096123 => 
-      array (
-        'content' => 'Site moved to <a href="http://ajfork.berlios.de/">http://ajfork.berlios.de/</a> !',
-        'title' => '2.1 (aka 168) finally here!',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '4',
-        'views' => 0,
+        'views' => 44,
       ),
       1107009146 => 
       array (
@@ -88,49 +58,6 @@ Det var to år siden. Juli 2003. Jeg var på min to måneder lange sommerferie f
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 0,
-      ),
-      1106846559 => 
-      array (
-        'content' => 'Link spammed out by Josue Salazar... This is your non-exclusive chance to meet the <a href="http://www.livejournal.com/users/dslartoo/97452.html">pirates of the caribbean; l33t-edition</a>!
-
-I particularly appreciate the end:
-
-<blockquote><pre>Cap\'n Jack: d00d th1s 1s teh sukc    
-Will: *fightz*    
-Cap\'n Jack: *fightz*    
-Soldiers: d00d ur b0th bu5t3d    
-Will and Jack: wtf suxx0r!!!1    
-Will: u c4nt k1ll j4ck, h3z c00l    
-Elizabeth: u c4nt k1ll j4ck, h3z c00l    
-Governor: d00dz d0nt sh00t    
-Soldiers: wtf suxx0r!!!1    
-Cap\'n Jack: l8r every1    
-The Good Pirates: 4rrrrrrrrrrrrrr!!1    
-Cap\'n Jack: i s0 t0tlly r00l    
-Governor: m4yb3 p1r4t3s r ok s0m3t1m3s    
-Norrington: y34h ok    
-Will: s3xx0r m3 3l1z4b3th    
-Elizabeth: unf unf</pre></blockquote>
-
-Don\'t understand leet? Fear not, the all-powerful and ever helpful <a href="http://en.wikipedia.org/wiki/Leet">wikipedia: leet</a> is here!',
-        'title' => 'There be pirates!',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '5',
-        'views' => 0,
-      ),
-      1106219518 => 
-      array (
-        'content' => 'Nemlig <a href="http://studentportal.uib.no/?link_id=2638&amp;mode=show_page&amp;content_id=276&amp;modus=vis_emne&amp;kode=HUIN105">HUIN105</a>, et fag under ledelse av <a href="http://huminf.uib.no/~jill/">Jill Walker</a> ved <a href="http://www.uib.no">UiB</a>. Fagets forelesnings og seminarplan kræsjer totalt med hovedfaget mitt; Kunsthistorie, men siden jeg er nokså velbefaren på nettet, spesielt innen blogging og slikt, og tilogmed har utviklet mitt eget bloggesystem, tror jeg nok jeg skal klare meg med å besøke en forelesning en gang iblant. Kanskje også et seminar, mens Kollokvier ser ut til å gå greit. Jeg fikk ikke møtt opp i går, så jeg fikk heller aldri med meg at det ble gitt oppgave om å springe rundt i bergen for å knipse bilder, men jeg gjorde det jo faktisk likevel her om dagen...
-
-<div style="text-align: center;"><img src="http://appelsinjuice.org/blogg/data/upimages/floibarn.jpg" alt="floibarn.jpg" width="550" height="367" class="bilde" /><p>Barna på Fløyen</p></div>
-
-Jeg tror jeg liker dette faget. En fagleder som oppdaterer faget sitt med <a href="http://huin105.blogspot.com/">en blogg</a> er virkelig min type lærer',
-        'title' => '...og vi er igang med en ny kategori',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '8',
         'views' => 0,
       ),
       1105972367 => 
@@ -205,39 +132,10 @@ Reiseskildring og bilder kommer vel etterhvert ;)',
         'category' => '3',
         'views' => 0,
       ),
-      1104407016 => 
-      array (
-        'content' => '<strong>Øivind, your ideal sexual partner is a Type 6.</strong>
-
-<em>A Type 6 partner is just naturally into sex and, more specifically, this person is interested in having sex with you exclusively. That means they\'re as dedicated to fulfilling their sex drive as they are to using sex as an expression of love. And as such, they are also good at exploring the emotional and physical outlets of pleasure. They can put the orgasm on hold in order to get creative with just as much expertise and interest as they have in being affectionate and loving.</em>
-
-Jaha, det var jo ikke akkurat noen overraskelser der nei. For alle dere som måtte være på jakt etter denne ideelle sexpartneren; Tickle.com tilbyr også en betalt guide for hva du skal se etter for å finne den. Haha! Huff. Jeg lover å ikke publisere dritt som dette igjen ;)
-
-Det er nå 239 timer til jeg er tilbake hos min kjære i Bergen by. Snart er det bare 238.',
-        'title' => 'Tickle.com tester de som kjeder seg...',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '7',
-        'views' => 0,
-      ),
       1103832211 => 
       array (
         'content' => 'Men fortsatt sytten lange dager igjen.',
         'title' => 'Tre måneder :)',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '7',
-        'views' => 0,
-      ),
-      1103600015 => 
-      array (
-        'content' => '23. Februar 05: <strong>Donnas</strong> (Rockefeller)
-28. Juni 05: <strong>Iron Maiden</strong> (Spektrum)
-
-Må-se/Ukjent: Sahara Hotnights, U2, Damien Rice, 
-
-Jeg trenger hint, tips og hjelp :)',
-        'title' => 'Konsertkalenderens spede begynnelse',
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '7',

@@ -3,6 +3,10 @@
 include("options.php");
 $moduletitle = i18n("templates_moduletitle");
 
+function html2specialchars($str){
+   $trans_table = array_flip(get_html_translation_table(HTML_SPECIALCHARS));
+   return strtr($str, $trans_table);
+}
 
 #	Fetch and set up needed data
 
@@ -11,14 +15,15 @@ $moduletitle = i18n("templates_moduletitle");
 
 if($_POST[template] && !$_POST["switch"]) {
 	$id = sanitize_variables(stripslashes($_POST[template][id]));
-	
 	$templateid = sanitize_variables(stripslashes($_POST[template][id]));
+	
+
 	$data = array(
-		"name"		=> stripslashes($_POST[template][name]),
-		"listing" 	=> stripslashes($_POST[template][listing]),
-		"view" 	=> stripslashes($_POST[template][view]),
-		"comment" 	=> stripslashes($_POST[template][comment]),
-		"commentform" 	=> stripslashes($_POST[template][commentform]),
+		"name"		=> html2specialchars(stripslashes($_POST[template][name])),
+		"listing" 	=> html2specialchars(stripslashes($_POST[template][listing])),
+		"view" 	=> html2specialchars(stripslashes($_POST[template][view])),
+		"comment" 	=> html2specialchars(stripslashes($_POST[template][comment])),
+		"commentform" 	=> html2specialchars(stripslashes($_POST[template][commentform])),
 		
 		);		
 		
@@ -160,7 +165,10 @@ $tvars_commentform = array(
 					<td>$description</td>
 				</tr>";
 		}
-		
+	$template[listing] = htmlspecialchars($template[listing]);
+	$template[view] = htmlspecialchars($template[view]);
+	$template[comment] = htmlspecialchars($template[comment]);
+	$template[commentform] = htmlspecialchars($template[commentform]);		
 	$main_content .= '
 			</table>
 			<textarea class="tamedium" id="edit_template_articlelist" name="template[listing]">'.$template[listing].'</textarea>
@@ -203,8 +211,7 @@ $tvars_commentform = array(
 					<td><span class=\"vinfo\" title=\"$description\">$variable</span></td>
 					<td>$description</td>
 				</tr>";
-		}
-		
+		}		
 	$main_content .= '
 			</table>
 			<textarea class="tasmall" id="edit_template_commentform" name="template[commentform]">'.$template[commentform].'</textarea>
