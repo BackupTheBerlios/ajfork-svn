@@ -13,7 +13,7 @@ Hejdå!',
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 20,
+        'views' => 25,
       ),
       1107610947 => 
       array (
