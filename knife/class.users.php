@@ -6,6 +6,13 @@
 
 class KUsers {
 
+	var $username;
+	var $nickname;
+	var $status;
+	var $level;
+	var $language;
+	var $logintype;
+
 #
 #	We need
 #
@@ -80,25 +87,21 @@ function verify() {
 	foreach ($users as $thisuser => $thisuserdata) {
 		if (urlTitle($userdata[username]) == urlTitle($thisuser)) {
 			if ($e_given == $thisuserdata[password]) {
-				$return = array(
-					"user" => $thisuser,
-					"nickname" => $thisuserdata[nickname],
-					"status" => "verified",
-					"level" => $thisuserdata[level],
-					"language" => $userdata[language],
-					"type" => $userdata[logintype],
-					);
-					
+				$this->username = $thisuser;
+				$this->nickname = $thisuserdata[nickname];
+				$this->status = "verified";
+				$this->level = $thisuserdata[level];
+				$this->language = $userdata[language];
+				$this->type = $userdata[logintype];
+				
 				if ($userdata[logintype] == "standard") {
 					setcookie("kusername", $thisuser, time()+3600);
 					setcookie("kmd5password", $e_md5, time()+3600);	
 					setcookie("klanguage", $userdata[language]);
 					}
+				}
 			}
 		}
-	}
-	
-	return $return;
 	}
 
 function logout() {

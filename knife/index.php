@@ -10,27 +10,32 @@
     	
 	include(KNIFE_PATH.'/inc/functions.php');			# load common functions
 	include(KNIFE_PATH.'/config.php');					# load temporary config
-	include(KNIFE_PATH.'/class.users.php');
+	include(KNIFE_PATH.'/class.users.php');				# load userclass - can't live without
 
 
 
 #
-#	variable murdering
+# 	Load the user class and run verify
+$User = new KUsers;
+$null = $User->verify();
+
+# 	$User will be false if no login could be found
+# 	User data is accessible via $Userclass->username, etc, or $User[username], etc.
+
+
 #
-
-$Userclass = new KUsers;
-$User = $Userclass->verify();
-
-	if ($User) {
-		include(KNIFE_PATH.'/lang/'.$User[language]);
+#	Now, load the language file chosen or load default one
+	if ($User->language) {
+		include(KNIFE_PATH.'/lang/'.$User->language);
 		}
 	else {
 		include(KNIFE_PATH.'/lang/en_gb.php');
 		}
+#
+#	We need to display the login form if no good login data is found
+if (!$User->username) {
 
-if (!$User) {
-
-	$moduletitle = "knife - ". i18n("login_modtitle");
+	$moduletitle = SCRIPT_TITLE . " - ". i18n("login_modtitle");
 	$menus[0] = "";
 	
 	# FIXME: Insert menu filter?
@@ -63,19 +68,12 @@ if (!$User) {
 	</div></form></div>';
 	}
 
+#
+#	Oh, great. Somehow we're logged in.
+if ($User->username) {
 
 #
-#	If we're successfully logged in ($check[status] says verified), we can start including the modules
-#		- Permission levels should be taken care of roughly in the includes below,
-#		  while fine-grained access restriction should be done in the modules.
-#
-
-#if ($check[status] == "verified") {
-
-if ($User) {
-
 #	Set up the first menu
-
 	$menus[0] = "
 	<ul>
 		<li id=\"main_menu_dashboard\"><a href=\"index.php\">".i18n("menu_dashboard")."</a></li>
@@ -84,7 +82,7 @@ if ($User) {
 		<li id=\"main_menu_options\"><a href=\"?panel=options\">".i18n("menu_options")."</a></li>
 		<li id=\"main_menu_help\"><a href=\"?panel=help\">".i18n("menu_help")."</a></li>
 		<li id=\"main_menu_plugins\"><a href=\"#\">".i18n("menu_plugins")."</a></li>
-		<li id=\"main_menu_info\"><a href=\"?panel=logout\">$check[nickname] (".i18n("menu_logout").")</a></li>
+		<li id=\"main_menu_info\"><a href=\"?panel=logout\">$User->nickname (".i18n("menu_logout").")</a></li>
 	</ul>
 	";
 
@@ -115,28 +113,21 @@ if ($User) {
 		}
 		
 	if($_POST[panel] == "logout" || $_GET[panel] == "logout") {
-		
-		# delete cookies
-		$menus[0] = "";
-#		setcookie("kusername", "", time() - 3600);
-#		setcookie("kmd5password", "", time() - 3600);
-		# header reload?
-
-		$logout = $Userclass->logout();
-		# status message
+		$menus[0] = "";									# kill menu
+		$logout = $User->logout();					# kill user
 		$moduletitle = "Logout";
 		$statusmessage = "Successfully logged out.";
 		$main_content = i18n("login_loggedout");
 		
-		#header("Location: index.php");
-		#http1.1 requires absolute redirects. snippet from manual
-		
+		#
+		#	Redirect the user (hopefully)
 		header("Location: http://" . $_SERVER['HTTP_HOST']
                      . dirname($_SERVER['PHP_SELF'])
-                     . "/" . "index.php");		
-		
-	}
+                     . "/" . "index.php");
+		}
 
+	#
+	#	Surrender, insert the dashboard
 	if (!$_GET[panel] && !$_POST[panel] or $_POST[panel] == "dashboard") {
 		include(KNIFE_PATH."/dashboard.php");
 	}
@@ -147,7 +138,7 @@ if ($User) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo "$moduletitle ($check[user])"; ?></title>
+<title><?php echo "$moduletitle ($User->username)"; ?></title>
 <style type="text/css">
 
 /*
@@ -481,7 +472,7 @@ th {
 	</div>
 	
 	<div id="footer">
-		<span style="color: #f32988;">k</span>nife 0.2 &quot;cutting edge personal publishing - do we need a new name?&quot; - Licensed under the <strong>GPL</strong>
+		<?=SCRIPT_TITLE;?> 0.2.2 &quot;cutting edge personal publishing&quot; - Licensed under the <strong>GPL</strong>
 		<?php 
 			if (!$_GET[debug]) { 
 				$_GET[debug] = 1;
@@ -493,7 +484,7 @@ th {
 				print_r($_POST);
 				echo "\n\n-----------&lt;- post | cookie -&gt;---------------\n\n;";
 				print_r($_COOKIE);
-				print_r($Userclass->collectlogin());
+				print_r($User->collectlogin());
 				echo "</pre></fieldset>";
 				}
 				?>

@@ -1,5 +1,5 @@
 <?php
-if ($User[level] < 2) { 
+if ($User->level < 2) { 
 	die(i18n("login_noaccess"));
 	}
 	
@@ -19,7 +19,7 @@ if ($User[level] < 2) {
 
 if($_POST[article] && !$_POST[preview]) {
 	$KAclass = new KArticles;
-	$statusmessage = $KAclass->add($check[user]);
+	$statusmessage = $KAclass->add($User->username);
 }
 
 

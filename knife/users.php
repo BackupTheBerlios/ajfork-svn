@@ -1,5 +1,5 @@
 <?php
-if ($User[level] < 4) { 
+if ($User->level < 4) { 
 	die(i18n("login_noaccess"));
 	}
 	
@@ -227,7 +227,7 @@ if (!$_POST[adduser] && !$_GET[edit]) {
 	foreach ($currentusers as $username => $userdata) {
 		$level = $userdata[level];
 		$level = $leveltotext[$level];
-		$main_content .= "<tr><form method=\"get\"><input type=\"hidden\" name=\"panel\" value=\"users\" /><input type=\"hidden\" name=\"edit\" value=\"$username\" /><td>$username</td><td>$level</td><td>".date("j. F Y", $userdata[registered])."</td><td></td><td><input type=\"submit\" value=\"".i18n("generic_edit")."\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"".i18n("generic_delete")."\" /></td></form></tr>";
+		$main_content .= "<tr><form method=\"get\"><input type=\"hidden\" name=\"panel\" value=\"users\" /><input type=\"hidden\" name=\"edit\" value=\"$username\" /><td>$username</td><td>$level</td><td>".date("j. F Y", $userdata[registered])."</td><td></td><td><input type=\"submit\" value=\"".i18n("generic_edit")."\" /><input type=\"submit\" name=\"action[delete]\" class=\"delete\" value=\"".i18n("generic_delete")."\" /></td></form></tr>";
 		}
 	$main_content .='
 	</table>
@@ -239,7 +239,7 @@ if (!$_POST[adduser] && !$_GET[edit]) {
 #
 #	Delete
 #
-if ($_GET[action] == "Delete") {
+if ($_GET[action][delete]) {
 
 	$userkey = $_GET[edit];
 	$dataclass = new SettingsStorage('settings');

@@ -104,13 +104,13 @@ class CommentStorage {
 class SettingsStorage {
 	function SettingsStorage($plugin_name) {
 		$this->name = $plugin_name;
-		$this->all_settings = LoadArray("./data/settings.php");
+		$this->all_settings = LoadArray(KNIFE_PATH."/data/settings.php");
 		$this->settings = $this->all_settings[$plugin_name];
 	}
 
 	function save() {
 		$this->all_settings[$this->name] = $this->settings;
-		return SaveArray($this->all_settings, "./data/settings.php");
+		return SaveArray($this->all_settings, KNIFE_PATH."/data/settings.php");
 	}
 
 	function delete($where, $id) {

@@ -1,5 +1,5 @@
 <?php
-if ($User[level] < 3) { 
+if ($User->level < 3) { 
 	die(i18n("login_noaccess"));
 	}
 

@@ -1,7 +1,7 @@
 <?php
 
 $moduletitle = i18n("dashboard_moduletitle");
-$statusmessage = i18n("login_YouAre").$check[nickname];
+$statusmessage = i18n("login_YouAre").$User->nickname;
 
 	$templates = $settingsdatabase->settings['templates'];
 	$articledatabase = new ArticleStorage('storage');

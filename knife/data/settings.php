@@ -91,16 +91,6 @@ Sju
 Åtte',
         'level' => '4',
       ),
-      'john' => 
-      array (
-        'registered' => '1107804659',
-        'nickname' => 'John|Will',
-        'password' => '4749709942162cd47a8a71020b6446efe3cfad79',
-        'email' => 'email@email.com',
-        'url' => 'http://appelsinjuice.org',
-        'profile' => 'sffafas',
-        'level' => '4',
-      ),
       'commenter' => 
       array (
         'registered' => '1107808829',
