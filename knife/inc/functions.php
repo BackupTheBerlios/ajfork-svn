@@ -1,7 +1,4 @@
 <?php
-define('ROOTPATH', $cutepath ? $cutepath : '.');
-define('PLUGIN_SETTINGS_FILE', './saved.php');
-/* File Functions */
 
 function FileFolderList($path, $depth = 0, $current = '', $level=0) {
 	if ($level==0 && !@file_exists($path))
@@ -137,7 +134,7 @@ function urlTitle($title) {
 	}
 
 #
-# Bad dropdown
+# 	Bad dropdown
 #
 function makeDropDown($options, $name, $selected="FALSE")
     {
@@ -155,7 +152,7 @@ function makeDropDown($options, $name, $selected="FALSE")
     }
 
 #
-# Good dropdown
+# 	Good dropdown
 #
 
 function htmldropdown($options, $name, $selected="FALSE")
@@ -174,11 +171,11 @@ function htmldropdown($options, $name, $selected="FALSE")
     }
 
 
-/*
-	Function: 	formatsize
-	Description:	Properly formats the size of a file
-	Credit:		Flexer
-*/
+#
+#	Function: 		formatsize
+#	Description:	Properly formats the size of a file
+#	Credit:			Flexer
+#
 function formatsize($file_size){
 	if($file_size >= 1073741824)
 		{$file_size = round($file_size / 1073741824 * 100) / 100 . "GB";}
@@ -191,7 +188,7 @@ return $file_size;
 }
 
 #
-#	Login function
+#	knife Login function
 #
 
 function c_login($gusername, $gpassword, $cookie=FALSE) {

@@ -13,6 +13,9 @@ $menus["sub_options"] = '
 </ul>
 ';
 
+	$dataclass = new SettingsStorage('settings');
+	$currentcats = $dataclass->settings['categories'];
+	$alltemplates = $dataclass->settings['templates'];
 
 #
 # Knife setup
@@ -40,32 +43,61 @@ if ($_GET[screen] == "setup") {
 if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 
 	$statusmessage = "Categories";
-	$dataclass = new SettingsStorage('settings');
-	$currentcats = $dataclass->settings['categories'];
-	$alltemplates = $dataclass->settings['templates'];
+
 	
 	$main_content = '
-	<div id="manage_cats_main" class="div_normal options_categorylist">
-	<table><thead><th>ID</th><th>Name</th><th>Default template</th><th>Actions</th></thead>';
+	<div id="manage_cats_wrapper">
+	<div class="div_normal options_categorylist">
+	<table>
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Default template</th>
+			<th>Actions</th>
+		</tr>
+		</thead>';
 	
 	foreach ($currentcats as $catid => $catinfo) {
-		$main_content .= "<tr><form method=\"get\"><input type=\"hidden\" name=\"panel\" value=\"options\" /><input type=\"hidden\" name=\"catid\" value=\"$catid\" /><td>$catid</td><td>$catinfo[name]</td><td>$catinfo[template]</td><td><input type=\"submit\" value=\"Edit\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"Delete\" /></td></form></tr>";
+		$thistemplate = $alltemplates[$catinfo[template]];
+		$main_content .= "
+		<tr>
+			<form method=\"get\">
+				<input type=\"hidden\" name=\"panel\" value=\"options\" />
+				<input type=\"hidden\" name=\"screen\" value=\"categories\" />>
+				<input type=\"hidden\" name=\"catid\" value=\"$catid\" />
+				<td>$catid</td>
+				<td>$catinfo[name]</td>
+				<td>$thistemplate[name]</td>
+				<td><input type=\"submit\" value=\"Edit\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"Delete\" /></td>
+			</form>
+		</tr>";
 		}
+		
 	$main_content .='
 	</table>
-	</div><div class="div_extended"">
-	<form id="add_cat_form" class="cpform" method="post">
-	<fieldset>
-	<legend>Add category</legend>
-	<input type="hidden" name="	panel" value="options" />
-	<p><label for="add_cat_name">Name and default Template</label><br /><input class="inshort" type="text" id="add_cat_name" name="addcat[name]" />';
+	</div>
+	<div class="div_extended">
+		<form id="add_cat_form" class="cpform" method="post">
+			<fieldset>
+				<legend>Add category</legend>
+					<input type="hidden" name="	panel" value="options" />
+					<p>
+						<label for="add_cat_name">Name and default Template</label><br />
+						<input class="inshort" type="text" id="add_cat_name" name="addcat[name]" />
+					';
 	
 	
 	$main_content .= makeDropDown($alltemplates, "addcat[template]", "");
 
-	$main_content .= '</p>
-	<p><input type="submit" value="Add category" /></p></fieldset>
-	</form>	
+	$main_content .= '
+					</p>
+					<p>
+						<input type="submit" value="Add category" />
+					</p>
+			</fieldset>
+		</form>	
+	</div>
 	</div>';
 	
 	}
@@ -75,10 +107,7 @@ if ($_POST[addcat]) {
 #
 #	Add a new category (Routine)
 #
-
 	$now = time();
-	$dataclass = new SettingsStorage('settings');
-	$currentcats = $dataclass->settings['categories'];
 	
 	# Remove unwanted stuff!
 	$_POST[addcat][name] = sanitize_variables($_POST[addcat][name]);
@@ -96,5 +125,14 @@ if ($_POST[addcat]) {
 	$statusmessage = "Category &quot;$data[name]&quot; added";
 	}
 
+#
+#	Delete a category (Routine)
+#
+
+if	($_GET[action] && $_GET[catid]) {
+
+	
+
+}
 
 ?>

@@ -87,13 +87,6 @@ if (!$_POST[template] && !$_POST[changet] || $_POST[tswitch][submit]) {
 		$templateid = 1;
 		}
 
-#	templates select
-
-	$main_content = "";
-	$main_content .= '<form id="edit_template_switch" class="cpform" method="post">';
-	$main_content .= makeDropDown($alltemplates, "id", $templateid);
-	$main_content .= ' <input type="submit" name="tswitch[submit]" value="Edit" /><input type="submit" class="delete" name="changet[delete]" value="Delete" /><input type="submit" name="changet[new]" value="New based on this" /> named <input type="text" name="changet[name]" class="inshort" /></form>';
-
 
 #	load selected template
 	$template = $alltemplates[$templateid];
@@ -140,48 +133,110 @@ $tvars_commentform = array(
 
 #
 	$main_content .= '
-       <form id="edit_template" class="cpform" method="post">
-       <input type="hidden" name="template[id]" value="'.$templateid.'" />
-       <input type="hidden" name="panel" value="template" />
-	<label for="edit_template_name">Template name</label><input type="text" class="inshort" id="edit_template_name" name="template[name]" value="'.$template[name].'"/>
-	<label for="edit_template_articlelist"><h2>Articlelist template</h2></label>
-
-	<table>';
+	<div id="edit_templates_wrapper">
+	<div class="div_normal templates_fields">
+       <form method="post">
+			<fieldset>
+				<legend>Current template ('.$template[name].')</legend>
+			<input type="hidden" name="template[id]" value="'.$templateid.'" />
+			<input type="hidden" name="panel" value="template" />
+			
+			<p>
+				Unlike CuteNews/AJ-Fork, we will explain templates here<br />
+				eventually
+			</p>
+			
+			<label for="edit_template_articlelist"><h3>Articlelist template</h3></label>
+			<table>';
 	
 	foreach ($tvars_listing as $variable => $description) {
-		$main_content .= "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$description\">$variable</span></td><td>$description</td></tr>";
+		$main_content .= "
+				<tr>
+					<td><span class=\"vinfo\" title=\"$description\">$variable</span></td>
+					<td>$description</td>
+				</tr>";
 		}
 		
 	$main_content .= '
-	</table><textarea class="tamedium" id="edit_template_articlelist" name="template[listing]">'.$template[listing].'</textarea>
-	<label for="edit_template_view"><h2>Article template</h2></label>
-	<table>';
+			</table>
+			<textarea class="tamedium" id="edit_template_articlelist" name="template[listing]">'.$template[listing].'</textarea>
+			
+			<label for="edit_template_view"><h2>Article template</h2></label>
+			<table>';
 	
 	foreach ($tvars_view as $variable => $description) {
-		$main_content .= "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$description\">$variable</span></td><td>$description</td></tr>";
+		$main_content .= "
+				<tr>
+					<td><span class=\"vinfo\" title=\"$description\">$variable</span></td>
+					<td>$description</td>
+				</tr>";
 		}
 		
 	$main_content .= '
-	</table><textarea class="tamedium" id="edit_template_view" name="template[view]">'.$template[view].'</textarea>
-	<label for="edit_template_comment"><h2>Comment template</h2></label>
-	<table>';
+			</table>
+			<textarea class="tamedium" id="edit_template_view" name="template[view]">'.$template[view].'</textarea>
+			
+			<label for="edit_template_comment"><h2>Comment template</h2></label>
+			<table>';
 	
 	foreach ($tvars_comment as $variable => $description) {
-		$main_content .= "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$description\">$variable</span></td><td>$description</td></tr>";
+		$main_content .= "
+				<tr>
+					<td><span class=\"vinfo\" title=\"$description\">$variable</span></td>
+					<td>$description</td>
+				</tr>";
 		}
 		
 	$main_content .= '
-	</table><textarea class="tasmall" id="edit_template_comment" name="template[comment]">'.$template[comment].'</textarea>
-	<label for="edit_template_commentform"><h2>Commentform template</h2></label>
-	<table>';
+			</table>
+			<textarea class="tasmall" id="edit_template_comment" name="template[comment]">'.$template[comment].'</textarea>
+			<label for="edit_template_commentform"><h2>Commentform template</h2></label>
+			<table>';
 	
 	foreach ($tvars_commentform as $variable => $description) {
-		$main_content .= "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$description\">$variable</span></td><td>$description</td></tr>";
+		$main_content .= "
+				<tr>
+					<td><span class=\"vinfo\" title=\"$description\">$variable</span></td>
+					<td>$description</td>
+				</tr>";
 		}
 		
 	$main_content .= '
-	</table><textarea class="tasmall" id="edit_template_commentform" name="template[commentform]">'.$template[commentform].'</textarea>
-	<div><input type="submit" value="Save template" /></div>
-	</form>';
+			</table>
+			<textarea class="tasmall" id="edit_template_commentform" name="template[commentform]">'.$template[commentform].'</textarea>
+			
+			<fieldset>
+				<legend>Edit template name</legend>
+				<input type="text" class="inshort" id="edit_template_name" name="template[name]" value="'.$template[name].'"/>
+			</fieldset>
+
+			
+			
+			<p><input type="submit" value="Save template" /></p>
+			</fieldset>
+		</form>
+	</div>
+	<div class="div_extended templates_options">
+		<form id="edit_template_switch" method="post">
+			<fieldset>
+				<legend>Options</legend>
+				<p>';
+					$main_content .= makeDropDown($alltemplates, "id", $templateid);
+					$main_content .= '
+					<input type="submit" name="tswitch[submit]" value="Edit" /> 
+					<input type="submit" class="delete" name="changet[delete]" value="Delete" />
+				</p>
+				<p>
+					New templates will be based on the currently selected above. Fill in the new template name below:
+				</p>
+				<p>
+					<input type="text" name="changet[name]" class="inshort" id="changetname" /> 
+					<br />
+					<input type="submit" name="changet[new]" value="New template" />
+				</p>
+			</fieldset>
+		</form>	
+	</div>
+	';
 }
 ?>

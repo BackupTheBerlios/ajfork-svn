@@ -190,8 +190,9 @@ h1, h2, h3 {
 	border: 1px solid #f3eedc;
 	}
 	
-#header {
-	background: #fff url(graphics/logo.png) no-repeat bottom right;
+#header h1 {
+	background: url(graphics/logo.png) no-repeat top left;
+	padding: 0 0 0 35px;
 }
 
 #header h1:first-letter {
@@ -290,12 +291,6 @@ textarea {
 	height: 550px;
 }
 	
-#edit_template_switch {
-	border: 1px solid #dae4ea;
-	padding: 5px;
-	}
-
-
 fieldset {
 	border: 1px solid #f3e3ac;
 	-moz-border-radius: 5px;
@@ -330,6 +325,12 @@ th {
 	width: 60%;
 	}
 
+.templates_fields textarea {
+	width: 640px;
+	}
+.templates_options {
+	width: 210px;
+	}
 </style>
 </head>
 

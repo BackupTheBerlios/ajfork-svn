@@ -53,7 +53,7 @@ $moduletitle = "Dashboard";
 					</li>
 				</ul>
 			</li>
-			<li>Categories<ul><li>Default template</li></ul></li>
+			<li>Categories<ul><li>Add</li><li>Edit</li><li>Delete</li><li>Default template</li></ul></li>
 			<li>Plugins</li>
 			<li>Comments</li>
 			<li><del>Write news</del><ul><li>Custom date</li></ul></li>

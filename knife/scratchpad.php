@@ -1,3 +1,10 @@
+<HTML>
+<BODY>
+<Q id="greatQuote" cite="http://www.Shakespeare.the.great.com">
+To Be or Not to Be, That is the Question</Q>
+</BODY>
+</HTML>
+
 scratchpad:
 
 
