@@ -8,19 +8,7 @@
 	include('./config.php');						# load temporary config
 
 
-# Load default locale or chosen locale
-# including en_gb is too static.
-# this needs a config option -> default language for admin panels
-# also, figure out why this doesn't work in the first screen.
-#  - what's wrong with the order??
 
-if	(!$_COOKIE[klanguage]) {
-	include('./lang/en_gb.php');
-	}
-	else {
-		include("./lang/".$_COOKIE[klanguage]);
-		}
-	
 
 
 #
@@ -28,13 +16,6 @@ if	(!$_COOKIE[klanguage]) {
 #
 
 unset($_GET[check], $_POST[check]);
-
-
-#
-#	check avail languages
-#
-
-
 
 #
 #	authorization is ofcourse required
@@ -77,6 +58,25 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 	
 	}
 	
+# Load default locale or chosen locale
+# including en_gb is too static.
+# this needs a config option -> default language for admin panels
+# also, figure out why this doesn't work in the first screen.
+#  - what's wrong with the order??
+
+if	(!$_COOKIE[klanguage]) {
+		if(!$check[language]) {
+			include('./lang/en_gb.php');
+			}
+		else {
+			include("./lang/".$check[language]);
+		}
+	}
+	else {
+		include("./lang/".$_COOKIE[klanguage]);
+		}
+	
+	
 
 if ($check[status] == "unverified" or !$_COOKIE["kusername"] or !$_COOKIE["kmd5password"]) {
 
@@ -97,7 +97,7 @@ if ($check[status] == "unverified" or !$_COOKIE["kusername"] or !$_COOKIE["kmd5p
 	<div id="login_wrapper">
 		<div class="div_normal">
 		<fieldset>
-		<legend>Login (i18nhere)</legend><p>'.i18n("login_AuthReq").'</p>
+		<legend>'.i18n("login_Login").'</legend><p>'.i18n("login_AuthReq").'</p>
 	<form id="login" method="post" action="">
 	<input type="hidden" name="panel" value="dashboard" />
 <p><input class="inshort" type="text" name="username" id="login_username" /> <label for="login_username">'.i18n("login_Username").'</label></p>
@@ -107,7 +107,7 @@ if ($check[status] == "unverified" or !$_COOKIE["kusername"] or !$_COOKIE["kmd5p
 </div>
 <div class="div_extended">
 <fieldset>
-	<legend>Language(i18n!)</legend>
+	<legend>'.i18n("generic_language").'</legend>
 <p>'.$lang_input_fields.'</p>
 
 	</div></form></div>';
@@ -180,13 +180,20 @@ if ($check[status] == "verified") {
 		$menus[0] = "";
 		setcookie("kusername", "", time() - 3600);
 		setcookie("kmd5password", "", time() - 3600);
-		setcookie("klanguage", "", time() - 3600);
 		# header reload?
 		
 		# status message
 		$moduletitle = "Logout";
 		$statusmessage = "Successfully logged out.";
 		$main_content = i18n("login_loggedout");
+		
+		#header("Location: index.php");
+		#http1.1 requires absolute redirects. snippet from manual
+		
+		header("Location: http://" . $_SERVER['HTTP_HOST']
+                     . dirname($_SERVER['PHP_SELF'])
+                     . "/" . "index.php");		
+		
 	}
 
 	if (!$_GET[panel] && !$_POST[panel] or $_POST[panel] == "dashboard") {

@@ -5,7 +5,7 @@
 	Filename: en_gb.php
 	Language National: British
 	Language International: English
-	Version: 0.1
+	Version: 0.1.1
 	Author: Øivind Overå Hoel
 	Author URI: http://appelsinjuice.org/
 	
@@ -92,4 +92,5 @@ $lang->generic_url				= 'Website';
 $lang->generic_profile			= 'Profile';
 $lang->generic_level			= 'Level';
 $lang->generic_regdate			= 'Registration date';
+$lang->generic_language			= 'Language';
 ?>

@@ -1,5 +1,11 @@
 # Changelog
 
+	[sat 12 feb]
+	
+	Brk: Apache 2.0.53-1 (breaks pcre)
+	Fix: Sorted the logincheck order: languages now load instantly
+	Fix: Logout redirects to index.php
+
 	[wed 09 feb]
 
 	New: i18n-function, hooks being placed, norwegian bokmål (nb_no) file is testcase	

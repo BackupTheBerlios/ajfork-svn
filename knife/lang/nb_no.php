@@ -4,14 +4,14 @@
 	Filename: nb_no
 	Language National: Norsk Bokmål
 	Language International: Norwegian
-	Version: 0.1
+	Version: 0.1.1
 	Author: Øivind Overå Hoel
 	Author URI: http://appelsinjuice.org/
 	
 */
 
 $lang->login_modtitle			= 'Autentisering påkrevd';
-$lang->login_AuthReq  			= 'Du må oppgi gyldig brukernavn og passord for å få tilgang til dette systemet. Dette krever at nettleseren din støtter cookies';
+$lang->login_AuthReq  			= 'Du må oppgi gyldig brukernavn og passord for å få tilgang til dette systemet. <br />Dette krever at nettleseren din støtter cookies';
 $lang->login_Username 			= 'Brukernavn';
 $lang->login_Password 			= 'Passord';
 $lang->login_Login				= 'Logg inn';
@@ -91,4 +91,5 @@ $lang->generic_url				= 'Webside';
 $lang->generic_profile			= 'Profil';
 $lang->generic_level			= 'Nivå';
 $lang->generic_regdate			= 'Registrasjonsdato';
+$lang->generic_language			= 'Språk';
 ?>
