@@ -1,5 +1,5 @@
 <?php
-$moduletitle = "Write article";
+$moduletitle = i18n("write_mainmodtitle");
 
 	$settingsclass = new SettingsStorage('settings');
 	$dataclass = new ArticleStorage('storage');
@@ -33,7 +33,7 @@ if($_POST[article]) {
 	$dataclass->save();
 
 	# Give the user a status message
-	$statusmessage = "Article &quot;$data[title]&quot; successfully saved";
+	$statusmessage = i18n("generic_article"). " &quot;$data[title]&quot; ". i18n("write_published");
 }
 
 
@@ -41,7 +41,10 @@ if (!$_POST[article]) {
 
 	# set up category checkboxes
 	foreach ($currentcats as $catid => $catinfo) {
-		$catformfields .= "<input type=\"checkbox\" name=\"article[category][]\" id=\"catbox$catid\" value=\"$catid\" />
+	
+		# get a config for default cat select
+		if ($catid == "0") { $checked = "checked=\"checked\" "; } else { $checked = ""; }
+		$catformfields .= "<input type=\"checkbox\" name=\"article[category][]\" id=\"catbox$catid\" value=\"$catid\" $checked/>
 							<label for=\"catbox$catid\">$catinfo[name]</label><br />";
 	}
 
@@ -51,22 +54,22 @@ if (!$_POST[article]) {
 	<form id="add_article_form" class="cpform" method="post">
 	<div class="div_normal">
 		<fieldset>
-			<legend>Article metainfo</legend>
+			<legend>'.i18n("write_metainfo").'</legend>
 		<input type="hidden" name="panel" value="write" />
 		<p>
-			<label for="add_article_title">Title</label><br />
+			<label for="add_article_title">'.i18n("generic_title").'</label><br />
 			<input class="inlong" type="text" id="add_article_title" name="article[title]" />
 		</p>
 		</fieldset>
 		<fieldset>
-			<legend>Content</legend>
+			<legend>'.i18n("write_content").'</legend>
 		<p>	
 			<script language="JavaScript" type="text/javascript">edToolbar();</script>
 			<textarea class="tamedium" id="add_article_content" name="article[content]"></textarea>
 		</p>
 		</fieldset>
 		<p>
-			<input type="submit" value="Write article" />
+			<input type="submit" value="'.i18n("write_publish").'" />
 		</p>
 	</div>
 	
@@ -78,7 +81,7 @@ if (!$_POST[article]) {
 	
 	<div class="div_extended">
 		<fieldset>
-			<legend>Category</legend>
+			<legend>'.i18n("write_category").'</legend>
 			'.$catformfields.'
 		</fieldset>';
 # Run filter:		$ext_extended = run_filters('write-extended-fieldset', $ext_extended);

@@ -6,6 +6,7 @@
 
 	include('./inc/functions.php');					# load common functions
 	include('./config.php');						# load temporary config
+	include('./lang/nb_no.php');
 
 
 #
@@ -29,7 +30,7 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 	
 		$check = c_login($_POST[username], $_POST[password]);
 		if ($check[status] == "verified") {
-			$statusmessage = "You are logged in, $check[nickname]!";
+			$statusmessage = i18n("login_YouAre").$check[nickname];
 			$c_md5password = md5($check[password]);
 			setcookie("kusername", $check[user], time()+3600);
 			setcookie("kmd5password", $c_md5password, time()+3600);		
@@ -44,7 +45,7 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 	
 			$check = c_login($_COOKIE["kusername"], $_COOKIE["kmd5password"], "yes");
 		if ($check[status] == "verified") {
-			$statusmessage = "You are logged in, $check[nickname]!";
+			$statusmessage = i18n("login_YouAre").$check[nickname];
 			$c_md5password = md5($check[password]);
 			}
 		
@@ -59,17 +60,17 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 
 if ($check[status] == "unverified" or !$_COOKIE["kusername"] or !$_COOKIE["kmd5password"]) {
 
-	$moduletitle = "knife - Authorization required";
+	$moduletitle = "knife - ". i18n("login_modtitle");
 	$menus[0] = "";
 	
 	# FIXME: Insert menu filter?
 	
-	$main_content = '<div id="login_div"><p>You need to provide valid credentials to view any sections of this software. This requires a browser that supports cookies.</p>
+	$main_content = '<div id="login_div"><p>'.i18n("login_AuthReq").'</p>
 	<form id="login" method="post" action="">
 	<input type="hidden" name="panel" value="dashboard" />
-<p><input class="inshort" type="text" name="username" id="login_username" /> <label for="login_username">Username</label></p>
-<p><input class="inshort" type="password" name="password" id="login_password" /> <label for="login_password">Password</label></p>
-<p><input type="submit" name="sendlogin" value="Login" /></p>
+<p><input class="inshort" type="text" name="username" id="login_username" /> <label for="login_username">'.i18n("login_Username").'</label></p>
+<p><input class="inshort" type="password" name="password" id="login_password" /> <label for="login_password">'.i18n("login_Password").'</label></p>
+<p><input type="submit" name="sendlogin" value="'.i18n("login_Login").'" /></p>
 	</form></div>';
 	}
 
@@ -86,13 +87,13 @@ if ($check[status] == "verified") {
 
 	$menus[0] = "
 	<ul>
-		<li id=\"main_menu_dashboard\"><a href=\"index.php\">dashboard</a></li>
-		<li id=\"main_menu_write\"><a href=\"?panel=write\">write</a></li>
-		<li id=\"main_menu_edit\"><a href=\"?panel=edit\">edit</a></li>
-		<li id=\"main_menu_options\"><a href=\"?panel=options\">options</a></li>
-		<li id=\"main_menu_help\"><a href=\"?panel=help\">help</a></li>
-		<li id=\"main_menu_plugins\"><a href=\"#\">plugins</a></li>
-		<li id=\"main_menu_info\"><a href=\"?panel=logout\">$check[nickname] (logout)</a></li>
+		<li id=\"main_menu_dashboard\"><a href=\"index.php\">".i18n("menu_dashboard")."</a></li>
+		<li id=\"main_menu_write\"><a href=\"?panel=write\">".i18n("menu_write")."</a></li>
+		<li id=\"main_menu_edit\"><a href=\"?panel=edit\">".i18n("menu_edit")."</a></li>
+		<li id=\"main_menu_options\"><a href=\"?panel=options\">".i18n("menu_options")."</a></li>
+		<li id=\"main_menu_help\"><a href=\"?panel=help\">".i18n("menu_help")."</a></li>
+		<li id=\"main_menu_plugins\"><a href=\"#\">".i18n("menu_plugins")."</a></li>
+		<li id=\"main_menu_info\"><a href=\"?panel=logout\">$check[nickname] (".i18n("menu_logout").")</a></li>
 	</ul>
 	";
 
@@ -102,28 +103,28 @@ if ($check[status] == "verified") {
 		if ($check[level] >= 2) {
 		include("write.php");
 		}
-		else { $main_content = "Insufficient access"; }
+		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "template" || $_GET[panel] == "template") {
 		if ($check[level] >= 4) {
 		include("template.php");
 		}
-		else { $main_content = "Insufficient access"; }
+		else { $main_content = i18n("login_noaccess"); }
 	}
 	
 	if($_POST[panel] == "edit" || $_GET[panel] == "edit") {
 		if ($check[level] >= 3) {
 		include("edit.php");
 		}
-		else { $main_content = "Insufficient access"; }
+		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "users" || $_GET[panel] == "users") {
 		if ($check[level] >= 4) {
 		include("users.php");
 		}
-		else { $main_content = "Insufficient access"; }
+		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "options" || $_GET[panel] == "options") {
@@ -144,7 +145,7 @@ if ($check[status] == "verified") {
 		# status message
 		$moduletitle = "Logout";
 		$statusmessage = "Successfully logged out.";
-		$main_content = "Cookies cleared. Do you want to <a href=\"index.php\">log in again?</a>";
+		$main_content = i18n("login_loggedout");
 	}
 
 	if (!$_GET[panel] && !$_POST[panel] or $_POST[panel] == "dashboard") {

@@ -1,4 +1,5 @@
 <?php
+
 $moduletitle = "Dashboard";
 
 	$templates = $settingsdatabase->settings['templates'];
@@ -15,11 +16,11 @@ $moduletitle = "Dashboard";
 	<div id=\"dashboard_wrapper\">
 		<div class=\"div_extended\">
 		<fieldset>
-			<legend>Statistics</legend>
-		Articles: $totalarticles<br />
-		Users: $totalusers<br />
-		Article cumulative size: ".formatsize(filesize("./data/articles.php"))."<br />
-			<acronym title=\"Templates, Users, etc\">Settings</acronym> size: ".formatsize(filesize("./data/settings.php"))."
+			<legend>".i18n("dashboard_Statistics")."</legend>
+		".i18n("dashboard_Articles").": $totalarticles<br />
+		".i18n("dashboard_Users").": $totalusers<br />
+		".i18n("dashboard_ACS").": ".formatsize(filesize("./data/articles.php"))."<br />
+			<acronym title=\"".i18n("templates").", ".i18n("users").", etc\">".i18n("dashboard_SS")."</acronym>: ".formatsize(filesize("./data/settings.php"))."
 		</div>";
 		
 			

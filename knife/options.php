@@ -1,14 +1,14 @@
 <?php
 
-$moduletitle = "All options";
+$moduletitle = i18n("options_moduletitle");
 
 $menus["sub_options"] = '
 
 <ul style="margin: 20px 0 15px 45px;">
-	<li id="options_menu_users"><a href="?panel=users">users</a></li>
-	<li id="options_menu_templates"><a href="?panel=template">templates</a></li>
-	<li id="options_menu_categories"><a href="?panel=options&amp;screen=categories">categories</a></li>
-	<li id="options_menu_setup"><a href="?panel=options&amp;screen=setup"><span style="color: #f32988;">k</span>nife setup</a></li>
+	<li id="options_menu_users"><a href="?panel=users">'.i18n("menu_users").'</a></li>
+	<li id="options_menu_templates"><a href="?panel=template">'.i18n("menu_templates").'</a></li>
+	<li id="options_menu_categories"><a href="?panel=options&amp;screen=categories">'.i18n("menu_categories").'</a></li>
+	<li id="options_menu_setup"><a href="?panel=options&amp;screen=setup"><span style="color: #f32988;">k</span>nife'.i18n("menu_setup").'</a></li>
 </ul>
 ';
 
@@ -41,21 +41,22 @@ if ($_GET[screen] == "setup") {
 
 if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 
-	$statusmessage = "Categories";
+	$moduletitle = i18n("dashboard_categories");
+	$statusmessage = i18n("dashboard_categories");
 
 	
 	$main_content = '
 	<div id="manage_cats_wrapper">
 	<div class="div_normal options_categorylist">
 	<fieldset>
-		<legend>Current categories</legend>
+		<legend>'.i18n("categories_current").'</legend>
 	<table>
 		<thead>
 		<tr>
 			<th>ID</th>
-			<th>Name</th>
-			<th>Default template</th>
-			<th>Actions</th>
+			<th>'.i18n("generic_name").'</th>
+			<th>'.i18n("categories_defaulttpl").'</th>
+			<th>'.i18n("generic_actions").'</th>
 		</tr>
 		</thead>';
 	
@@ -70,7 +71,7 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 				<td>$catid</td>
 				<td>$catinfo[name]</td>
 				<td>$thistemplate[name]</td>
-				<td><input type=\"submit\" value=\"Edit\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"Delete\" /></td>
+				<td><input type=\"submit\" value=\"".i18n("generic_edit")."\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"".i18n("generic_delete")."\" /></td>
 			</form>
 		</tr>";
 		}
@@ -82,10 +83,10 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 	<div class="div_extended">
 		<form id="add_cat_form" class="cpform" method="post">
 			<fieldset>
-				<legend>Add category</legend>
+				<legend>'.i18n("categories_add").'</legend>
 					<input type="hidden" name="	panel" value="options" />
 					<p>
-						<label for="add_cat_name">Name</label><br />
+						<label for="add_cat_name">'.i18n("generic_name").'</label><br />
 						<input class="inshort" type="text" id="add_cat_name" name="addcat[name]" /><br />
 						
 					</p>
@@ -94,10 +95,10 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 	
 	$main_content .= makeDropDown($alltemplates, "addcat[template]", "");
 
-	$main_content .= ' <label>Default Template</label>
+	$main_content .= ' <label>'.i18n("categories_defaulttpl").'</label>
 					</p>
 					<p>
-						<input type="submit" value="Add category" />
+						<input type="submit" value="'.i18n("categories_add").'" />
 					</p>
 			</fieldset>
 		</form>	

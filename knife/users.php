@@ -131,11 +131,15 @@ if($_GET[edit] && !$_POST[edituser] && !$_GET[action]) {
 		$usertoedit = $currentusers[$userkey];
 
 		$main_content = '
-		<div id="manage_users_main" style="float: left; width: 80%;"><h2>Edit <u>'.$userkey.'</u> ('.$usertoedit[nickname].')</h2>
-		<form id="edit_user_form" class="cpform" method="post">
-		<input type="hidden" name="panel" value="users" />
-		<input type="hidden" name="edituser[name]" value="'.$userkey.'" />
-		<p><select name="edituser[level]">';
+	<div id="manage_users_wrapper">
+		<div class="div_normal">
+			<fieldset>
+				<legend>'.i18n("generic_edit").' <u>'.$userkey.'</u> ('.$usertoedit[nickname].')</legend>
+				
+			<form id="edit_user_form" class="cpform" method="post">
+			<input type="hidden" name="panel" value="users" />
+			<input type="hidden" name="edituser[name]" value="'.$userkey.'" />
+			<p><select name="edituser[level]">';
 		
 	if($usertoedit[level] == 4){$main_content .= ' <option value="4" selected="selected">Admin</option>';}
 		else {$main_content .= ' <option value="4">Admin</option>';}
@@ -148,14 +152,15 @@ if($_GET[edit] && !$_POST[edituser] && !$_GET[action]) {
 		
 		
 		$main_content .='
-		</select></p><p><input class="inshort" type="text" id="edit_user_nname" name="edituser[nickname]" value="'.$usertoedit[nickname].'" /><label for="edit_user_nname">Nickname</label></p>
-		<p><input class="inshort" type="text" id="edit_user_password" name="edituser[password]" /><label for="edit_user_password">Password</label></p>
-		<p><input class="inmedium" type="text" id="edit_user_email" name="edituser[email]" value="'.$usertoedit[email].'" /><label for="edit_user_email">Email</label></p>
-		<p><input class="inmedium" type="text" id="edit_user_url" name="edituser[url]" value="'.$usertoedit[url].'" /><label for="edit_user_url">Website</label></p>
-		<p><label for="edit_user_profile">Profile</label><br /><textarea class="tamedium" id="edit_user_profile" name="edituser[profile]">'.$usertoedit[profile].'</textarea></p>
-		<p><input type="submit" value="Save changes" /></p>
-		</form></div><div style="float: right;"><p>Extended options</p></div>';
-		}
+			</select></p><p><input class="inshort" type="text" id="edit_user_nname" name="edituser[nickname]" value="'.$usertoedit[nickname].'" /><label for="edit_user_nname">'.i18n("generic_nickname").'</label></p>
+			<p><input class="inshort" type="text" id="edit_user_password" name="edituser[password]" /><label for="edit_user_password">'.i18n("login_Password").'</label></p>
+			<p><input class="inmedium" type="text" id="edit_user_email" name="edituser[email]" value="'.$usertoedit[email].'" /><label for="edit_user_email">'.i18n("generic_email").'</label></p>
+			<p><input class="inmedium" type="text" id="edit_user_url" name="edituser[url]" value="'.$usertoedit[url].'" /><label for="edit_user_url">'.i18n("generic_url").'</label></p>
+			<p><label for="edit_user_profile">'.i18n("generic_profile").'</label><br /><textarea class="tamedium" id="edit_user_profile" name="edituser[profile]">'.$usertoedit[profile].'</textarea></p>
+			</fieldset>
+			<p><input type="submit" value="'.i18n("generic_save").'" /></p>
+			</form></div><div class="div_extended"><p>Extended options</p></div></div>';
+			}
 	
 	else {
 	
@@ -179,35 +184,51 @@ if (!$_POST[adduser] && !$_GET[edit]) {
 		);
 
 	$main_content = '
-	<div id="manage_users_main" style="float: left; width: 80%;"><h2>Add user</h2>
+	<div id="manage_users_wrapper">
+	<div class="div_normal">
+		<fieldset>
+		<legend>'.i18n("users_add").'</legend>
+		
 	<form id="add_user_form" class="cpform" method="post">
-	<input type="hidden" name="	panel" value="users" />
-	<p><label for="add_user_name">Name</label><br /><input class="inshort" type="text" id="add_user_name" name="adduser[name]" /> 
-	<select id="add_user_level" name="adduser[level]">
-		<option value="4">Admin</option>
-		<option value="3">Editor</option>
-		<option value="2">Journalist</option>
-		<option value="1">Commenter</option>
-	</select> <label for="add_user_level">Access level</label></p>
-	<p><input class="inshort" type="text" id="add_user_nname" name="adduser[nickname]" /><label for="add_user_nname">Nickname</label></p>
-	<p><input class="inshort" type="text" id="add_user_password" name="adduser[password]" /><label for="add_user_password">Password</label></p>
-	<p><input class="inmedium" type="text" id="add_user_email" name="adduser[email]" /><label for="add_user_email">Email</label></p>
-	<p><input class="inmedium" type="text" id="add_user_url" name="adduser[url]" /><label for="add_user_url">Website</label></p>
-	<p><label for="add_user_profile">Profile</label><br /><textarea class="tamedium" id="add_user_profile" name="adduser[profile]"></textarea></p>
-	<p><input type="submit" value="Add user" /></p>
+		<input type="hidden" name="	panel" value="users" />
+		<p><label for="add_user_name">'.i18n("login_Username").'</label><br /><input class="inshort" type="text" id="add_user_name" name="adduser[name]" /> 
+		<select id="add_user_level" name="adduser[level]">
+			<option value="4">Admin</option>
+			<option value="3">Editor</option>
+			<option value="2">Journalist</option>
+			<option value="1">Commenter</option>
+		</select> <label for="add_user_level">'.i18n("generic_level").'</label></p>
+		<p><input class="inshort" type="text" id="add_user_nname" name="adduser[nickname]" /><label for="add_user_nname">'.i18n("generic_nickname").'</label></p>
+		<p><input class="inshort" type="text" id="add_user_password" name="adduser[password]" /><label for="add_user_password">'.i18n("login_Password").'</label></p>
+		<p><input class="inmedium" type="text" id="add_user_email" name="adduser[email]" /><label for="add_user_email">'.i18n("generic_email").'</label></p>
+		<p><input class="inmedium" type="text" id="add_user_url" name="adduser[url]" /><label for="add_user_url">'.i18n("generic_url").'</label></p>
+		<p><label for="add_user_profile">'.i18n("generic_profile").'</label><br /><textarea class="tamedium" id="add_user_profile" name="adduser[profile]"></textarea></p>
+		</fieldset>
+		<p><input type="submit" value="'.i18n("generic_add").'" /></p>
 	</form>
 	
-	<h2>Currently registered users</h2>
-	<table><thead><th>Username</th><th>Level</th><th>Registration date</th><th>Articles</th><th>Actions</th></thead>';
+	<fieldset>
+		<legend>'.i18n("users_existing").'</legend>
+	<table>
+		<thead>
+			<tr>
+				<th>'.i18n("login_Username").'</th>
+				<th>'.i18n("generic_level").'</th>
+				<th>'.i18n("generic_regdate").'</th>
+				<th>'.i18n("dashboard_Articles").'</th>
+				<th>'.i18n("generic_actions").'</th>
+			</tr>
+		</thead>';
 	
 	foreach ($currentusers as $username => $userdata) {
 		$level = $userdata[level];
 		$level = $leveltotext[$level];
-		$main_content .= "<tr><form method=\"get\"><input type=\"hidden\" name=\"panel\" value=\"users\" /><input type=\"hidden\" name=\"edit\" value=\"$username\" /><td>$username</td><td>$level</td><td>".date("j. F Y", $userdata[registered])."</td><td></td><td><input type=\"submit\" value=\"Edit\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"Delete\" /></td></form></tr>";
+		$main_content .= "<tr><form method=\"get\"><input type=\"hidden\" name=\"panel\" value=\"users\" /><input type=\"hidden\" name=\"edit\" value=\"$username\" /><td>$username</td><td>$level</td><td>".date("j. F Y", $userdata[registered])."</td><td></td><td><input type=\"submit\" value=\"".i18n("generic_edit")."\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"".i18n("generic_delete")."\" /></td></form></tr>";
 		}
 	$main_content .='
 	</table>
-	</div><div style="float: right;"><p>Extended options</p></div>';
+	</fieldset>
+	</div><div class="div_extended"><p>Extended options</p></div>';
 	
 	}
 

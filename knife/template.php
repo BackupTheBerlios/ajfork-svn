@@ -1,7 +1,7 @@
 <?php
 
 include("options.php");
-$moduletitle = "Edit templates";
+$moduletitle = i18n("templates_moduletitle");
 
 
 #	Fetch and set up needed data
@@ -141,7 +141,7 @@ $tvars_commentform = array(
 	<div class="div_normal templates_fields">
        <form method="post">
 			<fieldset>
-				<legend>Current template ('.$template[name].')</legend>
+				<legend>'.i18n("templates_current").' ('.$template[name].')</legend>
 			<input type="hidden" name="template[id]" value="'.$templateid.'" />
 			<input type="hidden" name="panel" value="template" />
 			
@@ -150,7 +150,7 @@ $tvars_commentform = array(
 				eventually
 			</p>
 			
-			<label for="edit_template_articlelist"><h3>Articlelist template</h3></label>
+			<label for="edit_template_articlelist"><h3>'.i18n("templates_list").'</h3></label>
 			<table>';
 	
 	foreach ($tvars_listing as $variable => $description) {
@@ -165,7 +165,7 @@ $tvars_commentform = array(
 			</table>
 			<textarea class="tamedium" id="edit_template_articlelist" name="template[listing]">'.$template[listing].'</textarea>
 			
-			<label for="edit_template_view"><h2>Article template</h2></label>
+			<label for="edit_template_view"><h3>'.i18n("templates_view").'</h3></label>
 			<table>';
 	
 	foreach ($tvars_view as $variable => $description) {
@@ -180,7 +180,7 @@ $tvars_commentform = array(
 			</table>
 			<textarea class="tamedium" id="edit_template_view" name="template[view]">'.$template[view].'</textarea>
 			
-			<label for="edit_template_comment"><h2>Comment template</h2></label>
+			<label for="edit_template_comment"><h3>'.i18n("templates_comment").'</h3></label>
 			<table>';
 	
 	foreach ($tvars_comment as $variable => $description) {
@@ -194,7 +194,7 @@ $tvars_commentform = array(
 	$main_content .= '
 			</table>
 			<textarea class="tasmall" id="edit_template_comment" name="template[comment]">'.$template[comment].'</textarea>
-			<label for="edit_template_commentform"><h2>Commentform template</h2></label>
+			<label for="edit_template_commentform"><h3>'.i18n("templates_commentform").'</h3></label>
 			<table>';
 	
 	foreach ($tvars_commentform as $variable => $description) {
@@ -210,33 +210,33 @@ $tvars_commentform = array(
 			<textarea class="tasmall" id="edit_template_commentform" name="template[commentform]">'.$template[commentform].'</textarea>
 			
 			<fieldset>
-				<legend>Edit template name</legend>
+				<legend>'.i18n("templates_editname").'</legend>
 				<input type="text" class="inshort" id="edit_template_name" name="template[name]" value="'.$template[name].'"/>
 			</fieldset>
 
 			
 			
-			<p><input type="submit" value="Save template" /></p>
+			<p><input type="submit" value="'.i18n("generic_save").'" /></p>
 			</fieldset>
 		</form>
 	</div>
 	<div class="div_extended templates_options">
 		<form id="edit_template_switch" method="post">
 			<fieldset>
-				<legend>Options</legend>
+				<legend>'.i18n("generic_actions").'</legend>
 				<p>';
 					$main_content .= makeDropDown($templates, "id", $templateid);
-					$main_content .= '
-					<input type="submit" name="tswitch[submit]" value="Edit" /> 
-					<input type="submit" class="delete" name="changet[delete]" value="Delete" />
+					$main_content .= '</p><p>
+					<input type="submit" name="tswitch[submit]" value="'.i18n("generic_edit").'" /> 
+					<input type="submit" class="delete" name="changet[delete]" value="'.i18n("generic_delete").'" />
 				</p>
 				<p>
-					New templates will be based on the currently selected above. Fill in the new template name below:
+					'.i18n("templates_fillnew").'
 				</p>
 				<p>
 					<input type="text" name="changet[name]" class="inshort" id="changetname" /> 
 					<br />
-					<input type="submit" name="changet[new]" value="New template" />
+					<input type="submit" name="changet[new]" value="'.i18n("templates_newtemplate").'" />
 				</p>
 			</fieldset>
 		</form>	

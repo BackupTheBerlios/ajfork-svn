@@ -17,7 +17,7 @@ if ($_GET[id] && !$_POST[id] && !$_GET[action]) {
 	
 	$editentry = $allarticles[$_GET[id]];
 	
-	$moduletitle = "Edit &quot;$editentry[title]&quot;";
+	$moduletitle = i18n("edit_module_edit"). " &quot;$editentry[title]&quot;";
 	# form stuff here
 	
 	# set up category checkboxes
@@ -32,25 +32,25 @@ $main_content .= '
 	<form id="edit_article_form" method="post">
 	<div class="div_normal">
 		<fieldset>
-			<legend>Article metainfo</legend>
-		<ul><li><strong>Author</strong>: '.$editentry[author].'</li><li><strong>Date</strong>: '.date("j F Y, H:i", $_GET[id]).'</li></ul>
+			<legend>'.i18n("write_metainfo").'</legend>
+		<ul><li><strong>'.i18n("generic_author").'</strong>: '.$editentry[author].'</li><li><strong>'.i18n("generic_date").'</strong>: '.date("j F Y, H:i", $_GET[id]).'</li></ul>
 
 		<input type="hidden" name="panel" value="edit" />
 		<input type="hidden" name="id" value="'.$_GET[id].'" />
 		<p>
-			<label for="edit_article_title">Title</label><br />
+			<label for="edit_article_title">'.i18n("generic_title").'</label><br />
 			<input class="inlong" value="'.$editentry[title].'" type="text" id="edit_article_title" name="article[title]" />
 		</p>
 		</fieldset>
 		<fieldset>
-			<legend>Content</legend>
+			<legend>'.i18n("write_content").'</legend>
 		<p>
 			<script language="JavaScript" type="text/javascript">edToolbar();</script>
 			<textarea class="tamedium" id="edit_article_content" name="article[content]">'.$editentry[content].'</textarea>
 		</p>
 		</fieldset>
 		<p>
-			<input type="submit" value="Edit article" />
+			<input type="submit" value="'.i18n("edit_save").'" />
 		</p>
 	</div>
 	
@@ -62,7 +62,7 @@ $main_content .= '
 
 	<div class="div_extended">
 		<fieldset>
-			<legend>Category</legend>
+			<legend>'.i18n("write_category").'</legend>
 			<input value="'.$editentry[category].'" type="text" id="edit_article_category" value="General" name="article[category]" />
 		</fieldset>
 	</div>
@@ -122,8 +122,17 @@ if (!$_GET[id] && !$_POST[editlist]) {
 	$allcats = $dataclass->settings['categories'];
 	
 	krsort($allarticles);
-	$moduletitle = "Edit articles";
-	$main_content .= "<form id=\"edit_article_list\" method=\"post\" class=\"cpform\"><table><tr><th>Title</th><th>Date</th><th>Category</th><th>Author</th><th style=\"text-align: right;\">Actions</th></tr>";
+	$moduletitle = i18n("edit_module_list");
+	$main_content .= "
+	<form id=\"edit_article_list\" method=\"post\" class=\"cpform\">
+	<table>
+		<tr>
+			<th>".i18n("generic_title")."</th>
+			<th>".i18n("generic_date")."</th>
+			<th>".i18n("generic_category")."</th>
+			<th>".i18n("generic_author")."</th>
+			<th style=\"text-align: right;\">".i18n("generic_actions")."</th>
+		</tr>";
 	foreach($allarticles as $date => $article) {
 	
 	$catarray = explode(", ", $article[category]);
@@ -139,10 +148,10 @@ if (!$_GET[id] && !$_POST[editlist]) {
 			<td>".date("d/m/y", $date)."</td>
 			<td><acronym title=\"$thiscatnamelisting\">$article[category]</acronym></td>
 			<td>$article[author]</td>
-			<td style=\"text-align: right;\"><span class=\"delete\"><a href=\"?panel=edit&amp;id=$date&amp;action=delete\" title=\"Quick-Erase $article[title] ?\">X</a></span> <input type=\"checkbox\" name=\"id[]\" value=\"$date\" /></td>
+			<td style=\"text-align: right;\"><span class=\"delete\"><a href=\"?panel=edit&amp;id=$date&amp;action=delete\" title=\"".i18n("edit_quickerase")." $article[title] ?\">X</a></span> <input type=\"checkbox\" name=\"id[]\" value=\"$date\" /></td>
 		</tr>";	
 	}
-	$main_content .= "</table><div style=\"text-align: right;\"><br /><input type=\"submit\" name=\"editlist[submit]\" value=\"Perform\" /></div></form>";
+	$main_content .= "</table><div style=\"text-align: right;\"><br /><input type=\"submit\" name=\"editlist[submit]\" value=\"".i18n("generic_do")."\" /></div></form>";
 
 }
 

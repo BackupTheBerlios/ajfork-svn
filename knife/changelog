@@ -1,7 +1,8 @@
 # Changelog
 
 	[wed 09 feb]
-	
+
+	New: i18n-function, hooks being placed, norwegian bokmål (nb_no) file is testcase	
 	New: Menus are named
 	New: Preliminary {lastedit} support
 	

@@ -234,4 +234,9 @@ function c_login($gusername, $gpassword, $cookie=FALSE) {
 
 }
 
+function i18n( $messageid ) {
+	global $lang;
+	return $lang->$messageid;
+}
+
 ?>
