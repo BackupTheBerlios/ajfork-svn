@@ -24,6 +24,20 @@ class KComments {
 			$articlecomments = $allcomments[$timestamp];
 			return $articlecomments;
 		}
+		
+	function articlecommentsdelete($article) {
+		$commentsclass = new CommentStorage('comments');
+		if (!is_array($article)) {
+			$commentsclass->deleteall($article);
+			return true;
+			}
+		else {
+			foreach ($article as $null => $thisid) {
+				$commentsclass->deleteall($thisid);
+				}
+			return true;
+			}
+		}
 	
 	function getcomment($article, $comment) {
 			$comments = KComments::articlecomments($article);

@@ -81,6 +81,7 @@ $lang->generic_article			= 'Article';
 $lang->generic_author			= 'Author';
 $lang->generic_date				= 'Date';
 $lang->generic_category			= 'Category';
+$lang->generic_comments			= 'Comments';
 $lang->generic_actions			= 'Actions';
 $lang->generic_do				= 'Do';
 $lang->generic_save				= 'Save';

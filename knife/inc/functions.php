@@ -91,11 +91,11 @@ class CommentStorage {
 	}
 
 	function delete($article_id, $comment_id) {
-		unset($this->settings['comments'][$article_id][$comment_id]);
+		unset($this->settings[$article_id][$comment_id]);
 		return $this->save();
 	}
 	function deleteall($article_id) {
-		unset($this->settings['comments'][$article_id]);
+		unset($this->settings[$article_id]);
 		return $this->save();
 		}	
 

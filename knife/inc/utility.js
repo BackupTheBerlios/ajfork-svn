@@ -10,3 +10,19 @@ function toggleDisplay(obj_id){
 		obj.style.display = state;
 		}
 }
+
+function knife_bgc(row, highlight) {
+	var lastColorUsed;
+	if (highlight) {
+		lastColorUsed = row.style.background;
+		if (lastColorUsed) {
+			row.style.background = '';
+			}
+		else {
+			row.style.background = '#fff9e2';
+			}
+		}
+	else {
+		row.style.background = lastColorUsed;
+		}
+	}

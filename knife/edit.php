@@ -67,7 +67,7 @@ $main_content .= '
 		<p>
 			<input type="submit" value="'.i18n("edit_save").'" />
 		</p>
-	</div>$comments = $KCclass->articlecomments($_GET[id]);
+	</div>
 	
 	<script type="text/javascript" language="JavaScript">
 	<!--
@@ -83,7 +83,7 @@ $main_content .= '
 	</div>
 	</form>
 ';
-
+$comments = $KCclass->articlecomments($_GET[id]);
 	if ($comments) {
 		$main_content .= "<div class=\"div_normal\"><form><fieldset><legend>Comments</legend><table><tr><th>Date</th><th>Name</th><th>Content</th></tr>";
 		foreach ($comments as $commentid => $comment) {
@@ -184,13 +184,13 @@ if (!$_GET[id] && !$_POST[editlist]) {
 		$catrowcontent = "<acronym title=\"$thiscatnamelisting\">$article[category]</acronym>";
 		}
 		
-	$main_content .= "<tr>
-			<td><a href=\"?panel=edit&amp;id=$date\">$one $article[title]</a></td>
-			<td>".date("d/m/y", $date)."</td>
-			<td>".count($KCclass->articlecomments($date))."</td>
-			<td>$catrowcontent</td>
-			<td title=\"".i18n("edit_lastedit")." $article[lastedit]\">$article[author]</td>
-			<td style=\"text-align: right;\"><span class=\"delete\"><a href=\"?panel=edit&amp;id=$date&amp;action=delete\" title=\"".i18n("edit_quickerase")." $article[title] ?\">X</a></span> <input type=\"checkbox\" name=\"id[]\" value=\"$date\" /></td>
+	$main_content .= "<tr id=\"editlist$date\" onmousedown=\"knife_bgc(this, true);\">
+			<td onmousedown=\"document.getElementById('del$date').checked = (document.getElementById('del$date').checked ? false : true);\"><a href=\"?panel=edit&amp;id=$date\">$one $article[title]</a></td>
+			<td onmousedown=\"document.getElementById('del$date').checked = (document.getElementById('del$date').checked ? false : true);\">".date("d/m/y", $date)."</td>
+			<td onmousedown=\"document.getElementById('del$date').checked = (document.getElementById('del$date').checked ? false : true);\">".count($KCclass->articlecomments($date))."</td>
+			<td onmousedown=\"document.getElementById('del$date').checked = (document.getElementById('del$date').checked ? false : true);\">$catrowcontent</td>
+			<td onmousedown=\"document.getElementById('del$date').checked = (document.getElementById('del$date').checked ? false : true);\" title=\"".i18n("edit_lastedit")." $article[lastedit]\">$article[author]</td>
+			<td style=\"text-align: right;\"><span class=\"delete\"><a href=\"?panel=edit&amp;id=$date&amp;action=delete\" title=\"".i18n("edit_quickerase")." $article[title] ?\">X</a></span> <input type=\"checkbox\" id=\"del$date\" name=\"id[]\" value=\"$date\" /></td>
 		</tr>";	
 	}
 	$main_content .= "</table><div style=\"text-align: right;\"><br /><input type=\"submit\" name=\"editlist[submit]\" value=\"".i18n("generic_do")."\" /></div></form>";
@@ -209,11 +209,14 @@ if ($_GET[action] == "delete" || $_POST[editlist]) {
 	if ($_GET[action] == "delete") {
 		$id = $_GET[id];
 		$statusmessage = $KAclass->delete($id, false);
+		$statusmessage .= $KCclass->articlecommentsdelete($id);
+		
 		}
 		
 	else {
 		$id = $_POST[id];
 		$statusmessage = $KAclass->delete($id, true);
+		$statusmessage .= $KCclass->articlecommentsdelete($id);
 		}
 }
 

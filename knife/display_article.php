@@ -95,6 +95,50 @@
 		echo '</div>';
 		
 		#
+		#	If receiving a comment
+		#
+		
+		if ($_POST[comment] && $valid) {
+		
+		#
+		#	Needs i18n-love
+		
+		if (!$_POST[comment][name] or $_POST[comment][name] == "") {
+			$errors .= "<li><p>No name submitted. You'll have to identify yourself, I'm afraid!</p></li>";
+			}
+		if ($_POST[comment][email] && !preg_match("/^[\.A-z0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z]{1,4}$/", $_POST[comment][email])) {
+			$errors .= "<li><p>Given email is invalid, a real email is needed</p></li>";
+			}
+		if (!stristr($_POST[comment][url], "http://")) {
+			$errors .= "<li><p>Given url is invalid. Check that it contains the required http:// part</p></li>";
+			}
+		if (!$_POST[comment][content] or $_POST[comment][content] == "") {
+			$errors .= "<li><p>Sorry to break the news to you, but blank comments are quite useless</p></li>";
+			}
+		
+		if (!$errors) {
+			$newcommentid = time();
+			$savecomment = array(
+				'parentcid' => $_POST[comment][parent],
+				'name' => $_POST[comment][name],
+				'email' => $_POST[comment][email],
+				'url' => $_POST[comment][url],
+				'ip' => '127.0.0.1',
+				'browser' => 'firefox ofcourse',
+				'content' => $_POST[comment][content],
+				);
+			$commentsclass = new CommentStorage('comments');
+			$commentsclass->settings[$date][$newcommentid] = $savecomment;
+			$commentsclass->save();
+			echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}';</script>";
+			}
+			
+		else {
+			echo "<div id=\"Commentposterror\"><h1>Trouble in the hills!</h1><p>There was a problem processing the material you submitted. The specific problems are detailed below, and you are encouraged to sort out the problems and try again:</p><ol>$errors</ol></div>";
+			}
+		}
+		
+		#
 		#	Show the comment form
 		#
 		
@@ -102,27 +146,7 @@
 		$output .= $template[commentform];
 		$output .= '</form>';
 		echo $output;
-		
-		#
-		#	If receiving a comment
-		#
-		
-		if ($_POST[comment] && $valid) {
-		
-		$newcommentid = time();
-		$savecomment = array(
-			'parentcid' => $_POST[comment][parent],
-			'name' => $_POST[comment][name],
-			'email' => $_POST[comment][email],
-			'url' => $_POST[comment][url],
-			'ip' => '127.0.0.1',
-			'browser' => 'firefox ofcourse',
-			'content' => $_POST[comment][content],
-			);
-		$commentsclass = new CommentStorage('comments');
-		$commentsclass->settings[$date][$newcommentid] = $savecomment;
-		$commentsclass->save();
-		echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}';</script>";
-		}
+	
+
 		
 		?>

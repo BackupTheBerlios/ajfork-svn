@@ -1,4 +1,12 @@
 # Changelog
+
+	[wed 23 feb]
+	
+	New: Javascript magic in edit articles list (selecting)
+	New: Comments
+	New: Comments shown in edit screens
+	Fix: Delete article also deletes its comments
+	Fix: Blank comments, faulty email and faulty urls not accepted. Name required. Errors reported
 	
 	[tue 22 feb]
 	

@@ -81,6 +81,7 @@ $lang->generic_article			= 'Artikkel';
 $lang->generic_author			= 'Forfatter';
 $lang->generic_date				= 'Dato';
 $lang->generic_category			= 'Kategori';
+$lang->generic_comments			= 'Kommentarer';
 $lang->generic_actions			= 'Valg';
 $lang->generic_do				= 'Utfør';
 $lang->generic_save				= 'Lagre';
