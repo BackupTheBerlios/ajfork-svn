@@ -72,8 +72,6 @@ $lang->categories_defaulttpl	= 'Standardmal';
 
 $lang->users_add				= 'Ny bruker';
 $lang->users_existing			= 'Eksisterende brukere';
-#$lang->users_
-#$lang->users_
 
 $lang->generic_title			= 'Tittel';
 $lang->generic_article			= 'Artikkel';

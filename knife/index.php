@@ -6,7 +6,8 @@
 
 	include('./inc/functions.php');					# load common functions
 	include('./config.php');						# load temporary config
-	include('./lang/nb_no.php');
+	include('./lang/nb_no.php');					# load norwegian locale
+#	include('./lang/en_gb.php');					# load english locale
 
 
 #
