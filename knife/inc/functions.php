@@ -62,13 +62,13 @@ $array = '. var_export($array,1) .';
 class ArticleStorage {
 	function ArticleStorage($plugin_name) {
 		$this->name = $plugin_name;
-		$this->all_settings = LoadArray("./data/articles.php");
+		$this->all_settings = LoadArray(KNIFE_PATH.'/data/articles.php');
 		$this->settings = $this->all_settings[$plugin_name];
 	}
 
 	function save() {
 		$this->all_settings[$this->name] = $this->settings;
-		return SaveArray($this->all_settings, "./data/articles.php");
+		return SaveArray($this->all_settings, KNIFE_PATH.'/data/articles.php');
 	}
 
 	function delete($article_id) {
@@ -81,13 +81,13 @@ class ArticleStorage {
 class CommentStorage {
 	function CommentStorage($plugin_name) {
 		$this->name = $plugin_name;
-		$this->all_settings = LoadArray("./data/comments.php");
+		$this->all_settings = LoadArray(KNIFE_PATH.'/data/comments.php');
 		$this->settings = $this->all_settings[$plugin_name];
 	}
 
 	function save() {
 		$this->all_settings[$this->name] = $this->settings;
-		return SaveArray($this->all_settings, "./data/comments.php");
+		return SaveArray($this->all_settings, KNIFE_PATH.'/data/comments.php');
 	}
 
 	function delete($article_id, $comment_id) {

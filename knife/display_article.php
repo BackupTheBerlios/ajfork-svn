@@ -167,7 +167,7 @@
 			$commentsclass->settings[$date][$newcommentid] = $savecomment;
 			$commentsclass->save();
 			#FIXME: Redirect javascript doesn't work on all servers
-#			echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}';</script>";
+			echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}';</script>";
 			}
 			
 		else {

@@ -2130,6 +2130,28 @@ using markdown?!',
         'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
         'content' => 'En kommentar etter klassene ble flyttet ;-)',
       ),
+      1109619590 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => '',
+        'url' => '',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Hva med meg? Jeg er jo regga!',
+      ),
+      1109619641 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => '',
+        'url' => '',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Hva med meg? Jeg er jo regga! Jess det er jeg jo!
+
+Rewrite javascript. Fixed classes.',
+      ),
     ),
   ),
 );

@@ -34,13 +34,14 @@ background: #fff;
 	include(KNIFE_PATH.'/inc/class.users.php');				# load userclass - can't live without
 	include(KNIFE_PATH.'/lang/nb_no.php');				# load a language
 	
-	include(KNIFE_PATH."inc/functions.php");
-	include(KNIFE_PATH."plugins/markdown.php");
+	include(KNIFE_PATH.'/inc/functions.php');
+	include(KNIFE_PATH.'/plugins/markdown.php');
 	
 	$pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
 	$commentsclass = new KComments;
 	$Userclass = new KUsers;
 	$KAclass = new KArticles;
+
 #
 #	Reset some variables
 #
@@ -51,7 +52,7 @@ $timestamp = 0;
 #	Display articles
 #
 
-
+echo KNIFE_PATH;
 	$settingsdatabase = new SettingsStorage('settings');
 	$alltemplates = $settingsdatabase->settings['templates'];
 	$allcats = $settingsdatabase->settings['categories'];
