@@ -29,13 +29,14 @@ background: #fff;
     	}
 
 	include(KNIFE_PATH.'/config.php');					# load temporary config
-	include(KNIFE_PATH.'/class.articles.php');
-	include(KNIFE_PATH.'/class.comments.php');
-	include(KNIFE_PATH.'/class.users.php');				# load userclass - can't live without
+	include(KNIFE_PATH.'/inc/class.articles.php');
+	include(KNIFE_PATH.'/inc/class.comments.php');
+	include(KNIFE_PATH.'/inc/class.users.php');				# load userclass - can't live without
 	include(KNIFE_PATH.'/lang/nb_no.php');				# load a language
 	
-	include("inc/functions.php");
-	include("plugins/markdown.php");
+	include(KNIFE_PATH."inc/functions.php");
+	include(KNIFE_PATH."plugins/markdown.php");
+	
 	$pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
 	$commentsclass = new KComments;
 	$Userclass = new KUsers;

@@ -10,7 +10,7 @@ if ($User->level < 2) {
 	$settingsclass 		= new SettingsStorage('settings');
 	$currentcats 		= $settingsclass->settings['categories'];
 
-	include(KNIFE_PATH.'/class.articles.php');
+	include(KNIFE_PATH.'/inc/class.articles.php');
 	
 
 #

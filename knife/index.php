@@ -10,7 +10,7 @@
     	
 	include(KNIFE_PATH.'/inc/functions.php');			# load common functions
 	include(KNIFE_PATH.'/config.php');					# load temporary config
-	include(KNIFE_PATH.'/class.users.php');				# load userclass - can't live without
+	include(KNIFE_PATH.'/inc/class.users.php');				# load userclass - can't live without
 
 
 

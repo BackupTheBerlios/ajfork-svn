@@ -118,7 +118,7 @@
 			$errors .= "<li><p>" . i18n("visible_comment_error_content") . "</p></li>";
 			}
 
-	if (!errors) {
+	if (!$errors) {
 	$_POST[comment][name] = trim($_POST[comment][name]);		# clean the submitted name for db lkp
 	$match = $Userclass->indatabase($allusers);
 		
@@ -167,7 +167,7 @@
 			$commentsclass->settings[$date][$newcommentid] = $savecomment;
 			$commentsclass->save();
 			#FIXME: Redirect javascript doesn't work on all servers
-			echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}';</script>";
+#			echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}';</script>";
 			}
 			
 		else {

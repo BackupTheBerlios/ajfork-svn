@@ -836,7 +836,6 @@ Mer?',
       ),
       1109615976 => 
       array (
-        'timestamp' => 1109615976,
         'content' => 'Det var det med å være hjemme alene. Ikke hjemme i mamma og pappas hus. Ikke hjemme i sin egen leilighet. Ikke hos en hvilkensomhelst venninne eller kompis som straks kommer tilbake fra et kjapt ærend på butikken. Neida, jeg er hjemme alene hos Marit. I leiligheten hun og søsteren deler.
 
 Søsteren er i Bolivia, og jeg vet at minst den andre halvparten av husstanden også hadde hatt lyst til å være der akkurat nå. Men denne andre halvparten er altså inne i Bergen sentrum, sammen med en Boliviansk kamerat som visstnok ser mer ut som en kineser enn en gjennomsnittsbolivianer. Jeg aner ikke når hun kommer hjem, og har rukket å få med meg både Oberstdorf, Hitler, Brødrene Dahl og Klienten eller hva nå den Trump-ripoffen går under navn som.
@@ -848,11 +847,14 @@ En annen ting jeg lurer på er hvor mange glass det egentlig er i en treliters p
 Nå skal jeg iallefall ta meg et glass til, så får vi se. Det største problemet er å finne ut om jeg skal se på Klassefesten, en eller annen fengselsfilm, eller den forferdelige musikkprisutdelingen på tv2 som får meg til å lure på hva som har skjedd med all den herlige norske musikken jeg hørte i høst? Det skal bli koselig når Marit kommer hjem..
 
 Da skal hun få sin dose kjærleik :)
+
+Jepp
 ',
         'title' => 'Hjemme alene',
         'author' => 'eruin',
+        'lastedit' => '',
         'category' => '2',
-        'views' => 1,
+        'views' => 17,
       ),
     ),
   ),
