@@ -84,6 +84,31 @@ Homoveske, sier Marit. Ikke noe fordomshomo, men fordi vesken min visstnok ser u
         'lastedit' => 'eruin',
         'category' => '2, 6, 7',
       ),
+      1108663647 => 
+      array (
+        'content' => 'Kunst, kunsthistorie',
+        'title' => 'Ting å skrive om',
+        'author' => 'eruin',
+        'lastedit' => 'eruin',
+        'category' => '7',
+      ),
+      1108921761 => 
+      array (
+        'timestamp' => 1108921761,
+        'content' => 'is lost
+we like to paint our names on the wall',
+        'title' => 'And when all ',
+        'author' => 'eruin',
+        'category' => '2, 5',
+      ),
+      1108921886 => 
+      array (
+        'timestamp' => 1108921886,
+        'content' => 'asfasfasfasf',
+        'title' => 'sfasf',
+        'author' => 'eruin',
+        'category' => '2, 5',
+      ),
     ),
   ),
 );

@@ -1,39 +1,22 @@
 <?php
-$moduletitle = i18n("write_mainmodtitle");
-
-	$settingsclass = new SettingsStorage('settings');
-	$dataclass = new ArticleStorage('storage');
-	$currentcats = $settingsclass->settings['categories'];
 	
+	#
+	#	Setup
+	#
+	$moduletitle 		= i18n("write_mainmodtitle");
+	$settingsclass 		= new SettingsStorage('settings');
+	$currentcats 		= $settingsclass->settings['categories'];
+
+	include(KNIFE_PATH.'/class.articles.php');
+	
+
+#
+#	If article submitted
+#
+
 if($_POST[article] && !$_POST[preview]) {
-
-	$now = time();
-
-
-	# Remove unwanted stuff!
-	$_POST[article][content] = sanitize_variables($_POST[article][content]);
-	$_POST[article][title] = sanitize_variables($_POST[article][title]);
-	$_POST[article][category] = sanitize_variables($_POST[article][category]);
-	
-	$savecats = implode(", ", $_POST[article][category]);
-
-	# Put the posted and santitized stuff into an array for saving
-	$data = array(
-		# "timestamp" => $now,
-		"content" 	=> stripslashes($_POST[article][content]),
-		"title" 	=> stripslashes($_POST[article][title]),
-		"author" 	=> stripslashes($check[user]),
-		"category" 	=> stripslashes($savecats),
-		);
-# hook to add custom fields here.
-#	$data = run_filters('admin-new-savedata', $data);
-
-
-	$dataclass->settings['articles'][$now] = $data;
-	$dataclass->save();
-
-	# Give the user a status message
-	$statusmessage = i18n("generic_article"). " &quot;$data[title]&quot; ". i18n("write_published");
+	$KAclass = new KArticles;
+	$statusmessage = $KAclass->add($check[user]);
 }
 
 

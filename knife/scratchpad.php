@@ -22,9 +22,19 @@ Features
 			(exif support)
 			
 	display_articles needs a wrapper that can destroy variables and do basic config
+	helper tools ala plog
 			
 			
 			
+			
+			
+
+
+
+
+#
+#	Image stuff:
+#
 
 $image = exif_thumbnail("image.jpg", $width, $height, $type);
 if ($image!==false) {

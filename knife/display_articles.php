@@ -80,10 +80,16 @@ include("plugins/markdown.php");
 			
 
 		if ((isset($cat) and array_key_exists($cat, $newcatarray))) {
+			# great, the article belongs to the requested category
 			}
 		else { 
-			if (!$cat) { }
-			else { continue; }	
+			if (!$cat) {
+				# display anything then
+				}
+			else {
+				# curses, this doesn't fit. move on
+				continue;
+				}	
 			}
 		
 		

@@ -4,10 +4,19 @@
 #	required init
 #	
 
-	include('./inc/functions.php');					# load common functions
-	include('./config.php');						# load temporary config
+	if (!defined( "KNIFE_PATH" )) {
+    	define( "KNIFE_PATH", dirname(__FILE__)."/");	# Absolute path to current script
+    	}
+    	
+    define( "KNIFESQL", "yes");							# Comment this to use flatfiles
+	define( "KNIFE_SQL_SERVER", "localhost");			# mySQL server
+	define( "KNIFE_SQL_USER", "root");					# mySQL username
+	define( "KNIFE_SQL_PASSWORD", "");					# mySQL password
+    define( "KNIFE_SQL_DATABASE", "ajfork");			# mySQL database
+    define( "KNIFE_SQL_TBL_PREFIX", "knife_");			# mySQL table prefix (unused)
 
-
+	include(KNIFE_PATH.'/inc/functions.php');			# load common functions
+	include(KNIFE_PATH.'/config.php');					# load temporary config
 
 
 
@@ -55,14 +64,14 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 
 if	(!$_COOKIE[klanguage]) {
 		if(!$check[language]) {
-			include('./lang/en_gb.php');
+			include(KNIFE_PATH.'/lang/en_gb.php');
 			}
 		else {
-			include("./lang/".$check[language]);
+			include(KNIFE_PATH."/lang/".$check[language]);
 		}
 	}
 	else {
-		include("./lang/".$_COOKIE[klanguage]);
+		include(KNIFE_PATH."/lang/".$_COOKIE[klanguage]);
 		}
 	
 	
@@ -129,38 +138,38 @@ if ($check[status] == "verified") {
 	
 	if($_POST[panel] == "write" || $_GET[panel] == "write") {
 		if ($check[level] >= 2) {
-		include("write.php");
+		include(KNIFE_PATH."/write.php");
 		}
 		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "template" || $_GET[panel] == "template") {
 		if ($check[level] >= 4) {
-		include("template.php");
+		include(KNIFE_PATH."/template.php");
 		}
 		else { $main_content = i18n("login_noaccess"); }
 	}
 	
 	if($_POST[panel] == "edit" || $_GET[panel] == "edit") {
 		if ($check[level] >= 3) {
-		include("edit.php");
+		include(KNIFE_PATH."/edit.php");
 		}
 		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "users" || $_GET[panel] == "users") {
 		if ($check[level] >= 4) {
-		include("users.php");
+		include(KNIFE_PATH."/users.php");
 		}
 		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "options" || $_GET[panel] == "options") {
-		include("options.php");
+		include(KNIFE_PATH."/options.php");
 		}
 		
 	if($_POST[panel] == "help" || $_GET[panel] == "help") {
-		include("help.php");
+		include(KNIFE_PATH."/help.php");
 		}
 		
 	if($_POST[panel] == "logout" || $_GET[panel] == "logout") {
@@ -186,7 +195,7 @@ if ($check[status] == "verified") {
 	}
 
 	if (!$_GET[panel] && !$_POST[panel] or $_POST[panel] == "dashboard") {
-		include("dashboard.php");
+		include(KNIFE_PATH."/dashboard.php");
 	}
 }
 	

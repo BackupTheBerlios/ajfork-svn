@@ -1,6 +1,8 @@
 <?php
 
 
+include(KNIFE_PATH.'/class.articles.php');
+
 #
 #	Show edit for for single article
 #
@@ -10,12 +12,13 @@ $menus["sub_edit"] = "
 ";
 
 if ($_GET[id] && !$_POST[id] && !$_GET[action]) {
-	$articledatabase = new ArticleStorage('storage');
-	$allarticles = $articledatabase->settings['articles'];
+
+	
 	$settingsclass = new SettingsStorage('settings');
 	$currentcats = $settingsclass->settings['categories'];
 	
-	$editentry = $allarticles[$_GET[id]];
+	$KAclass = new KArticles;
+	$editentry = $KAclass->getarticle($_GET[id]);
 	
 	$moduletitle = i18n("edit_module_edit"). " &quot;$editentry[title]&quot;";
 	# form stuff here
@@ -118,14 +121,17 @@ if ($_POST[id] && !$_POST[editlist][submit]) {
 }
 
 
+
+
 #
 #	Show list of articles
 #
+
 if (!$_GET[id] && !$_POST[editlist]) {
-	
-	$articledatabase = new ArticleStorage('storage');
-	$allarticles = $articledatabase->settings['articles'];
-	
+
+	$KAclass = new KArticles;
+	$allarticles = $KAclass->listarticles();
+		
 	$dataclass = new SettingsStorage('settings');
 	$allcats = $dataclass->settings['categories'];
 	
@@ -201,4 +207,6 @@ if ($_GET[action] == "delete" || $_POST[editlist]) {
 	}
 
 }
+
+
 ?>
