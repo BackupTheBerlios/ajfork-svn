@@ -184,28 +184,19 @@ if (!$_GET[id] && !$_POST[editlist]) {
 #
 if ($_GET[action] == "delete" || $_POST[editlist]) {
 
-		$dataclass = new ArticleStorage('storage');
-		$articles = $dataclass->settings['articles'];
-
+	$moduletitle = "Delete article";
+	
+	$KAclass = new KArticles;
+	
 	if ($_GET[action] == "delete") {
 		$id = $_GET[id];
-	
-		$dataclass->delete($id);
-	
-		$moduletitle = "Delete article";
-	
-		# Give the user a status message
-		$statusmessage = "Article successfully deleted!";
-	}
-
-	else {
-	$id = $_POST[id];
-	$statusmessage = "All selected articles deleted<br /><a href=\"?panel=edit\">Back to list?</a>";
-	foreach ($id as $null => $thisid) {
-		$dataclass->delete($thisid);
+		$statusmessage = $KAclass->delete($id, false);
 		}
-	}
-
+		
+	else {
+		$id = $_POST[id];
+		$statusmessage = $KAclass->delete($id, true);
+		}
 }
 
 

@@ -86,6 +86,7 @@ $statusmessage = i18n("login_YouAre").$check[nickname];
 				<ul><li>Hagnesta Hill</li><li>Isola</li></ul></li>
 			<li>Kula Shaker ( K )</li>
 			<li>Lisa Miskovsky<ul><li>Lisa Miskovsky</li><li>Fallingwater</li></ul></li>
+			<li>Modest Mouse (Good news for people who love bad news)</li>
 			</ol>
 			</fieldset>
 		</div>

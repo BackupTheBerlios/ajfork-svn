@@ -63,8 +63,45 @@ class KArticles {
 			}
 		}
 	
-	function delete($data) {
-	
+	function delete($timestamp, $multiple="FALSE") {
+		if (!$multiple) {
+			if (defined("KNIFESQL")) {
+				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
+				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
+			
+				$sql = "DELETE FROM articles WHERE articleid = '$timestamp'";
+				$result = mysql_query($sql) or die ('Query failed: ' . mysql_error());
+				$statusmessage = "Article deleted";
+				return $statusmessage;
+				}
+			else {
+				$dataclass = new ArticleStorage('storage');
+				$dataclass->delete($timestamp);
+				$statusmessage = "Article deleted";
+				return $statusmessage;
+				}
+			}
+		else {
+			# looks like we're deleting multiple entries
+			if (defined("KNIFESQL")) {
+				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
+				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
+				
+				foreach ($timestamp as $null => $thisid) {
+					unset($sql);
+					$sql = "DELETE FROM articles WHERE articleid = '$thisid'";
+					$result = mysql_query($sql) or die ('Query failed: ' . mysql_error());
+					}
+				$statusmessage = "All selected articles deleted";
+				return $statusmessage;
+				}
+			else {			
+				$dataclass = new ArticleStorage('storage');
+				foreach ($timestamp as $null => $thisid) {
+					$dataclass->delete($thisid);
+					}
+				}
+			}
 		}
 	
 	
