@@ -103,6 +103,26 @@ Sju
         'profile' => '',
         'level' => '4',
       ),
+      'stealtheye' => 
+      array (
+        'registered' => '1107983191',
+        'nickname' => 'StealthEye van Holland',
+        'password' => 'dfe642fd06030c47d3c2ea15d28589bc9ce1fca0',
+        'email' => '',
+        'url' => '',
+        'profile' => '',
+        'level' => '4',
+      ),
+      'admin' => 
+      array (
+        'registered' => '1107983473',
+        'nickname' => 'like.. an admin',
+        'password' => '17dc22e4ab03b081598ea4b1d273cdc6327b942a',
+        'email' => '',
+        'url' => '',
+        'profile' => '',
+        'level' => '4',
+      ),
     ),
     'categories' => 
     array (

@@ -47,6 +47,8 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 	$main_content = '
 	<div id="manage_cats_wrapper">
 	<div class="div_normal options_categorylist">
+	<fieldset>
+		<legend>Current categories</legend>
 	<table>
 		<thead>
 		<tr>
@@ -75,6 +77,7 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 		
 	$main_content .='
 	</table>
+	</fieldset>
 	</div>
 	<div class="div_extended">
 		<form id="add_cat_form" class="cpform" method="post">
@@ -82,14 +85,16 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 				<legend>Add category</legend>
 					<input type="hidden" name="	panel" value="options" />
 					<p>
-						<label for="add_cat_name">Name and default Template</label><br />
-						<input class="inshort" type="text" id="add_cat_name" name="addcat[name]" />
-					';
+						<label for="add_cat_name">Name</label><br />
+						<input class="inshort" type="text" id="add_cat_name" name="addcat[name]" /><br />
+						
+					</p>
+					<p>';
 	
 	
 	$main_content .= makeDropDown($alltemplates, "addcat[template]", "");
 
-	$main_content .= '
+	$main_content .= ' <label>Default Template</label>
 					</p>
 					<p>
 						<input type="submit" value="Add category" />

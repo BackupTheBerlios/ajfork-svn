@@ -12,11 +12,16 @@ $moduletitle = "Dashboard";
 	$totalusers = count($users);
 	
 	$main_content = "
-			Articles: $totalarticles<br />
-			Users: $totalusers<br />
-			Article cumulative size: ".formatsize(filesize("./data/articles.php"))."<br />
-			<acronym title=\"Templates, Users, etc\">Settings</acronym> size: ".formatsize(filesize("./data/settings.php"));
-			
+	<div id=\"dashboard_wrapper\">
+		<div class=\"div_extended\">
+		<fieldset>
+			<legend>Statistics</legend>
+		Articles: $totalarticles<br />
+		Users: $totalusers<br />
+		Article cumulative size: ".formatsize(filesize("./data/articles.php"))."<br />
+			<acronym title=\"Templates, Users, etc\">Settings</acronym> size: ".formatsize(filesize("./data/settings.php"))."
+		</div>";
+		
 			
 	
 	#
@@ -24,7 +29,9 @@ $moduletitle = "Dashboard";
 	#
 	
 	$main_content .= "
-	<h2>TODO:</h2>
+	<div class=\"div_normal\">
+		<fieldset>
+			<legend>Todo</legend>
 		<ol>
 			<li>Users<ul><li><del>Add</del></li><li><del>Edit</del></li><li><del>Delete</del></li><li><del>Passwords encrypted sha1(md5(password+unique_id_generated_on_install))</del></li><li>Non-Admin Profiles</li></ul></li>
 			<li>Options</li>
@@ -61,7 +68,9 @@ $moduletitle = "Dashboard";
 			<li>Generate archive</li>
 			<li>Search!</li>
 			<li>MySQL</li></ol>
-	<h2>Musical drive:</h2>
+		</fieldset>
+		<fieldset>
+			<legend>Musical drive</legend>
 		<ol>
 			<li>The Donnas ( Spend the night )</li>
 			<li>Porcupine Tree ( In absentia )</li>
@@ -73,6 +82,9 @@ $moduletitle = "Dashboard";
 				<ul><li>Hagnesta Hill</li><li>Isola</li></ul></li>
 			<li>Kula Shaker ( K )</li>
 			<li>Lisa Miskovsky<ul><li>Lisa Miskovsky</li><li>Fallingwater</li></ul></li>
-			</ol>";
+			</ol>
+			</fieldset>
+		</div>
+	</div>";
 
 ?>

@@ -90,8 +90,8 @@ if ($check[status] == "verified") {
 		<li id=\"main_menu_write\"><a href=\"?panel=write\">write</a></li>
 		<li id=\"main_menu_edit\"><a href=\"?panel=edit\">edit</a></li>
 		<li id=\"main_menu_options\"><a href=\"?panel=options\">options</a></li>
-		<li id=\"main_menu_help\">help</li>
-		<li id=\"main_menu_plugins\">plugins</li>
+		<li id=\"main_menu_help\"><a href=\"?panel=help\">help</a></li>
+		<li id=\"main_menu_plugins\"><a href=\"#\">plugins</a></li>
 		<li id=\"main_menu_info\"><a href=\"?panel=logout\">$check[nickname] (logout)</a></li>
 	</ul>
 	";
@@ -128,6 +128,10 @@ if ($check[status] == "verified") {
 
 	if($_POST[panel] == "options" || $_GET[panel] == "options") {
 		include("options.php");
+		}
+		
+	if($_POST[panel] == "help" || $_GET[panel] == "help") {
+		include("help.php");
 		}
 		
 	if($_POST[panel] == "logout" || $_GET[panel] == "logout") {
@@ -174,7 +178,6 @@ a {
 	}
 	
 a:hover {
-	
 	}
 
 h1, h2, h3 {
@@ -199,6 +202,7 @@ h1, h2, h3 {
 #header h1 {
 	background: url(graphics/logo.png) no-repeat top left;
 	padding: 0 0 0 35px;
+	font-size: 23px;
 }
 
 #header h1:first-letter {
@@ -209,6 +213,10 @@ h1, h2, h3 {
 	Menus
 */
 	
+#menu li a {
+	padding-left: 25px;
+	}
+
 #menu li {
 	display: inline;
 	margin: 0 8px 0 0;
@@ -223,72 +231,58 @@ h1, h2, h3 {
 	
 li#main_menu_dashboard {
 	background: url(graphics/icons/dashboard.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#main_menu_dashboard:hover {
 	background-image: url(graphics/icons/dashboard.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 	
 li#main_menu_write {
 	background: url(graphics/icons/write.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#main_menu_write:hover {
 	background-image: url(graphics/icons/write.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 	
 li#main_menu_edit {
 	background: url(graphics/icons/edit.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#main_menu_edit:hover {
 	background-image: url(graphics/icons/edit.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 	
 li#main_menu_help {
 	background: url(graphics/icons/help.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#main_menu_help:hover {
 	background-image: url(graphics/icons/help.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 	
 li#main_menu_options {
 	background: url(graphics/icons/options.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#main_menu_options:hover {
 	background-image: url(graphics/icons/options.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 	
 li#main_menu_plugins {
 	background: url(graphics/icons/plugins.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#main_menu_plugins:hover {
 	background-image: url(graphics/icons/plugins.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 	
 li#main_menu_info {
 	background: url(graphics/icons/logout.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#main_menu_info:hover {
 	background-image: url(graphics/icons/logout.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 
 /*
@@ -299,42 +293,34 @@ li#main_menu_info {
 
 li#options_menu_users {
 	background: url(graphics/icons/users.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#options_menu_users:hover {
 	background-image: url(graphics/icons/users.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 	
 li#options_menu_templates {
 	background: url(graphics/icons/templates.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#options_menu_templates:hover {
 	background-image: url(graphics/icons/templates.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 		
 li#options_menu_categories {
 	background: url(graphics/icons/categories.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#options_menu_categories:hover {
 	background-image: url(graphics/icons/categories.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 		
 li#options_menu_setup {
 	background: url(graphics/icons/setup.png) no-repeat top left;
-	padding-left: 25px;
 	}
 	li#options_menu_setup:hover {
 	background-image: url(graphics/icons/setup.png);
 	background-repeat: no-repeat;
-	padding-left: 25px;
 	}
 		
 
@@ -352,6 +338,7 @@ li#options_menu_setup {
 
 .div_normal {
 	float: left;
+	min-width: 670px;
 }
 
 .div_extended {
@@ -496,13 +483,13 @@ th {
 				$_GET[debug] = 1;
 				} 
 			if ($_GET[debug] == 1) {
-				echo " (debug mode)<br /><pre>";
+				echo "<br /><fieldset><legend>Debugging info</legend><pre>";
 				print_r($_GET);
 				echo "\n\n-----------&lt;- get  | post   -&gt;---------------\n\n";
 				print_r($_POST);
 				echo "\n\n-----------&lt;- post | cookie -&gt;---------------\n\n;";
 				print_r($_COOKIE);
-				echo "</pre>";
+				echo "</pre></fieldset>";
 				}
 				?>
 	</div>
