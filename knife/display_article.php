@@ -63,7 +63,6 @@
 		#
 		
 		echo '<div id="Commentscontainer">';
-		$commentsclass = new KComments;
 		$articlescomments = $commentsclass->articlecomments($date);
 		
 	if (!$articlescomments or $articlescomments == "") {

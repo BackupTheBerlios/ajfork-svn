@@ -11,7 +11,7 @@ $array = array (
         'author' => 'rilmith',
         'lastedit' => 'eruin',
         'category' => '2, 3, 7',
-        'views' => '12',
+        'views' => 13,
       ),
       1108842457 => 
       array (
@@ -22,7 +22,7 @@ Hejdå!',
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 1,
+        'views' => 2,
       ),
       1107610947 => 
       array (
@@ -36,7 +36,7 @@ Forresten, Philip: Beezewax skal spille i Bergen snart :)
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 2,
+        'views' => 9,
       ),
       1107206795 => 
       array (
@@ -47,7 +47,7 @@ Det var to år siden. Juli 2003. Jeg var på min to måneder lange sommerferie f
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 58,
+        'views' => 60,
       ),
       1107009146 => 
       array (

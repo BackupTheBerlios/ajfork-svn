@@ -12,7 +12,8 @@ $array = array (
 <strong>Posted by {author} (last edited by {lastedit}) in {category} ({date}) - [friendlylink]Friendly Link[/friendlylink] | [link]ID-Link[/link]</strong>
 <div class="article_text">
 {content}
-<p>views: {views}</p>
+<p>views: {views}<br />
+latest comment by: {latestcomment}</p>
 </div>',
         'view' => '<div class="article" style="margin-bottom: 40px;">
 <h1>{title}</h1>

@@ -31,7 +31,8 @@ include("plugins/markdown.php");
 $pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
 print_r($pathinfo_array);
 
-$commentsclass = new CommentStorage('comments');
+#$commentsclass = new CommentStorage('comments');
+$commentsclass = new KComments;
 
 #
 #	Reset some variables
@@ -150,9 +151,20 @@ $timestamp = 0;
 		#
 		#	NEEDS ABSTRACTION
 		#
-		$articlescomments = $commentsclass->settings[$date];
-		$article[comments] = count($articlescomments);
+#		$articlescomments = $commentsclass->settings[$date];
+		$articlescomments = $commentsclass->articlecomments($date);
+		if (is_array($articlescomments)) {
+		krsort($articlescomments);
+		reset($articlescomments);
 		
+		# get the latest
+		$tempcomments = $articlescomments;
+		$lastcomment = array_shift($tempcomments);
+		unset($tempcomments);
+		}
+		
+		$article[comments] = count($articlescomments);
+		$output = str_replace("{latestcomment}", $lastcomment[name], $output);
 		$output = str_replace("{comments}", $article[comments], $output);
 		
 		$article[views] = $KAclass->articleupdate($date, "views", "noupdate");
