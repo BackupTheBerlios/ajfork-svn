@@ -13,9 +13,9 @@ $menus["sub_options"] = '
 </ul>
 ';
 
-	$dataclass = new SettingsStorage('settings');
-	$currentcats = $dataclass->settings['categories'];
-	$alltemplates = $dataclass->settings['templates'];
+	$settingclass = new SettingsStorage('settings');
+	$currentcats = $settingclass->settings['categories'];
+	$alltemplates = $settingclass->settings['templates'];
 
 #
 # Knife setup
@@ -64,7 +64,7 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 		<tr>
 			<form method=\"get\">
 				<input type=\"hidden\" name=\"panel\" value=\"options\" />
-				<input type=\"hidden\" name=\"screen\" value=\"categories\" />>
+				<input type=\"hidden\" name=\"screen\" value=\"categories\" />
 				<input type=\"hidden\" name=\"catid\" value=\"$catid\" />
 				<td>$catid</td>
 				<td>$catinfo[name]</td>
@@ -118,8 +118,8 @@ if ($_POST[addcat]) {
 		"template" 	=> stripslashes($_POST[addcat][template]),
 		);
 	
-	$dataclass->settings['categories'][] = $data;
-	$dataclass->save();
+	$settingclass->settings['categories'][] = $data;
+	$settingclass->save();
 	
 	# Give the user a status message
 	$statusmessage = "Category &quot;$data[name]&quot; added";

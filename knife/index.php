@@ -86,13 +86,13 @@ if ($check[status] == "verified") {
 
 	$menus[0] = "
 	<ul>
-		<li><a href=\"index.php\">dashboard</a></li>
-		<li><a href=\"?panel=write\">write</a></li>
-		<li><a href=\"?panel=edit\">edit</a></li>
-		<li><a href=\"?panel=options\">options</a></li>
-		<li>help</li>
-		<li>plugins</li>
-		<li><a href=\"?panel=logout\">$check[nickname] (logout)</a></li>
+		<li id=\"main_menu_dashboard\"><a href=\"index.php\">dashboard</a></li>
+		<li id=\"main_menu_write\"><a href=\"?panel=write\">write</a></li>
+		<li id=\"main_menu_edit\"><a href=\"?panel=edit\">edit</a></li>
+		<li id=\"main_menu_options\"><a href=\"?panel=options\">options</a></li>
+		<li id=\"main_menu_help\">help</li>
+		<li id=\"main_menu_plugins\">plugins</li>
+		<li id=\"main_menu_info\"><a href=\"?panel=logout\">$check[nickname] (logout)</a></li>
 	</ul>
 	";
 
@@ -170,6 +170,11 @@ html,body {
 a {
 	text-decoration: none;
 	display: inline-block;
+	color: #f32988;
+	}
+	
+a:hover {
+	
 	}
 
 h1, h2, h3 {
@@ -183,11 +188,12 @@ h1, h2, h3 {
 #body {
 	margin: auto;
 	background: #fff;
-	width: 900px;
+	width: 910px;
+	border: 5px solid #f3eedc;
 	}
 #mainframe {
 	padding: 0 5px 5px 5px;
-	border: 1px solid #f3eedc;
+	border: 1px solid #e6d69e;
 	}
 	
 #header h1 {
@@ -199,16 +205,90 @@ h1, h2, h3 {
 	color: #f32988;
 	}
 	
+/*
+	Menus
+*/
+	
 #menu li {
 	display: inline;
-	border: 1px dotted #999;
 	margin: 0 8px 0 0;
 	padding: 3px;
+	border-bottom: 3px solid #f1f3d8;
 	}
 #menu li:hover {
-	background: #efefef;
+	background: #fff9e2;
 	cursor: pointer;
-	border-bottom: 3px solid #333;
+	border-bottom: 3px solid #819faf;
+	}
+	
+li#main_menu_dashboard {
+	background: url(graphics/icons/dashboard.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#main_menu_dashboard:hover {
+	background-image: url(graphics/icons/dashboard.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+	
+li#main_menu_write {
+	background: url(graphics/icons/write.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#main_menu_write:hover {
+	background-image: url(graphics/icons/write.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+	
+li#main_menu_edit {
+	background: url(graphics/icons/edit.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#main_menu_edit:hover {
+	background-image: url(graphics/icons/edit.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+	
+li#main_menu_help {
+	background: url(graphics/icons/help.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#main_menu_help:hover {
+	background-image: url(graphics/icons/help.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+	
+li#main_menu_options {
+	background: url(graphics/icons/options.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#main_menu_options:hover {
+	background-image: url(graphics/icons/options.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+	
+li#main_menu_plugins {
+	background: url(graphics/icons/plugins.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#main_menu_plugins:hover {
+	background-image: url(graphics/icons/plugins.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+	
+li#main_menu_info {
+	background: url(graphics/icons/logout.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#main_menu_info:hover {
+	background-image: url(graphics/icons/logout.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
 	}
 
 #status {
@@ -229,6 +309,7 @@ h1, h2, h3 {
 .div_extended {
 	padding-right: 10px;
 	float: right;
+	min-width: 210px;
 }
 
 #footer {
@@ -268,7 +349,7 @@ input:focus, textarea:focus {
 	}
 
 textarea {
-	width: 700px;
+	width: 640px;
 	}
 
 .inshort {
@@ -325,9 +406,6 @@ th {
 	width: 60%;
 	}
 
-.templates_fields textarea {
-	width: 640px;
-	}
 .templates_options {
 	width: 210px;
 	}

@@ -3,9 +3,15 @@
 include("options.php");
 $moduletitle = "Edit templates";
 
+
+#	Fetch and set up needed data
+
+	$settingclass = new SettingsStorage('settings');
+	$templates = $settingclass->settings['templates'];
+
 if($_POST[template] && !$_POST["switch"]) {
 	$id = sanitize_variables(stripslashes($_POST[template][id]));
-	$settingclass = new SettingsStorage('settings');
+	
 	$templateid = sanitize_variables(stripslashes($_POST[template][id]));
 	$data = array(
 		"name"		=> stripslashes($_POST[template][name]),
@@ -23,10 +29,12 @@ if($_POST[template] && !$_POST["switch"]) {
 
 if($_POST[changet]) {
 
-		$dataclass = new SettingsStorage('settings');
-		$templates = $dataclass->settings['templates'];
 
 	$chtdo = $_POST[changet];
+	
+	#
+	#	Delete template
+	#
 	if ($chtdo["delete"]) {
 	
 		$id = $_POST[id];
@@ -35,7 +43,7 @@ if($_POST[changet]) {
 		$deletedtplname = $templates[$id][name];
 	
 		if ($deletedtplname != "Default") {
-		$dataclass->delete("templates", $id);
+		$settingclass->delete("templates", $id);
 		$statusmessage = "Template &quot;$deletedtplname&quot; deleted<br /><a href=\"javascript:history.go(-1);\">Go back</a>";
 		}		
 		else {
@@ -56,8 +64,8 @@ if($_POST[changet]) {
 		);
 		
 		if ($data[name] && $data[name] != "") {
-			$dataclass->settings['templates'][] = $data;
-			$dataclass->save();
+			$settingclass->settings['templates'][] = $data;
+			$settingclass->save();
 		
 			$statusmessage = "New template created<br /><a href=\"javascript:history.go(-1);\">Go back</a>";
 			}
@@ -72,10 +80,6 @@ if($_POST[changet]) {
 	
 if (!$_POST[template] && !$_POST[changet] || $_POST[tswitch][submit]) {
 
-	$templatesdatabase = new SettingsStorage('settings');
-	$alltemplates = $templatesdatabase->settings['templates'];
-	
-	
 	
 	if ($_GET[id]) {
 		$templateid = $_GET[id];
@@ -89,7 +93,7 @@ if (!$_POST[template] && !$_POST[changet] || $_POST[tswitch][submit]) {
 
 
 #	load selected template
-	$template = $alltemplates[$templateid];
+	$template = $templates[$templateid];
 #	set status message
 	$statusmessage = "Working with template &quot;$template[name]&quot;";
 #	load enabled variables
@@ -221,7 +225,7 @@ $tvars_commentform = array(
 			<fieldset>
 				<legend>Options</legend>
 				<p>';
-					$main_content .= makeDropDown($alltemplates, "id", $templateid);
+					$main_content .= makeDropDown($templates, "id", $templateid);
 					$main_content .= '
 					<input type="submit" name="tswitch[submit]" value="Edit" /> 
 					<input type="submit" class="delete" name="changet[delete]" value="Delete" />

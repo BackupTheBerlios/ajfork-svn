@@ -31,20 +31,24 @@ $main_content .= '
 <div id="edit_article_wrapper">
 	<form id="edit_article_form" method="post">
 	<div class="div_normal">
-		Written by '.$editentry[author].' at '.date("j F Y, H:i", $_GET[id]).'
+		<fieldset>
+			<legend>Article metainfo</legend>
+		<ul><li><strong>Author</strong>: '.$editentry[author].'</li><li><strong>Date</strong>: '.date("j F Y, H:i", $_GET[id]).'</li></ul>
 
 		<input type="hidden" name="panel" value="edit" />
 		<input type="hidden" name="id" value="'.$_GET[id].'" />
 		<p>
-			<label for="edit_article_title">Title</label>
+			<label for="edit_article_title">Title</label><br />
 			<input class="inlong" value="'.$editentry[title].'" type="text" id="edit_article_title" name="article[title]" />
 		</p>
-		
+		</fieldset>
+		<fieldset>
+			<legend>Content</legend>
 		<p>
-			<label for="edit_article_content">Content</label><br />
 			<script language="JavaScript" type="text/javascript">edToolbar();</script>
 			<textarea class="tamedium" id="edit_article_content" name="article[content]">'.$editentry[content].'</textarea>
 		</p>
+		</fieldset>
 		<p>
 			<input type="submit" value="Edit article" />
 		</p>

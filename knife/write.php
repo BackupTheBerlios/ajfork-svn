@@ -50,16 +50,21 @@ if (!$_POST[article]) {
 <div id="add_article_wrapper">
 	<form id="add_article_form" class="cpform" method="post">
 	<div class="div_normal">
+		<fieldset>
+			<legend>Article metainfo</legend>
 		<input type="hidden" name="panel" value="write" />
 		<p>
 			<label for="add_article_title">Title</label><br />
 			<input class="inlong" type="text" id="add_article_title" name="article[title]" />
 		</p>
-		<p>
-			<label for="add_article_content">Content</label>	
+		</fieldset>
+		<fieldset>
+			<legend>Content</legend>
+		<p>	
 			<script language="JavaScript" type="text/javascript">edToolbar();</script>
 			<textarea class="tamedium" id="add_article_content" name="article[content]"></textarea>
 		</p>
+		</fieldset>
 		<p>
 			<input type="submit" value="Write article" />
 		</p>
@@ -75,7 +80,10 @@ if (!$_POST[article]) {
 		<fieldset>
 			<legend>Category</legend>
 			'.$catformfields.'
-		</fieldset>
+		</fieldset>';
+# Run filter:		$ext_extended = run_filters('write-extended-fieldset', $ext_extended);
+		$main_content .= $ext_extended .'
+		
 	</div>
 	</form>
 </div>';
