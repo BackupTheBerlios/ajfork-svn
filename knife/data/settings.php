@@ -8,10 +8,11 @@ $array = array (
       array (
         'name' => 'Default',
         'listing' => '<div class="article" style="margin-bottom: 40px;">
-<h1>[friendlylink]{title}[/friendlylink]</h1>
+<h1>[friendlylink]{title}[/friendlylink] {comments}</h1>
 <strong>Posted by {author} (last edited by {lastedit}) in {category} ({date}) - [friendlylink]Friendly Link[/friendlylink] | [link]ID-Link[/link]</strong>
 <div class="article_text">
 {content}
+<p>views: {views}</p>
 </div>',
         'view' => '<div class="article" style="margin-bottom: 40px;">
 <h1>{title}</h1>
@@ -20,6 +21,7 @@ $array = array (
 {content}
 
 {extended}
+<p>views: {views}</p>
 </div>',
         'comment' => '',
         'commentform' => '',

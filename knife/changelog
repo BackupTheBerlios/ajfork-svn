@@ -1,5 +1,16 @@
 # Changelog
 	
+	[tue 22 feb]
+	
+	New: mySQL support all over
+	Fix: Article handling being abstracted in class.articles.php
+	Fix: Login fix
+	Fix: Configuration abstracted even more
+	Fix: display.articles.php cleaned up alot
+	
+	articleid, parent comment id, comment id, commenter name, commenter url, commenter email, commenter ip, commenter browserstring, comment content, 
+	
+	
 	[tue 15 feb]
 	
 	New: Preview feature foundation in write.php

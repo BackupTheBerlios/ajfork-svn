@@ -6,18 +6,25 @@ $array = array (
     array (
       1107875442 => 
       array (
-        'content' => '',
+        'content' => 'Innholdet
+er i 23
+24 ?',
         'title' => 'Tre kategorier',
         'author' => 'eruin',
         'lastedit' => 'eruin',
         'category' => '2, 3, 5, 6',
+        'views' => 55,
       ),
       1107888186 => 
       array (
-        'content' => 'Denne her er om Webdesign og Knife-scriptet!"',
+        'content' => 'Denne her er om Webdesign og Knife-scriptet!"
+
+og hadde ikke views før',
         'title' => 'Tittel',
         'author' => 'eruin',
+        'lastedit' => 'eruin',
         'category' => '2, 3',
+        'views' => '',
       ),
       1107955039 => 
       array (
@@ -116,6 +123,17 @@ we like to paint our names on the wall',
         'author' => '',
         'lastedit' => 'eruin',
         'category' => '2, 5, 6, 7',
+      ),
+      1108948621 => 
+      array (
+        'content' => 'både i tittel og i innhold gitt!   
+ja hva skal vi si til slikt   
+egentlig ?',
+        'title' => 'Med nårske bokstavær',
+        'author' => '',
+        'lastedit' => 'eruin',
+        'category' => '3',
+        'views' => 18,
       ),
     ),
   ),

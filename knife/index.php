@@ -8,13 +8,6 @@
     	define( "KNIFE_PATH", dirname(__FILE__)."/");	# Absolute path to current script
     	}
     	
-    define( "KNIFESQL", "yes");							# Comment this to use flatfiles
-	define( "KNIFE_SQL_SERVER", "localhost");			# mySQL server
-	define( "KNIFE_SQL_USER", "root");					# mySQL username
-	define( "KNIFE_SQL_PASSWORD", "");					# mySQL password
-    define( "KNIFE_SQL_DATABASE", "ajfork");			# mySQL database
-    define( "KNIFE_SQL_TBL_PREFIX", "knife_");			# mySQL table prefix (unused)
-
 	include(KNIFE_PATH.'/inc/functions.php');			# load common functions
 	include(KNIFE_PATH.'/config.php');					# load temporary config
 

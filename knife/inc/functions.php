@@ -76,7 +76,28 @@ class ArticleStorage {
 		return $this->save();
 	}
 	
-	
+}
+
+class CommentStorage {
+	function CommentStorage($plugin_name) {
+		$this->name = $plugin_name;
+		$this->all_settings = LoadArray("./data/comments.php");
+		$this->settings = $this->all_settings[$plugin_name];
+	}
+
+	function save() {
+		$this->all_settings[$this->name] = $this->settings;
+		return SaveArray($this->all_settings, "./data/comments.php");
+	}
+
+	function delete($article_id, $comment_id) {
+		unset($this->settings['comments'][$article_id][$comment_id]);
+		return $this->save();
+	}
+	function deleteall($article_id) {
+		unset($this->settings['comments'][$article_id]);
+		return $this->save();
+		}	
 
 }
 

@@ -10,19 +10,17 @@
 	if (!defined( "KNIFE_PATH" )) {
     	define( "KNIFE_PATH", dirname(__FILE__)."/");	# Absolute path to current script
     	}
-    	
-    define( "KNIFESQL", "yes");							# Comment this to use flatfiles
-	define( "KNIFE_SQL_SERVER", "localhost");			# mySQL server
-	define( "KNIFE_SQL_USER", "root");					# mySQL username
-	define( "KNIFE_SQL_PASSWORD", "");					# mySQL password
-    define( "KNIFE_SQL_DATABASE", "ajfork");			# mySQL database
-    define( "KNIFE_SQL_TBL_PREFIX", "knife_");			# mySQL table prefix (unused)
 
 	include(KNIFE_PATH.'/config.php');					# load temporary config
 	include(KNIFE_PATH.'/class.articles.php');
-
+	
+include("inc/functions.php");
+include("plugins/markdown.php");
 $pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
 print_r($pathinfo_array);
+
+$commentsclass = new CommentStorage('comments');
+
 #
 #	Reset some variables
 #
@@ -32,9 +30,6 @@ $timestamp = 0;
 #
 #	Display articles
 #
-
-include("inc/functions.php");
-include("plugins/markdown.php");
 
 
 	$settingsdatabase = new SettingsStorage('settings');
@@ -49,7 +44,7 @@ include("plugins/markdown.php");
 	krsort($allarticles);
 	reset($allarticles);
 
-	if (!$_GET[k] and !$pathinfo_array[2]) {
+	if (!$_GET[k] and !$pathinfo_array[1]) {
 	
 	echo "<div>";
 	$i = 0;
@@ -140,6 +135,17 @@ include("plugins/markdown.php");
 		$output = str_replace("{category}", $thiscatnamelisting, $output);
 		$output = str_replace("{date}", date("dmy H:i", $date), $output);
 		
+		#
+		#	NEEDS ABSTRACTION
+		#
+		$articlescomments = $commentsclass->settings[$date];
+		$article[comments] = count($articlescomments);
+		
+		$output = str_replace("{comments}", $article[comments], $output);
+		
+		$article[views] = $KAclass->articleupdate($date, "views", "noupdate");
+		$output = str_replace("{views}", $article[views], $output);
+		
 		if ($article[lastedit]) {
 			$output = str_replace("{lastedit}", $article[lastedit], $output);
 			}
@@ -155,7 +161,7 @@ include("plugins/markdown.php");
 	echo "</div>";
 	}
 	
-	elseif (($_GET[k] or $pathinfo_array[2]) && !$_POST[comment]) {
+	elseif ($_GET[k] or $pathinfo_array[1]) {
 		include("display_article.php");
 		}
 	

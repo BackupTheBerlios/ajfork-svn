@@ -23,11 +23,62 @@ Features
 			
 	display_articles needs a wrapper that can destroy variables and do basic config
 	helper tools ala plog
+	restrict users to certain categories
+	gravatars
+	favatars
+	comment-user avatars
 			
 			
 			
 			
 			
+
+
+
+
+
+
+
+tables:
+
+1 article table
+1 comment table
+
+	? 1 templates table
+	? 1 users table
+	- OR we could just use flat files here since they should be fast enough for anyone
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -46,6 +46,7 @@ $main_content .= '
 		<ul><li><strong>'.i18n("generic_author").'</strong>: '.$editentry[author].'</li><li><strong>'.i18n("generic_date").'</strong>: '.date("j F Y, H:i", $_GET[id]).'</li></ul>
 
 		<input type="hidden" name="panel" value="edit" />
+		<input type="hidden" name="article[views]" value="'.$editentry[views].'" />
 		<input type="hidden" name="id" value="'.$_GET[id].'" />
 		<p>
 			<label for="edit_article_title">'.i18n("generic_title").'</label><br />
@@ -95,6 +96,7 @@ if ($_POST[id] && !$_POST[editlist][submit]) {
 	$_POST[article][content] = sanitize_variables($_POST[article][content]);
 	$_POST[article][title] = sanitize_variables($_POST[article][title]);
 	$_POST[article][category] = sanitize_variables($_POST[article][category]);
+	$_POST[article][views] = sanitize_variables($_POST[article][views]);
 	$savecats = implode(", ", $_POST[article][category]);
 
 	# Put the posted and santitized stuff into an array for saving
@@ -105,6 +107,7 @@ if ($_POST[id] && !$_POST[editlist][submit]) {
 		"author" 	=> stripslashes($oldart[author]),
 		"lastedit"	=> stripslashes($check[user]),
 		"category" 	=> stripslashes($savecats),
+		"views"		=> stripslashes($_POST[article][views]),
 		);
 # hook to add custom fields here.
 #	$data = run_filters('admin-new-savedata', $data);

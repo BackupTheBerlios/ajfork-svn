@@ -10,7 +10,6 @@ class KArticles {
 	
 	#
 	#	Add new article
-	#
 	function add($author) {
 		
 		# Get current time
@@ -31,6 +30,7 @@ class KArticles {
 			"title" 	=> stripslashes($_POST[article][title]),
 			"author" 	=> stripslashes($author),
 			"category" 	=> stripslashes($savecats),
+			"views"		=> "0",
 			);
 			
 		# hook to add custom fields here.
@@ -41,7 +41,7 @@ class KArticles {
 			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
 			mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
 			
-			$write_sql = "INSERT INTO articles VALUES ('$data[timestamp]', '$data[category]', '$data[author]', '$data[title]', '$data[content]', '1')";
+			$write_sql = "INSERT INTO articles VALUES ('$data[timestamp]', '$data[category]', '$data[author]', '$data[title]', '$data[content]', '$data[views]')";
 			$result = mysql_query($write_sql) or die('Query failed: ' . mysql_error());
 			$statusmessage = i18n("generic_article"). " &quot;$data[title]&quot; ". i18n("write_published");
 			return $statusmessage;
@@ -63,11 +63,9 @@ class KArticles {
 		}
 	#
 	#	Delete article(s)
-	#
 	function delete($timestamp, $multiple="FALSE") {
 		if (!$multiple) {
 			#	This means we're deleting a single entry
-			#
 			if (defined("KNIFESQL")) {
 				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
 				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
@@ -86,7 +84,6 @@ class KArticles {
 			}
 		else {
 			#	This means we're deleting more than one entry
-			#
 			if (defined("KNIFESQL")) {
 				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
 				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
@@ -111,7 +108,6 @@ class KArticles {
 	
 	#
 	#	Construct a list of all available articles
-	#
 	function listarticles($limit="FALSE") {
 		if (defined("KNIFESQL")) {
 			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
@@ -135,11 +131,43 @@ class KArticles {
 	
 	#
 	#	Get a specific article based on its timestamp id
-	#
 	function getarticle($timestamp) {
 			$allarticles = KArticles::listarticles();
 			$article = $allarticles[$timestamp];
 			return $article;
+		}
+		
+	#
+	#	Bump article metainfo
+	function articleupdate($timestamp, $method, $modifier) {
+		if ($method == "views") {
+			# this method increments views by one
+			# and returns the current amount of views
+			if (defined("KNIFESQL")) {
+				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
+				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);	
+				$mysql_query = "SELECT views FROM articles WHERE articleid = $timestamp";
+				$result = mysql_query($mysql_query) or die("Failed: " . mysql_error());
+				$views = mysql_fetch_assoc($result);
+				$views = $views[views];
+				if ($modifier == "update") {
+					$views++;
+					$mysql_query = "UPDATE articles SET views = $views WHERE articleid = $timestamp";
+					$result = mysql_query($mysql_query) or die("Failed: " . mysql_error());
+					}
+				return $views;
+				}
+			else {
+				$articledatabase = new ArticleStorage('storage');
+				$views = $articledatabase->settings['articles'][$timestamp][views];
+				if ($modifier == "update") {
+					$views++;
+					$articledatabase->settings['articles'][$timestamp][views] = $views;
+					$articledatabase->save();
+					}
+				return $views;
+				}
+			}
 		}
 }
 

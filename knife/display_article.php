@@ -6,10 +6,9 @@
 
 
 		$k = $_GET[k];
-		if (!$k) { $k = $pathinfo_array[2]; }
+		if (!$k) { $k = $pathinfo_array[1]; }
 		if (eregi("[a-z]", $k)) {
 			# if $k is alpha , find the timestamp for this article
-
 			foreach ($allarticles as $timestamp => $article) {
 				if (urlTitle($article[title]) == $k) {
 					$k = $timestamp;
@@ -20,7 +19,7 @@
 			
 			
 		$article = $allarticles[$k];
-
+		
 		# date can come from two places
 		if ($timestamp) {
 			$date = $timestamp;
@@ -53,7 +52,28 @@
 		$output = str_replace("{date}", date("dmy H:i", $date), $output);
 		$output = str_replace("{link}", "<a href=\"?k=$date\" title=\"$article[title]\">Read</a>", $output);
 
+		$article[views] = $KAclass->articleupdate($date, "views", "update");
+		$output = str_replace("{views}", $article[views], $output);
+		
 		echo $output;
+		
+		echo '<div id="commentshere">';
+		$commentsclass = new CommentStorage('comments');
+		$articlescomments = $commentsclass->settings[$date];
+		
+	if (!$articlescomments or $articlescomments == "") {
+		echo "no comments";
+	}
+	else {
+	
+		foreach ($articlescomments as $commentid => $comment) {
+			echo "<p>".date("dmyH:i", $commentid)."<br />name: $comment[name]<br />
+			url: $comment[url]<br />
+			ip: $comment[ip]<br />
+			comment: $comment[content]</p>";
+		}
+	}
+		echo '</div>';
 		
 		$output = '
 		<form method="post" style="margin-top: 20px; padding: 15px; border: 1px solid #999;">
@@ -67,5 +87,23 @@
 		</form>';
 		
 		echo $output;
+		
+		if ($_POST[comment]) {
+		
+		$newcommentid = time();
+		$savecomment = array(
+			'parentcid' => $_POST[comment][parent],
+			'name' => $_POST[comment][name],
+			'email' => $_POST[comment][email],
+			'url' => $_POST[comment][url],
+			'ip' => '127.0.0.1',
+			'browser' => 'firefox ofcourse',
+			'content' => $_POST[comment][content],
+			);
+			
+		$commentsclass->settings[$date][$newcommentid] = $savecomment;
+		$commentsclass->save();
+		echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}';</script>";
+		}
 		
 		?>
