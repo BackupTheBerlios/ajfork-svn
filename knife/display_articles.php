@@ -190,3 +190,9 @@ $timestamp = 0;
 				}
 		
 ?>
+
+<!--
+
+	Content publishing: <?=SCRIPT_TITLE;?> <?=SCRIPT_VERSION;?>
+	
+-->

@@ -179,7 +179,7 @@ include(KNIFE_PATH.'/plugins/kses.php');
 		#	Show the comment form
 		#
 		
-		$output = '<form method="post">';
+		$output = '<form method="post" action="">';
 		$output .= $template[commentform];
 		$output = str_replace("{allowedtags}", kses_filter("gettags"), $output);
 		$output .= '</form>';
