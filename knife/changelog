@@ -7,6 +7,7 @@
 	New: Comments shown in edit screens
 	Fix: Delete article also deletes its comments
 	Fix: Blank comments, faulty email and faulty urls not accepted. Name required. Errors reported
+	Fix: Markdown upstream merged
 	
 	[tue 22 feb]
 	

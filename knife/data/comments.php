@@ -2132,6 +2132,23 @@ $array = array (
         'content' => 'E skrive som en narkomanorgelspelar, appelsinhud skulle det stå der:p ai ai for et liv, for et liv - e vil til bergen å pilse',
       ),
     ),
+    1109123090 => 
+    array (
+      1109126309 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind',
+        'email' => 'email@email.com',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'An [example][id]. Then, anywhere
+else in the doc, define the link:
+
+  [id]: http://example.com/  "Title"
+',
+      ),
+    ),
   ),
 );
 ?>
