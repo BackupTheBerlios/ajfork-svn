@@ -1,0 +1,18 @@
+# Changelog
+
+	[sun 06 feb]
+	
+	New: Add template
+	New: Edit template
+	New: Delete template
+	New: Edit user
+	New: Delete user
+	New: Delete article
+	
+	Fix: Timestamp incorrectly set when viewing a single article
+	Fix: Delete-buttons should be more noticeable (red)
+	Fix: Add user form fields poorly laid out
+	
+	[sat 05 feb]
+	
+	Initial
