@@ -2,6 +2,8 @@
 
 $moduletitle = i18n("dashboard_moduletitle");
 $statusmessage = i18n("login_YouAre").$User->nickname;
+include(KNIFE_PATH.'/class.comments.php');
+include(KNIFE_PATH.'/class.articles.php');
 $Commentclass = new KComments;
 $Articleclass = new KArticles;
 
