@@ -2130,66 +2130,6 @@ using markdown?!',
         'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
         'content' => 'En kommentar etter klassene ble flyttet ;-)',
       ),
-      1109616247 => 
-      array (
-        'parentcid' => '',
-        'name' => 'eruin',
-        'email' => '',
-        'url' => '',
-        'ip' => '127.0.0.1',
-        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
-        'content' => 'Meg ja',
-      ),
-      1109616291 => 
-      array (
-        'parentcid' => '',
-        'name' => 'eruin',
-        'email' => '',
-        'url' => '',
-        'ip' => '127.0.0.1',
-        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
-        'content' => 'Meg ja',
-      ),
-      1109616626 => 
-      array (
-        'parentcid' => '',
-        'name' => 'eruin',
-        'email' => '',
-        'url' => '',
-        'ip' => '127.0.0.1',
-        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
-        'content' => 'My comment',
-      ),
-      1109616683 => 
-      array (
-        'parentcid' => '',
-        'name' => 'eruin',
-        'email' => '',
-        'url' => '',
-        'ip' => '127.0.0.1',
-        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
-        'content' => 'f33rm3',
-      ),
-      1109616708 => 
-      array (
-        'parentcid' => '',
-        'name' => 'eruin',
-        'email' => '',
-        'url' => '',
-        'ip' => '127.0.0.1',
-        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
-        'content' => 'f33rm3',
-      ),
-      1109616730 => 
-      array (
-        'parentcid' => '',
-        'name' => 'eruin',
-        'email' => '',
-        'url' => '',
-        'ip' => '127.0.0.1',
-        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
-        'content' => 'f33rm3',
-      ),
     ),
   ),
 );
