@@ -105,7 +105,7 @@ class KArticles {
 		}
 	
 	
-	function listarticles() {
+	function listarticles($limit="FALSE") {
 		if (defined("KNIFESQL")) {
 			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
 			mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);

@@ -7,6 +7,20 @@
 
 <?php
 
+	if (!defined( "KNIFE_PATH" )) {
+    	define( "KNIFE_PATH", dirname(__FILE__)."/");	# Absolute path to current script
+    	}
+    	
+    define( "KNIFESQL", "yes");							# Comment this to use flatfiles
+	define( "KNIFE_SQL_SERVER", "localhost");			# mySQL server
+	define( "KNIFE_SQL_USER", "root");					# mySQL username
+	define( "KNIFE_SQL_PASSWORD", "");					# mySQL password
+    define( "KNIFE_SQL_DATABASE", "ajfork");			# mySQL database
+    define( "KNIFE_SQL_TBL_PREFIX", "knife_");			# mySQL table prefix (unused)
+
+	include(KNIFE_PATH.'/config.php');					# load temporary config
+	include(KNIFE_PATH.'/class.articles.php');
+
 
 #
 #	Reset some variables
@@ -22,14 +36,14 @@ include("inc/functions.php");
 include("plugins/markdown.php");
 
 
-	$articledatabase = new ArticleStorage('storage');
 	$settingsdatabase = new SettingsStorage('settings');
 	$alltemplates = $settingsdatabase->settings['templates'];
 	$allcats = $settingsdatabase->settings['categories'];
 	
 	$template = $alltemplates[1];
 	
-	$allarticles = $articledatabase->settings['articles'];
+	$KAclass = new KArticles;
+	$allarticles = $KAclass->listarticles();
 	
 	krsort($allarticles);
 	reset($allarticles);
