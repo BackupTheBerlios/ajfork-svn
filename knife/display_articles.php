@@ -31,6 +31,7 @@ background: #fff;
 	include(KNIFE_PATH.'/config.php');					# load temporary config
 	include(KNIFE_PATH.'/class.articles.php');
 	include(KNIFE_PATH.'/class.comments.php');
+	include(KNIFE_PATH.'/class.users.php');				# load userclass - can't live without
 	
 include("inc/functions.php");
 include("plugins/markdown.php");
@@ -54,6 +55,8 @@ $timestamp = 0;
 	$settingsdatabase = new SettingsStorage('settings');
 	$alltemplates = $settingsdatabase->settings['templates'];
 	$allcats = $settingsdatabase->settings['categories'];
+	$Userclass = new KUsers;
+	$allusers = $settingsdatabase->settings['users'];
 	
 	$template = $alltemplates[1];
 	

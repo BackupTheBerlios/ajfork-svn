@@ -1977,6 +1977,16 @@ else in the doc, define the link:
         'content' => 'Ahhh, so THAT\'s how you do reference-style links  
 using markdown?!',
       ),
+      1109607475 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel (eruin)',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'My comment using a registered name',
+      ),
     ),
   ),
 );

@@ -121,6 +121,34 @@
 			$errors .= "<li><p>Sorry to break the news to you, but blank comments are quite useless</p></li>";
 			}
 		
+	#FIXME: Recognize nicks too
+		if (array_key_exists(urlTitle($_POST[comment][name]), $allusers)) {
+				$userverifymessage = "<li><p>This name is registered.<br />If you are the owner of this name, please supply the password below:</p>
+				<form method=\"post\" action=\"\"><p><input type=\"text\" name=\"comment[password]\" /></p>
+				<!--hidden--><p>
+					<input type=\"hidden\" value=\"". $_POST[comment][name]. "\" name=\"comment[name]\" />
+					<input type=\"hidden\" value=\"". $_POST[comment][email]. "\" name=\"comment[email]\" />
+					<input type=\"hidden\" value=\"". $_POST[comment][url]. "\" name=\"comment[url]\" />
+					<input type=\"hidden\" value=\"". $_POST[comment][content]. "\" name=\"comment[content]\" />
+				</p><!--endhidden-->
+				<p><input type=\"submit\" value=\"Verify\" /></p></form></li>";
+			if ($_POST[comment][password]) {
+				$null = $Userclass->verify();
+				if ($Userclass->username) {
+					# No error, we're good to go
+#					$errors .= "<li><p>Verified as ". $Userclass->nickname . "</p></li>";
+					$_POST[comment][name] = $Userclass->nickname . ' (' . $Userclass->username . ')';
+					}
+				else {
+					$errors .= $userverifymessage;
+					}
+				}
+			
+			else {
+				$errors .= $userverifymessage;
+				}
+			}
+		
 		if (!$errors) {
 			$newcommentid = time();
 			$savecomment = array(
@@ -135,11 +163,12 @@
 			$commentsclass = new CommentStorage('comments');
 			$commentsclass->settings[$date][$newcommentid] = $savecomment;
 			$commentsclass->save();
+			#FIXME: Redirect javascript doesn't work on all servers
 			echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}';</script>";
 			}
 			
 		else {
-			echo "<div id=\"Commentposterror\"><h1>Trouble in the hills!</h1><p>There was a problem processing the material you submitted. The specific problems are detailed below, and you are encouraged to sort out the problems and try again:</p><ol>$errors</ol></div>";
+			echo "<div id=\"Commentposterrors\"><h1>Trouble in the hills!</h1><p>There was a problem processing the material you submitted. The specific problems are detailed below, and you are encouraged to sort out the problems and try again:</p><ol>$errors</ol></div>";
 			}
 		}
 		

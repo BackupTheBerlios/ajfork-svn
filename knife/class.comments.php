@@ -13,7 +13,8 @@ class KComments {
 	function allcomments($limit="FALSE") {
 			$commentsclass = new CommentStorage('comments');
 			$allcomments = $commentsclass->settings;
-		
+			krsort($allcomments);
+			reset($allcomments);
 			return $allcomments;
 		}
 	
@@ -45,8 +46,27 @@ class KComments {
 			return $comment;
 			}
 			
-	function add($data) {
+	function latestcomments($number) {
+		$allcomments = KComments::allcomments();
+		$amount = 0;
+		foreach ($allcomments as $newsid => $comments) {
+			krsort($comments);
+			reset($comments);
+			foreach ($comments as $commentid => $commentdata) {
+				$latestcomments[$commentid] = $commentdata;
+				$latestcomments[$commentid][parent] = $newsid;
+				$amount++;
+				if ($amount >= $number) { 
+					break 2;
+					}
+				}
+			}
+		krsort($latestcomments);
+		reset($latestcomments);
+		return $latestcomments;
+		}	
 	
+	function add($data) {
 		}
 }
 

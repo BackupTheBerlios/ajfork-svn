@@ -2,6 +2,8 @@
 
 $moduletitle = i18n("dashboard_moduletitle");
 $statusmessage = i18n("login_YouAre").$User->nickname;
+$Commentclass = new KComments;
+$Articleclass = new KArticles;
 
 	$templates = $settingsdatabase->settings['templates'];
 	$articledatabase = new ArticleStorage('storage');
@@ -91,5 +93,14 @@ $statusmessage = i18n("login_YouAre").$User->nickname;
 			</fieldset>
 		</div>
 	</div>";
+	$main_content .= '<div class="div_normal"><fieldset><legend>Latest comments</legend>';
+	$number = 5;
+	$latestcomments = $Commentclass->latestcomments($number);
+	foreach ($latestcomments as $commentid => $commentdata) {
+		$article = $Articleclass->getarticle($commentdata[parent]);
+		$title = $article[title];
+		$main_content .= date("d/m ", $commentid) . $commentdata[name] . " <small>commenting $title</small> <blockquote>" . $commentdata[content] . "</blockquote><br />";
+		}
+	$main_content .= '</fieldset></div>';
 
 ?>

@@ -47,14 +47,20 @@ function collectlogin() {
 		$checkpost[password] = $_POST[password];
 		$checkpost[logintype] = "standard";
 		}
+		
+	elseif ($_POST[comment][password] && $_POST[comment][name]) {
+		$checkpost[password] = $_POST[comment][password];
+		$checkpost[username] = $_POST[comment][name];
+		$checkpost[logintype] = "comment";
+		}
 	
-		if ($_COOKIE[klanguage]) {
+	if ($_COOKIE[klanguage]) {
 			$checkpost[language] = $_COOKIE[klanguage];
 			}
-		elseif ($_POST[language]) {
+			
+	elseif ($_POST[language]) {
 			$checkpost[language] = $_POST[language];
 			}
-			
 /*	$checkpost = array(
 		"username" => $_POST[username],
 		"password" => $_POST[password],
@@ -77,6 +83,10 @@ function verify() {
 	# $unique_password = $userdata[ . $unique;
 	
 	if ($userdata[logintype] == "standard") {
+		$e_md5 = md5($userdata[password]);
+		$e_given = sha1($e_md5.$unique);
+	}
+	elseif ($userdata[logintype] == "comment") {
 		$e_md5 = md5($userdata[password]);
 		$e_given = sha1($e_md5.$unique);
 	}
