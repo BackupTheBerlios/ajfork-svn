@@ -334,11 +334,9 @@ th {
 		<div id="menu">
 		<?php
 #			$menu = run_filters('admin-menu-content',$menu);
-			foreach ($menus as $null => $menu) {
-				echo $menu;
+			foreach ($menus as $menuname => $menucontent) {
+				print $menucontent;
 			}
-#			echo $menu;
-#			echo $secondarymenu;
 			?>
 		</div>
 	</div>

@@ -2,7 +2,7 @@
 
 $moduletitle = "All options";
 
-$menus[1] = '
+$menus["sub_options"] = '
 
 <ul style="margin-left: 15px;">
 	<li>plugins</li>
@@ -42,6 +42,7 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 	$statusmessage = "Categories";
 	$dataclass = new SettingsStorage('settings');
 	$currentcats = $dataclass->settings['categories'];
+	$alltemplates = $dataclass->settings['templates'];
 	
 	$main_content = '
 	<div id="manage_cats_main" style="float: left; width: 60%;">
@@ -56,12 +57,12 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 	<h2>Add category</h2>
 	<form id="add_cat_form" class="cpform" method="post">
 	<input type="hidden" name="	panel" value="options" />
-	<p><label for="add_cat_name">Name</label><br /><input class="inshort" type="text" id="add_cat_name" name="addcat[name]" /> 
-	<select id="add_cat_defaulttpl" name="addcat[template]">
-		<option value="4">List</option>
-		<option value="3">Templates</option>
-		<option value="3">Here</option>
-	</select> <label for="add_cat_defaulttpl">Default template</label></p>
+	<p><label for="add_cat_name">Name and default Template</label><br /><input class="inshort" type="text" id="add_cat_name" name="addcat[name]" />';
+	
+	
+	$main_content .= makeDropDown($alltemplates, "addcat[template]", "");
+
+	$main_content .= '</p>
 	<p><input type="submit" value="Add category" /></p>
 	</form>	
 	</div>';

@@ -8,8 +8,8 @@ $array = array (
       array (
         'content' => 'attaat',
         'title' => 'taat',
-        'author' => 'eruin',
-        'category' => '1, 3',
+        'author' => '',
+        'category' => '0, 1, 3',
       ),
       1107875437 => 
       array (
@@ -38,6 +38,13 @@ $array = array (
         'title' => 'Tittel',
         'author' => 'eruin',
         'category' => '2, 3',
+      ),
+      1107955039 => 
+      array (
+        'content' => 'Jea',
+        'title' => 'Bare webdesign',
+        'author' => 'eruin',
+        'category' => '2',
       ),
     ),
   ),

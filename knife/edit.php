@@ -5,6 +5,10 @@
 #	Show edit for for single article
 #
 
+$menus["sub_edit"] = "
+<ul><li>proof</li><li>of</li><li>concept</li></ul>
+";
+
 if ($_GET[id] && !$_POST[id] && !$_GET[action]) {
 	$articledatabase = new ArticleStorage('storage');
 	$allarticles = $articledatabase->settings['articles'];
