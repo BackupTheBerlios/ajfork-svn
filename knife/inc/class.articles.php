@@ -176,6 +176,38 @@ class KArticles {
 				}
 			}
 		}
+	function urlconstructor($article, $categories) {
+		global $config_urlstyle;
+		
+		unset($config_urlstyle[0]);
+		$constructor = $config_urlstyle;
+		# get the keys
+		$titlekey = array_search("title", $config_urlstyle);
+		$catkey = array_search("category", $config_urlstyle);
+		
+		# right, now populate the array
+		$constructor[$titlekey] = urlTitle($article[title]);
+		if ($catkey) { $constructor[$catkey] = urlTitle(implode("_", $categories)); }
+		
+		$return = implode("/", $constructor);
+		return $return;
+		}
+		
+	function urldeconstructor($array, $method="title") {
+		global $config_urlstyle;
+	
+		if ($method == "title") {
+			$titlekey = array_search("title", $config_urlstyle);
+			$k = $array[$titlekey];
+			return $k;
+			}
+		if ($method == "category") {
+			$catkey = array_search("category", $config_urlstyle);
+			$category = $array[$catkey];
+			return $categories;
+			}
+		}
+
 }
 
 ?>

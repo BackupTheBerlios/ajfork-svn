@@ -472,7 +472,7 @@ th {
 	</div>
 	
 	<div id="footer">
-		<?=SCRIPT_TITLE;?> 0.2.2 &quot;cutting edge personal publishing&quot; - Licensed under the <strong>GPL</strong>
+		<?=SCRIPT_TITLE;?> <?=SCRIPT_VERSION;?> &quot;cutting edge personal publishing&quot; - Licensed under the <strong>GPL</strong>
 		<?php 
 			if (!$_GET[debug]) { 
 				$_GET[debug] = 1;

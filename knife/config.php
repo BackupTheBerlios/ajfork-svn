@@ -4,7 +4,8 @@
 $cp->unique = 'b83b9c064c365cc68d675c8e1ca986904159a9f0';
 define('CPATH', dirname(__FILE__) . '/' );
 define('UNIQUE', 'b83b9c064c365cc68d675c8e1ca986904159a9f0');
-define('SCRIPT_TITLE', 'cutepress');
+define('SCRIPT_TITLE', 'Allegory');
+define('SCRIPT_VERSION', '0.3.1');
 
 #    define( "KNIFESQL", "yes");							# Comment this to use flatfiles
 	define( "KNIFE_SQL_SERVER", "localhost");			# mySQL server
@@ -13,5 +14,9 @@ define('SCRIPT_TITLE', 'cutepress');
     define( "KNIFE_SQL_DATABASE", "ajfork");			# mySQL database
     define( "KNIFE_SQL_TBL_PREFIX", "knife_");			# mySQL table prefix (unused)
 
-$config_urlstyle = "%category%/%title%";  
+$config_urlstyle = array(
+	0 => "null",
+	1 => "category",
+	2 => "title",
+	);
 ?>

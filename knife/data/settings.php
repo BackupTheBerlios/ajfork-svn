@@ -144,6 +144,11 @@ Sju
     ),
     'categories' => 
     array (
+      0 => 
+      array (
+        'name' => 'Stilig',
+        'template' => '',
+      ),
       2 => 
       array (
         'name' => 'Webdesign',

@@ -820,7 +820,7 @@ Var bare det jeg ville si.',
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 1,
+        'views' => 8,
       ),
       1109123090 => 
       array (
@@ -832,7 +832,7 @@ Mer?',
         'author' => 'eruin',
         'lastedit' => 'eruin',
         'category' => '3',
-        'views' => 167,
+        'views' => 176,
       ),
       1109615976 => 
       array (
@@ -853,8 +853,17 @@ Jepp
         'title' => 'Hjemme alene',
         'author' => 'eruin',
         'lastedit' => '',
-        'category' => '2',
-        'views' => 30,
+        'category' => '2, 7',
+        'views' => 88,
+      ),
+      1109627134 => 
+      array (
+        'timestamp' => 1109627134,
+        'content' => 'Jessda',
+        'title' => 'Artikkel i nullkategorien',
+        'author' => 'eruin',
+        'category' => '0',
+        'views' => '0',
       ),
     ),
   ),

@@ -28,14 +28,14 @@ background: #fff;
     	define( "KNIFE_PATH", dirname(__FILE__)."/");	# Absolute path to current script
     	}
 
-	include(KNIFE_PATH.'/config.php');					# load temporary config
-	include(KNIFE_PATH.'/inc/class.articles.php');
-	include(KNIFE_PATH.'/inc/class.comments.php');
-	include(KNIFE_PATH.'/inc/class.users.php');				# load userclass - can't live without
-	include(KNIFE_PATH.'/lang/nb_no.php');				# load a language
+	include_once(KNIFE_PATH.'/config.php');					# load temporary config
+	include_once(KNIFE_PATH.'/inc/class.articles.php');
+	include_once(KNIFE_PATH.'/inc/class.comments.php');
+	include_once(KNIFE_PATH.'/inc/class.users.php');				# load userclass - can't live without
+	include_once(KNIFE_PATH.'/lang/nb_no.php');				# load a language
 	
-	include(KNIFE_PATH.'/inc/functions.php');
-	include(KNIFE_PATH.'/plugins/markdown.php');
+	include_once(KNIFE_PATH.'/inc/functions.php');
+	include_once(KNIFE_PATH.'/plugins/markdown.php');
 	
 	$pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
 	$commentsclass = new KComments;
@@ -52,7 +52,6 @@ $timestamp = 0;
 #	Display articles
 #
 
-echo KNIFE_PATH;
 	$settingsdatabase = new SettingsStorage('settings');
 	$alltemplates = $settingsdatabase->settings['templates'];
 	$allcats = $settingsdatabase->settings['categories'];
@@ -62,13 +61,13 @@ echo KNIFE_PATH;
 	$template = $alltemplates[1];
 	
 	$amount = $_GET[amount] ? $_GET[amount] : "5";			#FIXME
-	$cat = $_GET[cat];
+	if (!$cat && isset($_GET[cat])) { $cat = "$_GET[cat]"; }
 	$from = $_GET[from];
 	
 	
 	$allarticles = $KAclass->listarticles($amount, $from);
 	
-	if (!$_GET[k] and !$pathinfo_array[1] and !$_GET[display]) {
+	if (!$_GET[k] and !$pathinfo_array[1] and !$_GET[display] or $static) {
 	
 	echo "<div>";
 	$i = 0;
@@ -115,7 +114,7 @@ echo KNIFE_PATH;
 			# great, the article belongs to the requested category
 			}
 		else { 
-			if (!$cat) {
+			if (!isset($cat)) {
 				# display anything then
 				}
 			else {
@@ -145,9 +144,12 @@ echo KNIFE_PATH;
 		$output = str_replace("[link]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$PHP_SELF?k=$date\">", $output);
         $output = str_replace("[/link]","</a>", $output);    
 				
-		$output = str_replace("[friendlylink]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$_SERVER[PHP_SELF]/".urlTitle($article[title])."\">", $output);
+#		$output = str_replace("[friendlylink]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$_SERVER[PHP_SELF]/".urlTitle($article[title])."\">", $output);
+#        $output = str_replace("[/friendlylink]","</a>", $output);
+       
+		$output = str_replace("[friendlylink]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$_SERVER[SCRIPT_NAME]/".$KAclass->urlconstructor($article, $catarray)."\">", $output);
         $output = str_replace("[/friendlylink]","</a>", $output);
-        
+
 		$output = str_replace("{content}", $article[content], $output);
 		$output = str_replace("{extended}", "", $output);
 		$output = str_replace("{author}", $article[author], $output);
@@ -191,7 +193,7 @@ echo KNIFE_PATH;
 	echo "</div>";
 	}
 	
-	elseif ($_GET[k] or $pathinfo_array[1]) {
+	elseif (($_GET[k] or $pathinfo_array[1]) and !$static) {
 		include("display_article.php");
 		}
 	
@@ -206,6 +208,7 @@ echo KNIFE_PATH;
 				echo "\n\n-----------&lt;- post | cookie -&gt;---------------\n\n;";
 				print_r($_COOKIE);
 				echo "</pre>";
+		
 ?>
 
 </body>

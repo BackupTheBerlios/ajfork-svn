@@ -3,10 +3,9 @@
 #
 #		File loaded when displaying a single article
 #
-
-
 		$k = $_GET[k];
-		if (!$k) { $k = $pathinfo_array[1]; }
+#		if (!$k) { $k = $pathinfo_array[1]; }
+		if (!$k) { $k = $KAclass->urldeconstructor($pathinfo_array, "title"); }
 		if (eregi("[a-z]", $k)) {
 			# if $k is alpha , find the timestamp for this article
 			foreach ($allarticles as $timestamp => $article) {
