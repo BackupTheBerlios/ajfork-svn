@@ -4,12 +4,11 @@ $moduletitle = "All options";
 
 $menus["sub_options"] = '
 
-<ul style="margin-left: 15px;">
-	<li>plugins</li>
-	<li><a href="?panel=users">users</a></li>
-	<li><a href="?panel=template">templates</a></li>
-	<li><a href="?panel=options&amp;screen=categories">categories</a></li>
-	<li><a href="?panel=options&amp;screen=setup"><span style="color: #f32988;">k</span>nife setup</a></li>
+<ul style="margin: 20px 0 15px 45px;">
+	<li id="options_menu_users"><a href="?panel=users">users</a></li>
+	<li id="options_menu_templates"><a href="?panel=template">templates</a></li>
+	<li id="options_menu_categories"><a href="?panel=options&amp;screen=categories">categories</a></li>
+	<li id="options_menu_setup"><a href="?panel=options&amp;screen=setup"><span style="color: #f32988;">k</span>nife setup</a></li>
 </ul>
 ';
 

@@ -291,6 +291,54 @@ li#main_menu_info {
 	padding-left: 25px;
 	}
 
+/*
+
+	Options submenu
+*/
+
+
+li#options_menu_users {
+	background: url(graphics/icons/users.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#options_menu_users:hover {
+	background-image: url(graphics/icons/users.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+	
+li#options_menu_templates {
+	background: url(graphics/icons/templates.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#options_menu_templates:hover {
+	background-image: url(graphics/icons/templates.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+		
+li#options_menu_categories {
+	background: url(graphics/icons/categories.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#options_menu_categories:hover {
+	background-image: url(graphics/icons/categories.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+		
+li#options_menu_setup {
+	background: url(graphics/icons/setup.png) no-repeat top left;
+	padding-left: 25px;
+	}
+	li#options_menu_setup:hover {
+	background-image: url(graphics/icons/setup.png);
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	}
+		
+
+
 #status {
 	margin-left: auto;
 	margin-right: 10px;
