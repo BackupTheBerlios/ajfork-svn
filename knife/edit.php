@@ -67,7 +67,7 @@ $main_content .= '
 		</p>
 		</fieldset>
 		<p>
-			<input type="submit" value="'.i18n("edit_save").'" />
+			<input type="submit" name="preview" value="'.i18n("generic_preview").'" /> <input type="submit" value="'.i18n("edit_save").'" />
 		</p>
 	</div>
 	
@@ -100,7 +100,7 @@ $main_content .= '</div>';
 #	Edit article routine
 #
 
-if ($_POST[id] && !$_POST[editlist][submit]) {
+if ($_POST[id] && !$_POST[editlist][submit] && !$_POST[preview]) {
 
 	$id = $_POST[id];
 	$dataclass = new ArticleStorage('storage');
@@ -120,7 +120,7 @@ if ($_POST[id] && !$_POST[editlist][submit]) {
 		"content" 	=> stripslashes($_POST[article][content]),
 		"title" 	=> stripslashes($_POST[article][title]),
 		"author" 	=> stripslashes($oldart[author]),
-		"lastedit"	=> stripslashes($check[user]),
+		"lastedit"	=> stripslashes($User->username),
 		"category" 	=> stripslashes($savecats),
 		"views"		=> stripslashes($_POST[article][views]),
 		);
@@ -139,6 +139,26 @@ if ($_POST[id] && !$_POST[editlist][submit]) {
 }
 
 
+#
+#	If preview
+#
+
+if ($_POST[preview]) {
+
+	include("plugins/markdown.php");
+	$main_content = '
+	
+	<div id="article_preview_wrapper">
+		<div class="div_normal">
+			<fieldset>
+				<legend>Article content preview:</legend>	
+			'.Markdown($_POST[article][content]).'
+			</fieldset>
+		</div>
+	
+	</div>';
+
+}
 
 
 #

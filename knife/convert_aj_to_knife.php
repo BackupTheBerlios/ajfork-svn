@@ -82,6 +82,7 @@ $dataclass->save();											# save it all
 
 else { 
 	echo "<h1>This tool will attempt to convert an AJ-Fork database to Allegory</h1>";
+	echo "<p>ALPHA QUALITY</p>
 	echo "<p>Convert -> mysql: <a href=\"$_SERVER[SCRIPT_NAME]?go=1&storage=mysql\">start</a></p>";
 	echo "<p>Convert -> flatfiles: <a href=\"$_SERVER[SCRIPT_NAME]?go=1&storage=flat\">start</a></p>";
 	}

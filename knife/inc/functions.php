@@ -218,7 +218,7 @@ function i18n( $messageid ) {
 		return $lang->$messageid;
 		}
 	else {
-		$return = 'i18n-'.$messageid;
+		$return = 'i18nFIXME-'.$messageid;
 		return $return;
 		}
 }

@@ -4,15 +4,6 @@ $array = array (
   array (
     'articles' => 
     array (
-      1109627134 => 
-      array (
-        'content' => 'JessdaJeasdasddas',
-        'title' => 'Artikkel i nullkategorien',
-        'author' => 'eruin',
-        'lastedit' => '',
-        'category' => '0',
-        'views' => 25,
-      ),
       1109615976 => 
       array (
         'content' => 'Det var det med å være hjemme alene. Ikke hjemme i mamma og pappas hus. Ikke hjemme i sin egen leilighet. Ikke hos en hvilkensomhelst venninne eller kompis som straks kommer tilbake fra et kjapt ærend på butikken. Neida, jeg er hjemme alene hos Marit. I leiligheten hun og søsteren deler.
@@ -26,35 +17,12 @@ En annen ting jeg lurer på er hvor mange glass det egentlig er i en treliters p
 Nå skal jeg iallefall ta meg et glass til, så får vi se. Det største problemet er å finne ut om jeg skal se på Klassefesten, en eller annen fengselsfilm, eller den forferdelige musikkprisutdelingen på tv2 som får meg til å lure på hva som har skjedd med all den herlige norske musikken jeg hørte i høst? Det skal bli koselig når Marit kommer hjem..
 
 Da skal hun få sin dose kjærleik :)
-
-Jepp
 ',
         'title' => 'Hjemme alene',
         'author' => 'eruin',
-        'lastedit' => '',
-        'category' => '2, 7',
-        'views' => 119,
-      ),
-      1109123090 => 
-      array (
-        'content' => '$amount = number of articles to display  
-$from = article number to display from
-
-Mer?',
-        'title' => 'Usable URL variables',
-        'author' => 'eruin',
-        'lastedit' => '',
+        'lastedit' => 'eruin',
         'category' => '3',
-        'views' => 208,
-      ),
-      1108939031 => 
-      array (
-        'content' => '<a href="07_magnet_lay_lady_lay.mp3">høyreklikk, lagre som ;-)</a>',
-        'title' => 'Til min kjæreste',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '3',
-        'views' => 0,
+        'views' => '123',
       ),
       1108842457 => 
       array (
@@ -81,27 +49,6 @@ Forresten, Philip: Beezewax skal spille i Bergen snart :)
         'category' => '3',
         'views' => 1,
       ),
-      1107397778 => 
-      array (
-        'content' => 'Jeg arbeider som kjent med utvikling av bloggeverktøyet AJ-Fork, opprinnelig som en hjemmebrygget oppdatering av Cutenews, men etterhvert som antallet modifiseringer gikk opp, bestemte jeg meg etter press fra flere på CN-Forumet å publisere godsakene. Det ble mange ustabile utgaver med hyppige oppdateringer av idiotiske feil.
-
-Den tiden er over, og AJ-Fork er nå ute i versjon 2.1 (også kjent i lang tid under navnet 168). Plugin-arkitekturen som ble innført i forrige versjon er utvidet, og en hel drøss nye tillegg som Trackbacks, Menneskevennlige URLs (det er stort sett en myte at disse er mer søkemotorvennlige enn de gamle), Epostvarsling og ymse antispamtiltak som Googles nofollowinitiativ. Omtrent samtidig som min offentliggjøring av siste inkarnasjon AJ-Fork, legger jeg merke til at <a href="http://www.paradoxia.org/arkiv/blogg-relatert/wordpressed/">en</a> del <a href="http://www.bekkelund.net/blogg/2005/02/01/hvordan-konvertere-til-wordpress/">norske</a> <a href="http://kyrres.net/2005/02/01/wordpress-over-alt/">bloggere</a> som tidligere benyttet enten Cutenews eller AJ-Fork har gått over til Wordpress. Ingenting ondt om Wordpress - endel av funksjonaliteten i mitt skript (inkludert deler av plugin-arkitekturen) er lånt fra WP.
-
-Dette setter meg dog i en unik posisjon til å se klager på ting som aldri før har blitt nevnt for meg av andre, og som til en viss grad allerede har blitt ordnet opp i siste versjon. RSSfeeds nevnes, og jeg har sørget for å ha en meget mye bedre RSS2-funksjonalitet nå enn det som fantes før. Noen vil ha Trackbacks, og dette er som sagt også inne. MySQL er nevnt, og selv om dette ikke er en slik gudegitt hastighetsgave som endel mennesker av en eller annen grunn tror, er dette allerede godt på plass og vil dukke opp i neste versjon - det vil si - om det faktisk blir en neste versjon.
-
-Jeg innser nemlig (for andre gang) at selve kjernen i AJ-Fork - Cutenews - er gammeldags og vanskelig å håndtere. HTML-koden skrevet av Cutenews\' forfatter Flexer har jeg ryddet mer og mer opp i fra dag èn, men den prosessen er <strong>enda</strong> ikke helt ferdig. Jeg har abstrahert funksjoner i hytt og pine, men føler likevel at det er en god del overflødig kode jeg sitter og jobber med. Jeg har allerede tidvis jobbet med mitt eget bloggscript - eget fra grunnen av, men det har aldri tatt av. Det er nemlig ikke så gøy å jobbe med samme problemstillinger som man har løst (om enn på en ikke helt tilfredsstillende måte) i et eksisterende skript.
-
-Det jeg nå sysler med er kodet først og fremst med tanke på sikkerhet, og deretter med tanke på lagringsabstraksjon - det vil si at det skal være enkelt å bytte mellom f.eks MySQL, PostgreSQL og Vanlige flate filer. Admin-systemet skal være _mye_ enklere oppbygd enn det som nå finnes i AJ-Fork - det skal være lett å skinne via CSS, og det skal rett og slett være det beste der ute. Jeg regner med jeg får med meg et par av de som har vært med under utviklingen av AJ-Fork 2.1 på dette oppdraget, nå som jeg har ordnet meget nyttige funksjoner som SVN, etc ved hjelp av berlios.de (en forbedret utgave av sourceforge). Spørsmålet er om det er vits i. Jeg kunne jo alltids satt meg ned med Wordpress (som var det jeg brukte før jeg kom til Cutenews), men det er visse essensielle ting med Wordpress jeg absolutt ikke liker, selv hvor fint systemet er oppbygd. Det største jeg har å utsette på WP er akkurat dèt som gjør wordpress så enkelt å kode for - nemlig at det kontrollerer alle aspekter ved siten det ligger på. Dette var og er den store grunnen til at jeg ikke bruker WP. Jeg vil ha noe mer fleksibelt enn som så. Jeg liker måten Cutenews vokser sammen med PHP-kunnskapene mine - jeg vet akkurat hvordan jeg skal få all den funksjonalitet jeg trenger - det er mye, MYE udokumentert funksjonalitet som ligger begravd mellom all den arkaiske HTML-koden i alle de .mdu-filene...
-
-Med 2.1 av AJ-Fork har jeg bevist hva jeg kan. Jeg har bygd et knallbra bloggesystem med den selvsagte UTF-8støtten. Spørsmålet er hva jeg skal videre. Selv trenger jeg egentlig ikke mer enn det jeg akkurat nå sitter og skriver gjennom, men jeg har likevel lyst til å holde all den kunnskap jeg har ervervet meg under utviklingen ved like.
-
-Spørsmålet er bare hvordan... Jeg er lei av å svare på spørsmål om AJ-Fork fra folk som ikke engang gidder å lese den medfølgende readme-filen - dèt er iallefall helt sikkert.',
-        'title' => 'Cutenews og Flyktninger',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '9',
-        'views' => 0,
-      ),
       1107206795 => 
       array (
         'content' => '<div style="text-align: center;"><img src="http://appelsinjuice.org/blogg/data/upimages/aalebyj2003.jpg" alt="aalebyj2003.jpg" width="550" height="367" class="bilde" /></div>
@@ -113,15 +60,6 @@ Det var to år siden. Juli 2003. Jeg var på min to måneder lange sommerferie f
         'category' => '3',
         'views' => 17,
       ),
-      1107096123 => 
-      array (
-        'content' => 'Site moved to <a href="http://ajfork.berlios.de/">http://ajfork.berlios.de/</a> !',
-        'title' => '2.1 (aka 168) finally here!',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '4',
-        'views' => 0,
-      ),
       1107009146 => 
       array (
         'content' => 'Var ute og traska med tripod og kamera i natt jeg... Det er fint i Bergen om natta, her fra rett nedi gata:
@@ -131,49 +69,6 @@ Det var to år siden. Juli 2003. Jeg var på min to måneder lange sommerferie f
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 0,
-      ),
-      1106846559 => 
-      array (
-        'content' => 'Link spammed out by Josue Salazar... This is your non-exclusive chance to meet the <a href="http://www.livejournal.com/users/dslartoo/97452.html">pirates of the caribbean; l33t-edition</a>!
-
-I particularly appreciate the end:
-
-<blockquote><pre>Cap\'n Jack: d00d th1s 1s teh sukc    
-Will: *fightz*    
-Cap\'n Jack: *fightz*    
-Soldiers: d00d ur b0th bu5t3d    
-Will and Jack: wtf suxx0r!!!1    
-Will: u c4nt k1ll j4ck, h3z c00l    
-Elizabeth: u c4nt k1ll j4ck, h3z c00l    
-Governor: d00dz d0nt sh00t    
-Soldiers: wtf suxx0r!!!1    
-Cap\'n Jack: l8r every1    
-The Good Pirates: 4rrrrrrrrrrrrrr!!1    
-Cap\'n Jack: i s0 t0tlly r00l    
-Governor: m4yb3 p1r4t3s r ok s0m3t1m3s    
-Norrington: y34h ok    
-Will: s3xx0r m3 3l1z4b3th    
-Elizabeth: unf unf</pre></blockquote>
-
-Don\'t understand leet? Fear not, the all-powerful and ever helpful <a href="http://en.wikipedia.org/wiki/Leet">wikipedia: leet</a> is here!',
-        'title' => 'There be pirates!',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '5',
-        'views' => 0,
-      ),
-      1106219518 => 
-      array (
-        'content' => 'Nemlig <a href="http://studentportal.uib.no/?link_id=2638&amp;mode=show_page&amp;content_id=276&amp;modus=vis_emne&amp;kode=HUIN105">HUIN105</a>, et fag under ledelse av <a href="http://huminf.uib.no/~jill/">Jill Walker</a> ved <a href="http://www.uib.no">UiB</a>. Fagets forelesnings og seminarplan kræsjer totalt med hovedfaget mitt; Kunsthistorie, men siden jeg er nokså velbefaren på nettet, spesielt innen blogging og slikt, og tilogmed har utviklet mitt eget bloggesystem, tror jeg nok jeg skal klare meg med å besøke en forelesning en gang iblant. Kanskje også et seminar, mens Kollokvier ser ut til å gå greit. Jeg fikk ikke møtt opp i går, så jeg fikk heller aldri med meg at det ble gitt oppgave om å springe rundt i bergen for å knipse bilder, men jeg gjorde det jo faktisk likevel her om dagen...
-
-<div style="text-align: center;"><img src="http://appelsinjuice.org/blogg/data/upimages/floibarn.jpg" alt="floibarn.jpg" width="550" height="367" class="bilde" /><p>Barna på Fløyen</p></div>
-
-Jeg tror jeg liker dette faget. En fagleder som oppdaterer faget sitt med <a href="http://huin105.blogspot.com/">en blogg</a> er virkelig min type lærer',
-        'title' => '...og vi er igang med en ny kategori',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '8',
         'views' => 0,
       ),
       1105972367 => 
@@ -188,42 +83,6 @@ En ting som er kult med <a href="http://akam.no/art.php?artikkelid=4161">mitt ny
         'lastedit' => 'rilmith',
         'category' => '3',
         'views' => 1,
-      ),
-      1104770786 => 
-      array (
-        'content' => 'Ålesund / Løvenvold
-Ålesund / Avis
-Ålesund / Løvenvold II
-Ålesund / Statoil
-Ålesund / Blindheim
-Ålesund / Spjelkavik
-Skodje
- - Råkjøring før vi møter på styggvondt føre med null grader, slaps og sideskrens.
-Sjøholt
-Vestnes
-Åndalsnes
- - Andreas viser oss besteforeldrenes gravplass, en nedlagt fabrikk som tilhører familien. 
-Bjorli
-Lesja
-Dombås
-Dovre
-Kvam
-Lilleputthammer
-Lillehammer
-Gjøvik
-Brandbu
-Jaren
-Grorud
-Oslo
-Fredrikstad
-Halden
-Svinesund
-Göteborg',
-        'title' => 'Tralala',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '7',
-        'views' => 0,
       ),
       1104717011 => 
       array (
@@ -246,44 +105,6 @@ Reiseskildring og bilder kommer vel etterhvert ;)',
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 0,
-      ),
-      1104407016 => 
-      array (
-        'content' => '<strong>Øivind, your ideal sexual partner is a Type 6.</strong>
-
-<em>A Type 6 partner is just naturally into sex and, more specifically, this person is interested in having sex with you exclusively. That means they\'re as dedicated to fulfilling their sex drive as they are to using sex as an expression of love. And as such, they are also good at exploring the emotional and physical outlets of pleasure. They can put the orgasm on hold in order to get creative with just as much expertise and interest as they have in being affectionate and loving.</em>
-
-Jaha, det var jo ikke akkurat noen overraskelser der nei. For alle dere som måtte være på jakt etter denne ideelle sexpartneren; Tickle.com tilbyr også en betalt guide for hva du skal se etter for å finne den. Haha! Huff. Jeg lover å ikke publisere dritt som dette igjen ;)
-
-Det er nå 239 timer til jeg er tilbake hos min kjære i Bergen by. Snart er det bare 238.',
-        'title' => 'Tickle.com tester de som kjeder seg...',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '7',
-        'views' => 0,
-      ),
-      1103832211 => 
-      array (
-        'content' => 'Men fortsatt sytten lange dager igjen.',
-        'title' => 'Tre måneder :)',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '7',
-        'views' => 0,
-      ),
-      1103600015 => 
-      array (
-        'content' => '23. Februar 05: <strong>Donnas</strong> (Rockefeller)
-28. Juni 05: <strong>Iron Maiden</strong> (Spektrum)
-
-Må-se/Ukjent: Sahara Hotnights, U2, Damien Rice, 
-
-Jeg trenger hint, tips og hjelp :)',
-        'title' => 'Konsertkalenderens spede begynnelse',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '7',
         'views' => 0,
       ),
       1103428768 => 
@@ -664,21 +485,6 @@ Misforstå meg rett: Thomas Dybdahl er veldig fin musikk, men bør helst ses FØ
         'category' => '3',
         'views' => 0,
       ),
-      1099362909 => 
-      array (
-        'content' => '<div style="text-align: center;"><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="550" height="500" id="bush" align="top">
-<param name="allowScriptAccess" value="sameDomain" />
-<param name="movie" value="bush.swf" />
-<param name="quality" value="high" />
-<param name="bgcolor" value="#000000" />
-<embed src="http://mordecai.lizweb.no/bush.swf" quality="high" bgcolor="#000000" width="550" height="500" name="bush" align="top" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
-</object></div>',
-        'title' => 'Hahaha',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '7',
-        'views' => 0,
-      ),
       1099005281 => 
       array (
         'content' => '<div style="float: left; padding: 0px 10px 10px 0px;"><a href="http://fredag.dagbladet.no/fredag/2004/11/05/413588.html"><img src="http://appelsinjuice.org/blogg/data/upimages/detvardetmedkamera.jpg" alt="detvardetmedkamera.jpg" width="280" height="279" class="bilde" /></a></div>
@@ -807,15 +613,6 @@ Men ja. Lage litt mat og gjøre andre part klar over mine planer!
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 0,
-      ),
-      1096243119 => 
-      array (
-        'content' => 'Using the sliding doors-technique devised by <a href="http://alistapart.com">A list Apart</a>',
-        'title' => 'CSS - Rounded Borders',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '7',
         'views' => 0,
       ),
       1096161094 => 
@@ -975,124 +772,6 @@ I kveld har vært herlig. Herrlich! Smile bredt og sånn :)
         'category' => '3',
         'views' => 0,
       ),
-      1095088506 => 
-      array (
-        'content' => '<strong>Innledning</strong>
-
-Som oppgave under kurset Akademisk Skriving, har jeg valgt å plukke fra hverandre «Islams syn på Europa i moderne tid» av Gunvor Mejdell, førsteamenuensis ved Universitetet i Oslo. Teksten omhandler, som tittelen peker mot, om forskjellige syn på Europa tatt fra den moderne tidsepoken. Først jeg presentere et kort sammendrag av teksten, der jeg håper essensen blir illustrert. Deretter vil jeg bevege meg inn på argumentasjons- og retorikkanalyse, for så i første omgang å lande på sjangeranalysen.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Ver sakleg, unngå metaforar. Ha også ei nøyaktig referanse til analyseteksten. </em>
-
-<strong>Sammendrag</strong>
-
-Mejdell illustrerer i denne teksten et ambivalent forhold mellom den muslimske verden og vesten gjennom et sammendrag av en bok skrevet i 1944 av egypteren Yahya Haqqi. Videre påstås det at muslimske stemmer i moderne tid reflekterer en smertelig bevissthet om egne samfunns stagnasjon og svakhet  mot middelalderens selvsikre styrkeposisjon. Ifølge forfatteren har forholdet til Vesten kommet antatt eksistensielle dimensjoner for de fleste muslimske intellektuelle, som grunngis i at «Utfordringen fra Vesten» i stor grad berører personlig sosialkulturell identitet. Forskjellige reaksjoner på denne «utfordringen» fra ulike lag i den muslimske verden bruker så forfatteren til å poengtere at det ikke finnes noe enhetlig «islams syn på Europa», men snarere en rekke oppfatninger.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Bra. </em>
-
-Det ambivalente forholdet mellom den muslimske verden og Vesten/Europa illustrert videre ved å trekke inn forskjellige muslimsk-opprinnede tekster som omhandler møtet med Vesten og dens kultur. Tekstene som trekkes fram er både positive og negative (ambivalensen) i forhold til det Europeiske samfunn. Vi får se Europa som en modell for framgang og frihet, samtidig som de samme punktene blir brukt mot Europa.
-
-Det Mejdell vil vil formidle er at hun tror, og understreker her tror, at mange muslimer har fått et mer realistisk syn på europeiske samfunn. Men heller ikke her slipper man unna ambivalensen i forholdet: det er faktorer som har bidratt til en skjerpet negativ holdning fra muslimsk hold, og Mejdell mener dette først og fremst skyldes Islamsk fundamentalisme, og de vestlige reaksjonene på denne, som hun mener er vises best ved de mange hatske utfall mot islam og muslimer i europeiske medier.
-
-<em>Frode Ulvund, lærar, skriv 12. september: OK samandrag.</em>
-
-<strong>Argumentasjonsanalyse</strong>
-
-Hovedmålet med teksten og således også synspunktet, må være å få fram at det ikke finnes noe enhetlig «Islams syn på Europa», som tittelen hentyder, men at det ser ut til å være like diffust som Europas syn på den muslimske verden.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Her tar du opp to ting. At det ikkje er einskapleg syn på islam treng ikkje tyde på at synet er diffust, berre at det finst ulike syn. </em>
-
-Mejdell argumenterer blant annet for at synet på Europa varierer mellom sosiale lag, mellom forskjellige samfunn og etter hvilke interesser synspunktinnehaverne måtte ha. Dette argumentet blir støttet opp av tekster og siteringer som har flere ulike syn på vesten. Det bør tas med at ikke alle disse tekstene er hentet fra den relevante tidepoken, men er på sett og vis fortsatt nyttig for å bygge opp synspunktet.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Bra start på avsnittet, men ver konkret og vis til eksempel på desse argumenta og referer til kvar i teksten du finn dei. </em>
-
-Mejdell argumenterer altså her via tekstene hun siterer, og kommer tidvis med sine egne argument for å bygge opp under hovedargumentet vist gjennom siteringene. Et viktig argument for sitt synspunkt kommer Mejdell med mot slutten av teksten:
-«Vi kan vel innrømme at synet på Europa som arnested for maktarroganse og moralsk lettsindighet ikke er grepet helt ut av lufta. Da kan vi kanskje også trøste oss med at synet på Europa som modell for frihet, opplysning, demokrati og likeverd [...] i det minste også har en rot i virkeligheten?»
-
-<em>Frode Ulvund, lærar, skriv 12. september: Korleis er dette eit argument for korleis synet i islam er? Er det ikkje meir ein betraktning om Vesten, uavhengig av islams syn? </em>
-
-Jeg vil kalle denne påstanden et av de sentrale argumentene Mejdell bruker for å vise en tosidighet. Dette fordi følgende brukes for å legitimere påstanden:
-
-«Dette synet har også lang kontinuitet, og opprettholdes blant annet av de intellektuelle som, frivillig eller ufrivillig, har trukket til eksil i Europa for å slippe unna undertrykkelse og overgrep i eget samfunn.»
-
-Relevansargumentet som binder sammen argumentene (effektivt siteringene og Mejdells refleksjoner rundt disse) må vel være noe jeg også kommer innom i min retorikkanalyse: det er menneskelig natur å ha forskjellige meninger og oppfatninger rundt ting  dette sier seg selv, og man burde ikke behøve å argumentere for dette. Uten forskjellige meninger  ingen diskusjon og ingen læring. Resonnementet er forsåvidt greit, det er ingenting som skriker høylytt «feil» i denne teksten.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Synest du det er eit rimeleg relevansargument? Kan du også formulere noko som tar opp korleis det er råd å generalisere frå kjeldene ho bruker til islam/det islamske samfunn generelt?
-
-Vent med vurdering av resonnementet til du også har tatt opp Mejdell sin eigen vurdering av styrken til resonnementet og evt. motforestillingane ho tar stilling til. </em>
-
-Det at Mejdell legger fram skjønnlitterære verker som argumenter, leder meg til å mene at selve argumentasjonsgrunnlaget i teksten er svakt, men likevel står argumentasjonen som en helhet sterkt, fordi Mejdell viser til allmenn kunnskap.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Ja, flott poeng! Men er det ikkje eigentleg eit relevansargument du her er kritisk til? </em>
-
-Mejdell ser ikke ut til å presentere synspunkt/resonneringer som kan gå mot hennes eget synspunkt, som muligens kunne vært snakk om indoktrinering, kontrollsamfunn, og lignende.
-
-<strong>Retorikkanalyse</strong>
-
-Generelt sett og på overflaten virker det Mejdell påstår/forteller overbevisende. Dette er ikke fordi teksten er interessant, argumenterer for seg selv eller i det hele tatt bringer fram noen oppsiktsvekkende informasjon. Det er faktisk en helt åpenbar mangel på slikt.
-
-Jeg får inntrykk av at Mejdell bare har skrevet for å skrive, det vil si teksten oppfattes som en slags tankestrøm uten et overordnet mål, struktur eller mening. Det var min tanke etter både første, andre og tredje gangs lesing. Jeg ble faktisk overrasket da jeg benyttet google for å finne mer info om forfatteren og således oppdaget at hun var førsteamenuensis ved Universitetet i Oslo.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Ta først opp dei retoriske sidene ved resonnementet før du går laus på dei retoriske sidene meir generelt. </em>
-
-
-Mejdell bruker ikke sin naturlige autoritet som førsteamanuensis eller tilkobling til orientalske fag som et virkemiddel gjennom denne teksten. I denne sammenheng ville det i min mening helt klart virket mot sin hensikt, i den betydning at leseren muligens ville forkastet teksten med tanken «hun burde vite bedre / kommet med noe som ikke er allmennkunnskap». Jeg ser ikke hensikten med teksten i akademisk sammenheng.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Sterke ord! </em>
-
-Jeg kan jo trekke fram et eksempel på hva jeg refererer til i mine hardnakkede påstander i innledningen av den retoriske analysen: Selve synspunktet som blir kommunisert via teksten er dødfødt og overflødig. Hvorfor? Trenger vi egentlig å bli fortalt at det ikke finnes et «enhetlig Islams syn på Europa»? For å sette det hele i perspektiv og snu det litt på hodet: vi vet allerede at det ikke finnes et enhetlig _Norsk_ syn på Islam. Politikerne krangler titt og ofte i media, og jeg vet for eksempel at naboen min misliker alt som ligner muslimer, mens jeg mener de er mennesker på lik linje med en hvilken som helst «kristen nordmann», bare med et annet kulturbilde. Hvordan kan noen tro en menneskemasse rundt fem hundre ganger så stor som den norske kan ha et enhetlig syn på Europa?
-
-<em>Frode Ulvund, lærar, skriv 12. september: Ta deg ein kald dusj, du virker litt vel engasjert og bruker kraftuttrykk som det vel ikkje er tradisjon for i akademiske tekstar. Det gir inntrykk at du bygger teksten på kjensler meir enn fornuft/argument.</em> 
-
-Dette blir en belærende, fortellende tekst. Som en slags «innføring til det største politiske og sosiale klasseskillet i moderne historie» skrevet for et individ som ikke har noen slags oppfatning av menneskelighet.
-
-Et par ting Mejdell har rotet med i retorisk sammenheng er å bruke definerte ord om hverandre. Hun snakker om Vesten og Europa, Islam og Muslimer som om dette var èn og samme ting, noe det jo som kjent ikke er. Begge gruppene er nært knyttet, men Vesten omfatter mer enn bare Europa, og blir oftest brukt for å sette Europa og Amerika i sammenheng. En muslim tror riktignok på religionen Islam, men det er åpenbart at en religion og et menneske ikke er to sider av samme sak, og iallefall ikke det samme. Riktignok er Islam en mer kultur- og politisk bundet religion enn for eksempel kristendommen, men man har fortsatt ikke belegg for å bruke de to om hverandre som Mejdell her gjør.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Godt poeng! </em>
-
-Mot slutten (i hovedsak sitert over) virker det som om Mejdell prøver å unnskylde noen muslimers syn på europa som senter for maktarroganse, imperialisme og moralsk lettsindighet ved å trekke fram at stereotyper gjerne har en rot i virkeligheten (stereotyper er vitterligen ikke synonymt med fordommer), og at disse stereotypene ikke akkurat er tatt ut av lufta. Denne påstanden kan nok virke provoserende på mange lesere, så hun velger deretter å «smøre» leseren ved å fortelle om de «gode» sidene, med Europa som modell for frihet, opplysning, demokrati og likeverd, og på denne måten manipulerer hun leserens følelser. Historisk sett må jeg påpeke at Europa på ingen måte er noen god modell for likeverd  vi har jødeutslettelse, heksejakt og korstog på samvittigheten, så hvor hun tar dette fra, kan jeg ikke forstå.
-
-Koherenseffekten er på tross av (også til en viss grad pågrunn av) det nevnt jeg har nevnt over, gjennomgående god. Budskapet som blir presentert er i stor grad både allment kjent og akseptert. Jeg har ikke hatt mulighet til å bekrefte kildene og sitatene, noe jeg mener å gjøre ved en senere anledning, så jeg kan ikke utelukke bruk av bevisst feilsitering fra Mejdells side, selv om jeg er overbevist om at dette ikke ville hatt særlig positiv virkning for en med høy fartstid i utdanningsinstitusjoner.
-
-<em>Frode Ulvund, lærar, skriv 12. september: At du er overbevist er ikkje eit argument.
-
-Du har mange gode poeng her, og klare meiningar om teksten - det er bra! Men du vil kanskje tene på å dempe tonen i teksten noko, gjere den meir "akademisk". Retorisk fungerer kraftuttrykkene negativt i din eigen tekst, som lesar blir ein lett skeptisk til slike tekstar. </em>
-
-<strong>Sjangeranalyse</strong>
-
-Skal vi tro forfatteren selv, Gunvor Mejdell, er denne teksten et essay. Dette sier hun på side to, hvor også synspunktet blir presentert: «Det eksisterer således ikke noe enhetlig «Islams syn på Europa», som titelen på dette essayet kunne forlede oss til å tro, men snarere en rekke forskjellige muslimske oppfatninger.»
-
-Jeg vil likevel foreta en sjangeranalyse for forhåpentligvis bekrefte tekstens status som essay, og muligens også avkrefte denne selvpålagte statusen.
-
-Mejdell lanserer egentlig ikke en spesifikk problemstilling, men går heller inn i illustering av et fagområde, «Islams syn på Europa», noe som i første omgang leder meg inn mot to sjangre: Essay og Lærebok. Det essayistiske trekket er at problemstillingen ikke er konkretisert direkte i teksten, og det som taler for lærebok er måten hun belyser sitt arbeid/synspunkt fra flere hold ved hjelp av tekstene hun siterer.
-
-Teksten omfatter ikke noen redegjørelse for aktuelle rørelser fra nåtiden innen fagområdet som omtales. Dette taler igjen for en essayistisk form.
-
-Påstanden jeg har behandlet som hovedsynspuktet i teksten («Det finnes ikke noe Islams syn på Europa»)kommer klart fram, det samme gjør argumentasjonen, ved tekstene og Mejdells refleksjoner rundt disse.
-
-Det foreligger endel referanser i teksten, noe som sett i lys av de forrige punktene klart makter å få meg vekk fra utgangspunktet i denne analysen; at vi har med et rent Essay å gjøre. Det vi her har med å gjøre er et typisk tegn på sjangerblanding innen essay og vitenskapelige artikler.
-
-Relevansargumentet er som det framgår i argumentasjonsanalysen implisitt, men det er allmennkunnskap og kan ikke kalles originalt/banebrytende, noe som igjen gir meg inntrykk av at vi her har med et essay å gjøre, siden dette er typisk for ikke-kontroversielle essays.
-
-Terminologien i teksten kan best beskrives slik: Mejdell roter med termer som Vesten/Europa, Islam/Muslim, og hopper endel fram og tilbake på en måte som gjør teksten uoversiktlig for leseren. Hun er ikke redd for å bruke begrep som «jeg tror», noe som virker mot hennes autoritet som forfatter, og ikke ville vært på sin plass i en vitenskapelig artikkel, lærebok, metodebok, eller i en populærvitenskapelig. Her gjør hun seg altså sårbar. Dette går dog fint i et essay grunnet dets løse form. Struktureringen av teksten og resonnementet er som nevnt lite klar, og er lagt opp på en slik måte at den virker forvirrende på leseren. Om dette er lagt opp til av forfatterens side vites ikke, men det er her snakk om en stilart som hører hjemme i essayets verden. Forfatteren er lite tilstede i teksten, noe som i det store og det hele gir teksten et objektivt preg, men når Mejdell først er tilstede i teksten, er dette på en måte som framhever synsing, verdiladd språkbruk og forsøk på manipulering av leserens følelser, som nevnt i den retoriske analysen. Dette er ikke bra i akademisk sammenheng og vil, sett i lys av de forrige punktene lede meg til den endelige konklusjonen av at vi her hovedsakelig har med et Essay å gjøre, grunnet den løse stilen og mangel på belysning av konkret forskningsarbeid. Ikke stilrent et essay, siden det forekommer blanding med både læreboksjangeren og den vitenskapelige artikkelen ved noen tilfeller.
-
-<em>Frode Ulvund, lærar, skriv 12. september: Du analyserer bra her!
-Hugs også ein konklusjon i tillegg til kontekstdelen.
-
-Pass på nøyaktig referanse til analyseteksten i litterturlista under. Ta også med datoen du besøkte vebb-sida du har ført opp.
-
-Lykke til med innspurten! </em>
-
-<strong>Litteraturliste</strong>
-
-Metodehefte Akademisk Skriving, SFS, HF-fakultetet, UiB Høst 2004
-Tekstsamling Akademisk Skriving, SFS, HF-fakultetet, UiB Høst 2004
-«Muslims in the world», http://www.islamicweb.com/begin/results.htm',
-        'title' => 'Akademisk Skriving: Andre utkast m/kommentarer',
-        'author' => 'rilmith',
-        'lastedit' => 'rilmith',
-        'category' => '6',
-        'views' => 0,
-      ),
       1095002855 => 
       array (
         'content' => 'Rota til litt her og klarte å slette massemasee bloggskribleri og kommentarer. Beklager, sånn går det når man endrer på ting man ikke egentlig vet noe om når man kommer hjem fra bytur.<!--more-->Vors var kos, selv om vi var heller få. Den personen jeg absolutt ville skulle komme (som jeg hadde mast på), kom jo, så en hyggelig kveld var iallefall sikret for min del. Pils blei fortært, Eirik ble spinnfull og sang med på norske cowboysanger og SIX (popstars-sak, totalt stijlkræsj for en metalmann). Vi ramla oss etterhvert opp på hulen alle mann (jeg, Marit og Hanna kom på mirakuløst vis sist selv om vi var de som dro oppover først) og ja, resten er vel historie. Jeg og marit benka oss ned og prata mens resten sprang tulling i fylla, blåste ut lys, sang, hylte, rocka og spiste talg. Ja, Eirik spiste talg. Masse talg, en liten armlengde fra meg.
@@ -1131,7 +810,7 @@ Var bare det jeg ville si.',
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 42,
+        'views' => 43,
       ),
     ),
   ),

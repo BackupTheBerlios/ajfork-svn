@@ -158,7 +158,7 @@ Sju
       ),
       3 => 
       array (
-        'name' => 'About knife',
+        'name' => 'Weblogg',
         'template' => '',
       ),
       5 => 
