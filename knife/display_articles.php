@@ -43,6 +43,11 @@ include("plugins/markdown.php");
 	$amount = $_GET[amount] ? $_GET[amount] : "5";
 	$cat = $_GET[cat];
 	foreach($allarticles as $date => $article) {
+	
+		# Destroy variables from last loop
+		unset($catarray);
+		unset($newcatarray);
+		
 		$output = $template[listing];
 		
 		# category stuff
@@ -62,10 +67,8 @@ include("plugins/markdown.php");
 		$catarray = explode(", ", $article[category]);
 		
 		foreach ($catarray as $null => $catarraycatid) {
-			unset($catarray[$null]);
-			$catarray[$catarraycatid] = $catarraycatid;
+			$newcatarray[$catarraycatid] = $catarraycatid;
 			}
-		$catarray_orig = $catarray;
 
 		# Replace the category numbers with their names
 		foreach ($catarray as $null => $thiscatid) {
@@ -76,7 +79,7 @@ include("plugins/markdown.php");
 		$thiscatnamelisting = implode(", ", $catarray);
 			
 
-		if ((isset($cat) and array_key_exists($cat, $catarray_orig))) {
+		if ((isset($cat) and array_key_exists($cat, $newcatarray))) {
 			}
 		else { 
 			if (!$cat) { }

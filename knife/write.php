@@ -116,7 +116,7 @@ if (!$_POST[article]) {
 	
 	<div class="div_extended">
 		<fieldset>
-			<legend onclick="toggleDisplay(\'markdown_help\');">Markdown Help <small>(click)</small></legend>
+			<legend onclick="toggleDisplay(\'markdown_help\');">Markdown Help <small>('.i18n("generic_click").')</small></legend>
 				<div id="markdown_help">
 					<p>here is some nice markdown<br />syntax help 
 					for you... say thanks!</p>

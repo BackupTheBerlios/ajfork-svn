@@ -95,4 +95,6 @@ $lang->generic_profile			= 'Profil';
 $lang->generic_level			= 'Nivå';
 $lang->generic_regdate			= 'Registrasjonsdato';
 $lang->generic_language			= 'Språk';
+$lang->generic_preview			= 'Forhåndsvisning';
+$lang->generic_click			= 'Klikk';
 ?>
