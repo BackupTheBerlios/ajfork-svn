@@ -12,5 +12,6 @@ define('SCRIPT_TITLE', 'cutepress');
 	define( "KNIFE_SQL_PASSWORD", "");					# mySQL password
     define( "KNIFE_SQL_DATABASE", "ajfork");			# mySQL database
     define( "KNIFE_SQL_TBL_PREFIX", "knife_");			# mySQL table prefix (unused)
-    
+
+$config_urlstyle = "%category%/%title%";  
 ?>

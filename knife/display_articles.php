@@ -68,7 +68,7 @@ echo KNIFE_PATH;
 	
 	$allarticles = $KAclass->listarticles($amount, $from);
 	
-	if (!$_GET[k] and !$pathinfo_array[1]) {
+	if (!$_GET[k] and !$pathinfo_array[1] and !$_GET[display]) {
 	
 	echo "<div>";
 	$i = 0;
@@ -196,6 +196,9 @@ echo KNIFE_PATH;
 		}
 	
 	
+	elseif ($_GET[display] == "documentation") {
+		include("documentation.php");
+		}
 				echo " (debug mode)<br /><pre>";
 				print_r($_GET);
 				echo "\n\n-----------&lt;- get  | post   -&gt;---------------\n\n";
