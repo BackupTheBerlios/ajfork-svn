@@ -21,7 +21,8 @@
 	include(KNIFE_PATH.'/config.php');					# load temporary config
 	include(KNIFE_PATH.'/class.articles.php');
 
-
+$pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
+print_r($pathinfo_array);
 #
 #	Reset some variables
 #
@@ -48,7 +49,7 @@ include("plugins/markdown.php");
 	krsort($allarticles);
 	reset($allarticles);
 
-	if (!$_GET[k]) {
+	if (!$_GET[k] and !$pathinfo_array[2]) {
 	
 	echo "<div>";
 	$i = 0;
@@ -127,9 +128,12 @@ include("plugins/markdown.php");
 		$output = str_replace("[link]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$PHP_SELF?k=$date\">", $output);
         $output = str_replace("[/link]","</a>", $output);    
 		
-		$output = str_replace("[friendlylink]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$PHP_SELF?k=".urlTitle($article[title])."\">", $output);
-        $output = str_replace("[/friendlylink]","</a>", $output);
+#		$output = str_replace("[friendlylink]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$PHP_SELF?k=".urlTitle($article[title])."\">", $output);
+#        $output = str_replace("[/friendlylink]","</a>", $output);
 		
+		$output = str_replace("[friendlylink]","<a title=\"".htmlspecialchars($article[title])."\" href=\"$_SERVER[PHP_SELF]/".urlTitle($article[title])."\">", $output);
+        $output = str_replace("[/friendlylink]","</a>", $output);
+        
 		$output = str_replace("{content}", $article[content], $output);
 		$output = str_replace("{extended}", "", $output);
 		$output = str_replace("{author}", $article[author], $output);
@@ -151,7 +155,7 @@ include("plugins/markdown.php");
 	echo "</div>";
 	}
 	
-	elseif ($_GET[k] && !$_POST[comment]) {
+	elseif (($_GET[k] or $pathinfo_array[2]) && !$_POST[comment]) {
 		include("display_article.php");
 		}
 	

@@ -1,13 +1,16 @@
 <?php
 
 #
-#	Articles class
+#	Article storage abstraction class
 #
 
 
 
 class KArticles {
-		
+	
+	#
+	#	Add new article
+	#
 	function add($author) {
 		
 		# Get current time
@@ -32,12 +35,7 @@ class KArticles {
 			
 		# hook to add custom fields here.
 		#	$data = run_filters('admin-new-savedata', $data);
-	
-	
-#########------------------------------------------------------------\
-#		#	If Storage method is MYSQL:
-#########
-		
+			
 		if (defined("KNIFESQL")) {
 		
 			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
@@ -48,10 +46,7 @@ class KArticles {
 			$statusmessage = i18n("generic_article"). " &quot;$data[title]&quot; ". i18n("write_published");
 			return $statusmessage;
 			}
-		
-#########------------------------------------------------------------\
-#		#	If Storage method is assoc.array:
-#########
+
 		else {
 			$dataclass = new ArticleStorage('storage');
 			$dataclass->settings['articles'][$now] = $data;
@@ -63,8 +58,16 @@ class KArticles {
 			}
 		}
 	
+	function edit($timestamp) {
+	
+		}
+	#
+	#	Delete article(s)
+	#
 	function delete($timestamp, $multiple="FALSE") {
 		if (!$multiple) {
+			#	This means we're deleting a single entry
+			#
 			if (defined("KNIFESQL")) {
 				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
 				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
@@ -82,7 +85,8 @@ class KArticles {
 				}
 			}
 		else {
-			# looks like we're deleting multiple entries
+			#	This means we're deleting more than one entry
+			#
 			if (defined("KNIFESQL")) {
 				$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
 				mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
@@ -105,6 +109,9 @@ class KArticles {
 		}
 	
 	
+	#
+	#	Construct a list of all available articles
+	#
 	function listarticles($limit="FALSE") {
 		if (defined("KNIFESQL")) {
 			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
@@ -126,6 +133,9 @@ class KArticles {
 			}
 		}
 	
+	#
+	#	Get a specific article based on its timestamp id
+	#
 	function getarticle($timestamp) {
 			$allarticles = KArticles::listarticles();
 			$article = $allarticles[$timestamp];

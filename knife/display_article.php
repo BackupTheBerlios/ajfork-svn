@@ -6,6 +6,7 @@
 
 
 		$k = $_GET[k];
+		if (!$k) { $k = $pathinfo_array[2]; }
 		if (eregi("[a-z]", $k)) {
 			# if $k is alpha , find the timestamp for this article
 
