@@ -170,6 +170,16 @@ $array = array (
         'browser' => '',
         'content' => 'Yeah, ære og berømmelse. WOOOOOWOOOO!<br />Hva mener du med digresjonen?',
       ),
+      1109107999 => 
+      array (
+        'parentcid' => NULL,
+        'name' => 'Øivind',
+        'email' => 'email@email.com',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'And then we add one using knife',
+      ),
     ),
     1107009146 => 
     array (

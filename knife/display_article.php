@@ -50,7 +50,6 @@
 		$output = str_replace("{author}", $article[author], $output);
 		$output = str_replace("{category}", $article[category], $output);
 		$output = str_replace("{date}", date("dmy H:i", $date), $output);
-		$output = str_replace("{link}", "<a href=\"?k=$date\" title=\"$article[title]\">Read</a>", $output);
 
 		$article[views] = $KAclass->articleupdate($date, "views", "update");
 		$output = str_replace("{views}", $article[views], $output);
@@ -65,7 +64,8 @@
 		echo "no comments";
 	}
 	else {
-	
+		krsort($articlescomments);
+		reset($articlescomments);
 		foreach ($articlescomments as $commentid => $comment) {
 			$output = $template[comment];
 			$output = str_replace("{comment}", Markdown($comment[content]), $output);
@@ -80,16 +80,7 @@
 	}
 		echo '</div>';
 		
-		$output = '
-		<form method="post" style="margin-top: 20px; padding: 15px; border: 1px solid #999;">
-		<input type="text" name="comment[name]" /> Name<br />
-		<input type="text" name="comment[email]" /> Email<br />
-		<input type="text" name="comment[url]" /> URL<br /><br />
-			
-		Comment<br />
-		<textarea name="comment[content]" rows="7" cols="50"></textarea><br />
-		<input type="submit" value="Add comment"/>
-		</form>';
+		$output = $template[commentform];
 		
 		echo $output;
 		

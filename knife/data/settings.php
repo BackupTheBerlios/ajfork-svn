@@ -29,7 +29,15 @@ Comment posted {date} by <a href="{url}">{author}</a> (<a href="mailto:{mail}">@
 </div>
 {comment}
 </div>',
-        'commentform' => '',
+        'commentform' => '<div><h1>Add a comment?</h1>		<form method="post" style="margin-top: 20px; padding: 15px; border: 1px solid #999;">
+		<input type="text" name="comment[name]" /> Name<br />
+		<input type="text" name="comment[email]" /> Email<br />
+		<input type="text" name="comment[url]" /> URL<br /><br />
+			
+		Comment<br />
+		<textarea name="comment[content]" rows="7" cols="50"></textarea><br />
+		<input type="submit" value="Add comment"/>
+		</form></div>',
       ),
       2 => 
       array (

@@ -68,7 +68,7 @@ Det var to år siden. Juli 2003. Jeg var på min to måneder lange sommerferie f
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 11,
+        'views' => 16,
       ),
       1107096123 => 
       array (
