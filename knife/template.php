@@ -1,4 +1,6 @@
 <?php
+
+include("options.php");
 $moduletitle = "Edit templates";
 
 if($_POST[template] && !$_POST["switch"]) {
