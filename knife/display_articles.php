@@ -51,20 +51,19 @@ $timestamp = 0;
 	
 	$template = $alltemplates[1];
 	
-	$KAclass = new KArticles;
-	$allarticles = $KAclass->listarticles();
+	$amount = $_GET[amount] ? $_GET[amount] : "5";			#FIXME
+	$cat = $_GET[cat];
+	$from = $_GET[from];
 	
-	krsort($allarticles);
-	reset($allarticles);
-
+	$KAclass = new KArticles;
+	$allarticles = $KAclass->listarticles($amount, $from);
+	
 	if (!$_GET[k] and !$pathinfo_array[1]) {
 	
 	echo "<div>";
 	$i = 0;
 	
 	# set the number of articles to display
-	$amount = $_GET[amount] ? $_GET[amount] : "5";
-	$cat = $_GET[cat];
 	foreach($allarticles as $date => $article) {
 	
 		# Destroy variables from last loop

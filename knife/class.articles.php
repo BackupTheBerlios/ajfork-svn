@@ -108,7 +108,7 @@ class KArticles {
 	
 	#
 	#	Construct a list of all available articles
-	function listarticles($limit="FALSE") {
+	function listarticles($limit="FALSE", $from="FALSE") {
 		if (defined("KNIFESQL")) {
 			$mysql_id = mysql_connect(KNIFE_SQL_SERVER, KNIFE_SQL_USER, KNIFE_SQL_PASSWORD);
 			mysql_select_db(KNIFE_SQL_DATABASE, $mysql_id);
@@ -124,7 +124,11 @@ class KArticles {
 		else {
 			$articledatabase = new ArticleStorage('storage');
 			$allarticles = $articledatabase->settings['articles'];
-		
+			krsort($allarticles);
+			reset($allarticles);
+			if ($from) {
+					$allarticles = array_slice_key($allarticles, $from);
+				}
 			return $allarticles;
 			}
 		}

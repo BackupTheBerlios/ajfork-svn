@@ -8,12 +8,23 @@ $array = array (
       array (
         'name' => 'Default',
         'listing' => '<div class="article" style="margin-bottom: 40px;">
+
+<div class="articlemeta">
 <h1>[friendlylink]{title}[/friendlylink] {comments}</h1>
-<strong>Posted by {author} (last edited by {lastedit}) in {category} ({date}) - [friendlylink]Friendly Link[/friendlylink] | [link]ID-Link[/link]</strong>
+<p>
+<strong><small>Published by: {author} (last edit by {lastedit}) around {date}<br />
+Filed in: {category}<br />
+Views: {views}<br />
+Latest comment by: {latestcomment}<br />
+[friendlylink]Read all about it[/friendlylink]<br />
+[link]Read all about the old link[/link]</small></strong>
+</p>
+</div>
+
 <div class="article_text">
 {content}
-<p>views: {views}<br />
-latest comment by: {latestcomment}</p>
+</div>
+
 </div>',
         'view' => '<div class="article" style="margin-bottom: 40px;">
 <h1>{title}</h1>

@@ -14,6 +14,36 @@ $array = array (
         'browser' => '',
         'content' => 'Det går i et til tider, husker ikke forskjell på ukene og det bare surfer framover - når Påska inntrer med all sin Ungarske prakt skal jeg faktisk bare legge meg tilbake med en iskald Heineken og tenke over alt som har skjedd siden jul, hodet mitt trenger litt grubling nå, jeg trenger en modus som bare sløver og larker fremover uten mål og mening for en liten periode:) Nå skal jeg dra snart, og de neste tre ukene kommer hvertfall til å gå i et. Grattis med barnet btw:p Eller var det sex? I hvertfall ikke U2 konsert:p',
       ),
+      1109123549 => 
+      array (
+        'parentcid' => '1108905344',
+        'name' => 'Øivind',
+        'email' => 'email@email.com',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'Jeg bare quoter jeg...',
+      ),
+      1109123589 => 
+      array (
+        'parentcid' => '1109123549',
+        'name' => 'Øivind',
+        'email' => 'email@email.com',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'What happens if you quote a comment that\\\'s already quoting?',
+      ),
+      1109123639 => 
+      array (
+        'parentcid' => '1109123549',
+        'name' => 'Øivind',
+        'email' => 'email@email.com',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'firefox ofcourse',
+        'content' => 'What happens if you quote a comment that\'s already quoting?',
+      ),
     ),
     1107610947 => 
     array (
@@ -169,36 +199,6 @@ $array = array (
         'ip' => '217.197.177.251',
         'browser' => '',
         'content' => 'Yeah, ære og berømmelse. WOOOOOWOOOO!<br />Hva mener du med digresjonen?',
-      ),
-      1109107999 => 
-      array (
-        'parentcid' => NULL,
-        'name' => 'Øivind',
-        'email' => 'email@email.com',
-        'url' => 'http://appelsinjuice.org',
-        'ip' => '127.0.0.1',
-        'browser' => 'firefox ofcourse',
-        'content' => 'And then we add one using knife',
-      ),
-      1109112536 => 
-      array (
-        'parentcid' => '1107544931',
-        'name' => 'Øivind',
-        'email' => '',
-        'url' => 'http://appelsinjuice.org',
-        'ip' => '127.0.0.1',
-        'browser' => 'firefox ofcourse',
-        'content' => 'Her skal vi quote andreas tror jeg...',
-      ),
-      1109112981 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => '',
-        'url' => '',
-        'ip' => '127.0.0.1',
-        'browser' => 'firefox ofcourse',
-        'content' => 'En helt vanlig kommentar',
       ),
     ),
     1107009146 => 
@@ -1619,6 +1619,218 @@ $array = array (
         'content' => 'søt.',
       ),
     ),
+    1096161094 => 
+    array (
+      1096191962 => 
+      array (
+        'parentcid' => '',
+        'name' => 'andreas',
+        'email' => NULL,
+        'url' => 'http://rusty-bus.com',
+        'ip' => '80.232.79.61',
+        'browser' => '',
+        'content' => 'Hva er gale med klærne du har på nå da? "we live, we die" ohhhh OLP',
+      ),
+      1096204160 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind',
+        'email' => NULL,
+        'url' => 'http://appelsinjuice.org/',
+        'ip' => '213.145.179.140',
+        'browser' => '',
+        'content' => 'De er fargerike, men stygge. Akkurat som den tøffe, grønne genseren min. Og jeg har forbanna vondt i hodet.',
+      ),
+      1096223360 => 
+      array (
+        'parentcid' => '',
+        'name' => 'LarsPars',
+        'email' => NULL,
+        'url' => 'http://crazyweb.the-superstar.org',
+        'ip' => '80.202.54.246',
+        'browser' => '',
+        'content' => 'poser under øynene hører helt klart studentlivet til!',
+      ),
+      1096295173 => 
+      array (
+        'parentcid' => '',
+        'name' => 'K',
+        'email' => NULL,
+        'url' => NULL,
+        'ip' => '62.101.250.67',
+        'browser' => '',
+        'content' => 'Haha. Jeg krever mitt navn under det bildet der, da det er jeg som har tatt det. (synes jeg å huske.) Er du i form?',
+      ),
+      1096320033 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øyvind',
+        'email' => NULL,
+        'url' => 'http://home.no/ogreve/',
+        'ip' => '213.145.178.153',
+        'browser' => '',
+        'content' => 'Det finnes faktisk en lov som sier at man ikke skal ta bilder av barn og fulle folk uten tillatelse. Selv om den nok ikke er formulert akkurat slik. Og ikke er den praktisert i større grad heller.',
+      ),
+      1096326453 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Petter',
+        'email' => NULL,
+        'url' => 'http://blog.umulig.com',
+        'ip' => '217.118.51.207',
+        'browser' => '',
+        'content' => 'Øy: loven er vel for å beskytte seerne, ikke motivet..?<br />Øi: mongoøivind?<br /><br />-p',
+      ),
+      1096331474 => 
+      array (
+        'parentcid' => '',
+        'name' => 'ina',
+        'email' => NULL,
+        'url' => 'http://ina.skoddeheimen.no/',
+        'ip' => '80.213.182.15',
+        'browser' => '',
+        'content' => 'Seså. Det var da en svært animert ung mann. Hadde du det moro?  :)',
+      ),
+      1096394035 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind',
+        'email' => NULL,
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '213.145.179.140',
+        'browser' => '',
+        'content' => 'K: Det kan nok stemme ganske bra ;&gt; - Jeg er alltids i form, sånn bortsett fra når jeg har drukket så mye at jeg ser fjortenåringen i meg selv foran porsgrunn-porselen.<br /><br />Ø: Det er som petter sier, den er for å beskytte seerne, ikke motivet...<br /><br />P: Animert mongohomo-Øivind, tenker jeg ;P<br /><br />I: Mye moro for pengene, som alltid ;)',
+      ),
+    ),
+    1095949796 => 
+    array (
+      1095975722 => 
+      array (
+        'parentcid' => '',
+        'name' => 'andreas',
+        'email' => NULL,
+        'url' => 'http://rusty-bus.com',
+        'ip' => '80.232.79.61',
+        'browser' => '',
+        'content' => 'hoi, tenke bare e måtte informere om ka naboane mine drive på med for tida, -&gt; http://www.mil.no/luft/start/article.jhtml?articleID=84560',
+      ),
+      1096004250 => 
+      array (
+        'parentcid' => '',
+        'name' => 'LarsPars',
+        'email' => NULL,
+        'url' => 'http://crazyweb.the-superstar.org',
+        'ip' => '80.202.54.246',
+        'browser' => '',
+        'content' => 'og du sier at jeg er hemmelighetsfull?',
+      ),
+      1096061644 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind',
+        'email' => NULL,
+        'url' => 'http://appelsinjuice.org/',
+        'ip' => '213.145.179.140',
+        'browser' => '',
+        'content' => 'Mwahhaa. Je!',
+      ),
+      1096068044 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind',
+        'email' => 'o@o.no',
+        'url' => NULL,
+        'ip' => '213.145.179.140',
+        'browser' => '',
+        'content' => 'taat',
+      ),
+      1096110941 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Petter',
+        'email' => NULL,
+        'url' => 'http://blog.umulig.com',
+        'ip' => '217.118.51.207',
+        'browser' => '',
+        'content' => 'du har pula, du!<br /><br />-p',
+      ),
+      1096112815 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind',
+        'email' => NULL,
+        'url' => 'http://appelsinjuice.org/',
+        'ip' => '213.145.179.140',
+        'browser' => '',
+        'content' => 'Niet, wrong answer ;)',
+      ),
+    ),
+    1095735945 => 
+    array (
+      1095771504 => 
+      array (
+        'parentcid' => '',
+        'name' => 'andreas',
+        'email' => NULL,
+        'url' => 'http://rusty-bus.com',
+        'ip' => '80.232.79.61',
+        'browser' => '',
+        'content' => 'e du klar over kor irriterandes det e å slite gitarstrenga? Og e du klar over kor irriterandes det e å ikke vite hvor jeg kan få tak i nye? Jeg er helt fullstendig oppgitt! ARG!',
+      ),
+      1095864859 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Sindre',
+        'email' => NULL,
+        'url' => 'http://www.stud.ntnu.no/~haslene/blogg/',
+        'ip' => '213.145.179.140',
+        'browser' => '',
+        'content' => 'Ja, faktisk veldig klar over det. Stikk  hit du! Så kan du bestille det du trenger der. Jeg har blitt lovt at jeg til og med kan ringe og bestille bare et plekter og de skal slippe det i en konvolutt og sende. Så da bør det ikke være no problem.',
+      ),
+      1095864900 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Sindre',
+        'email' => NULL,
+        'url' => 'http://www.stud.ntnu.no/~haslene/blogg/',
+        'ip' => '213.145.179.140',
+        'browser' => '',
+        'content' => 'html var visst ikke pop det. Du får sakse: http://www.riff.no/butikk/index.php?cPath=26_209',
+      ),
+      1095866682 => 
+      array (
+        'parentcid' => '',
+        'name' => 'andreas',
+        'email' => NULL,
+        'url' => 'http://rusty-bus.com',
+        'ip' => '80.232.79.61',
+        'browser' => '',
+        'content' => 'Ey:) Sindre takk skal du ha, en god tjeneste å få det der! Jeg skal sakse right away så blir sikkert landolaen min glad igjen:)',
+      ),
+    ),
+    1095513348 => 
+    array (
+      1095548277 => 
+      array (
+        'parentcid' => '',
+        'name' => 'KSV',
+        'email' => NULL,
+        'url' => 'http://www.ksv-gfx.com',
+        'ip' => '194.29.201.211',
+        'browser' => '',
+        'content' => 'Hehe, liker ikke sånne tjenester..<br /><br />Men du har en bugg på siden din..<br />Når du viser navnet til de som har skrevet kommetnaren, er det bare navnet som kommer framm..<br />Resten er i HVIT skriv, så det vises ikke uten at du merker det.<br />Dette burde du kansje fikse? :)',
+      ),
+      1095550792 => 
+      array (
+        'parentcid' => '',
+        'name' => 'the unknown killerboi',
+        'email' => NULL,
+        'url' => NULL,
+        'ip' => '80.232.79.61',
+        'browser' => '',
+        'content' => 'småpoikar? ja småpoikar...',
+      ),
+    ),
     1095436249 => 
     array (
       1095499226 => 
@@ -1918,370 +2130,6 @@ $array = array (
         'ip' => '62.101.242.227',
         'browser' => '',
         'content' => 'E skrive som en narkomanorgelspelar, appelsinhud skulle det stå der:p ai ai for et liv, for et liv - e vil til bergen å pilse',
-      ),
-    ),
-    1094691614 => 
-    array (
-      1094692876 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => '*scars of my heart*',
-      ),
-      1094707808 => 
-      array (
-        'parentcid' => '',
-        'name' => 'LarsPars',
-        'email' => NULL,
-        'url' => 'http://crazyweb.the-superstar.org',
-        'ip' => '80.202.54.59',
-        'browser' => '',
-        'content' => 'dnåå. cutiepie!',
-      ),
-      1094727433 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Eirik',
-        'email' => NULL,
-        'url' => 'http://www.home.no/abnocto/',
-        'ip' => '129.177.202.163',
-        'browser' => '',
-        'content' => 'bbwwøøaaaarrrggghh',
-      ),
-      1094729576 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Andeas',
-        'email' => NULL,
-        'url' => 'http://www.rusty-bus.com',
-        'ip' => '62.101.242.227',
-        'browser' => '',
-        'content' => 'fint vær i Bergen altså? Det samme kan jeg ikke si om Ålesund, overskyet er det her. Men vi overlever dette ogsÅ!',
-      ),
-      1094744819 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Andeas',
-        'email' => NULL,
-        'url' => 'http://www.rusty-bus.com',
-        'ip' => '62.101.242.227',
-        'browser' => '',
-        'content' => 'eg oppdaterar meg sjølv, været i ålesund har blitt fint:) og eg har barbert meg idag din sjusk',
-      ),
-    ),
-    1094408965 => 
-    array (
-      1094448456 => 
-      array (
-        'parentcid' => '',
-        'name' => 'LarsPars',
-        'email' => NULL,
-        'url' => 'http://crazyweb.the-superstar.org',
-        'ip' => '80.202.54.59',
-        'browser' => '',
-        'content' => 'trick me twice *nynne*',
-      ),
-      1094491188 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Petter',
-        'email' => NULL,
-        'url' => 'http://blog.umulig.com',
-        'ip' => '193.91.205.91',
-        'browser' => '',
-        'content' => 'Enlighten me.<br />Kelis er ukjent farvann.<br />Vet ikke helt om jeg skal tråkke der i grunn.<br />R&amp;B saker er ikke helt min greie, for å si det sånn.<br /><br />Dette må rapporteres til Jugend Ålesund?:P<br /><br />-p',
-      ),
-      1094512070 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Du vil ikke tråkke der.<br />Kelis er hot og låten er dritt som bare R&amp;B kan være, men dog fengende.',
-      ),
-      1094523357 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Andeas',
-        'email' => NULL,
-        'url' => 'http://www.rusty-bus.com',
-        'ip' => '62.101.242.227',
-        'browser' => '',
-        'content' => 'Vi i Ålesund, følger med, hva blir det neste spør vi oss selv, hva BLIR det neste? Men Jugend Ålesund har ingen ting med dette å gjøre, dette er mer en sak for oss... hemmelig .... Siste ord er ikke sagt i denne saken Øivind, hør du oss! Og Kelis skal bort, hun er dønn ugly, hvordan jan du høre på en dame som synger sanger som f.eks inneholder 90% milkshake?',
-      ),
-      1094648486 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Danny',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '158.38.93.97',
-        'browser' => '',
-        'content' => 'Du burde skamme d oxo!!!',
-      ),
-    ),
-    1094253731 => 
-    array (
-      1094280033 => 
-      array (
-        'parentcid' => '',
-        'name' => 'LarsPars',
-        'email' => NULL,
-        'url' => 'http://crazyweb.the-superstar.org',
-        'ip' => '80.202.54.59',
-        'browser' => '',
-        'content' => 'lekselesning;)',
-      ),
-      1094475424 => 
-      array (
-        'parentcid' => '',
-        'name' => 'K',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '194.248.187.222',
-        'browser' => '',
-        'content' => 'Bursdagen min. Too late.',
-      ),
-      1094490727 => 
-      array (
-        'parentcid' => '',
-        'name' => 'oaa',
-        'email' => NULL,
-        'url' => 'http://oaa.ksv-gfx.com',
-        'ip' => '80.202.120.243',
-        'browser' => '',
-        'content' => 'Hehe... ;)',
-      ),
-      1094491057 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Petter',
-        'email' => NULL,
-        'url' => 'http://blog.umulig.com',
-        'ip' => '193.91.205.91',
-        'browser' => '',
-        'content' => 'Har blitt litt trønder kanskje. Mangler bart, men dog..<br />Var i Oslo i helga faktisk, så ikke så langt nord som vanlig. Likevel føler jeg meg mer og mer knyttet til Trondheim nå som jeg er der oppe annenhver/hver helg..<br /><br />Tullete?:P<br /><br />Love is baaaaad for yooooou',
-      ),
-    ),
-    1093975384 => 
-    array (
-      1093976979 => 
-      array (
-        'parentcid' => '',
-        'name' => 'oaa',
-        'email' => NULL,
-        'url' => 'http://oaa.ksv-gfx.com',
-        'ip' => '80.202.120.243',
-        'browser' => '',
-        'content' => 'wehoo ;)',
-      ),
-      1094062274 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Jomfru Maria',
-        'email' => 'stine_olstad@yahoo.no',
-        'url' => NULL,
-        'ip' => '80.213.160.36',
-        'browser' => '',
-        'content' => 'det gikk vel..sånn ca 60 minutter kjapt.. (altså en time) som i noen sammenhenger ville vært meget utholdende...! denne sammenhengen er intet unntak.. Uansett hyggelig at du brukte teleskrittene dine på en 60 min. lang samtale med Oslo.. (Selvom du burde spart pengene til ny BMW..)',
-      ),
-      1094066026 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Hva!? Holder ikke det med pappas knallsvarte cabriolet lenger? Ingen koz&amp;nuzz? Hva skjer med verden?<br /><br />Men det var jo hyggelig å ringe jomfruen og ikke minst klare å gjøre seg forstått, og, ja. Jeg er sliten nå, serru. Ikea er stort, og det tar på når man ikke finner det man leter etter samtidig som man er for sta til å spørre betjeningen om hjelp ;)<br /><br />Kent/Socker....',
-      ),
-      1094076039 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Petter',
-        'email' => NULL,
-        'url' => 'http://blog.umulig.com',
-        'ip' => '217.118.55.235',
-        'browser' => '',
-        'content' => 'Denne "Olstad" du snakker om..<br />Er dette en ekte jomfru?<br />Maria?<br />Eller Stine?<br />Hva?<br /><br />Uhm.. en time i tlf er ingeting. Prøv dame i Trondheim, 3h40min utgående på tlf i løpet av to dager, to helger(langhelger, fredag til tirsdag) i Trondheim på rad...to på rad!, og E6 helvete på vei hjem.. i tillegg til at jeg klarte å ødelegge sengen hennes mens jeg var der..<br />Ikke spør.<br /><br />Over.<br /><br />-p',
-      ),
-      1094079518 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Kjenner jeg deg rett, Petter, vil jeg ikke vite det. Spesielt ikke om jeg skal koble inn den meldinga som lå klar til meg på msn når jeg kom hjem... Niet!<br /><br />Men for å sitere min egen farfar: \\"Du er en jævla tøffel, gutt!\\" - og jeg synes det er søtt :D Regner med du får rompa ut av hjembyen heller før enn senere nå?',
-      ),
-      1094080452 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Forøvrig er jo alt med Jomfru Maria et mysterium... Hvordan er noen jomfru etter en fødsel, osv. Det er mange ting i livet man aldri vil få et klart, konsist og for all del enkelt svar på ;O',
-      ),
-      1094101407 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øyvind',
-        'email' => NULL,
-        'url' => 'http://home.no/ogreve/',
-        'ip' => '213.145.178.153',
-        'browser' => '',
-        'content' => 'Ødelagt seng? Been there, done that.',
-      ),
-      1094120655 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Petter',
-        'email' => NULL,
-        'url' => 'http://blog.umulig.com',
-        'ip' => '217.118.55.235',
-        'browser' => '',
-        'content' => 'Øi: Vi får se hva som skjer fremover. Ingenting er sikkert. Men tøffel, affirmative.<br /><br />Øy: godt å høre at det er flere enn meg:P<br /><br />-p',
-      ),
-      1094124611 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Så det er noe jeg bør sette som mål? Jeg får vel bare feite meg opp, kjøpe ei skjør seng og sette igang?',
-      ),
-      1094129422 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øyvind',
-        'email' => NULL,
-        'url' => 'http://home.no/ogreve/',
-        'ip' => '213.145.178.153',
-        'browser' => '',
-        'content' => 'Man behøver ikke være feit, selv om vi er det.',
-      ),
-      1094164259 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Petter',
-        'email' => NULL,
-        'url' => 'http://blog.umulig.com',
-        'ip' => '217.118.55.235',
-        'browser' => '',
-        'content' => 'Øy: vi? ;) Jeg veier da oveer 90 (man er ikke mann før man veier over 90), men anser meg ikke selv som overvektig. Er da 191cm så...<br /><br />Øi: skaff deg en seng/-epartner med sprett. Senga altså.. Og bare kos deg. Kos deg veldig:P Så klarer du det nok du også, selv om du veier halvparten av det jeg gjør.<br /><br />-p',
-      ),
-    ),
-    1093903343 => 
-    array (
-      1093959274 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øyvind',
-        'email' => 'oygreve@hotmail.com',
-        'url' => NULL,
-        'ip' => '213.145.178.153',
-        'browser' => '',
-        'content' => 'Siden jeg sløvet bort min egen mulighet til å få meg en slik en gmail, så får jeg vel tigge her etter en. Værsåsnillmedsukkerpå?',
-      ),
-      1093964819 => 
-      array (
-        'parentcid' => '',
-        'name' => 'oaa',
-        'email' => 'zorax@minlilleverden.net',
-        'url' => NULL,
-        'ip' => '80.202.120.243',
-        'browser' => '',
-        'content' => 'Heisann! Har du ein gmail til meg? :D "værsåsnillmedsukkerpå?" som du seier ;)',
-      ),
-      1094030854 => 
-      array (
-        'parentcid' => '',
-        'name' => 'danny',
-        'email' => NULL,
-        'url' => NULL,
-        'ip' => '158.38.93.97',
-        'browser' => '',
-        'content' => 'og e bare fikk en:smile:',
-      ),
-      1094048777 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Jeg vet da hvem som vil bli varm i trøya når de får noe sånt i innboksa si, gjør jeg vel ikke? :)',
-      ),
-    ),
-    1093901945 => 
-    array (
-      1093964765 => 
-      array (
-        'parentcid' => '',
-        'name' => 'JomfruMaria',
-        'email' => 'stine_olstad@yahoo.no',
-        'url' => NULL,
-        'ip' => '80.213.174.48',
-        'browser' => '',
-        'content' => 'ja.. her har du gjort litt av en analyse Øivind. Gøy å lese det du har jobbet så intenst med.. Jeg befinner meg så klart på et faglig lavere nivå enn deg, men jeg syns ihvertfall utkastet var flott! God argumentasjon.. du har vært flink gutt. (Ikke uventet, siden du tross alt er Guddommelig..)',
-      ),
-      1093974269 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Wee, takkitakk :) Tenkte jeg skulle legge til hva læreren mente også... *semi-stolt*',
-      ),
-      1093976207 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Mr. Cato',
-        'email' => 'ceztos@hotmail.com',
-        'url' => NULL,
-        'ip' => '80.202.126.79',
-        'browser' => '',
-        'content' => 'Keep up the good work. Dog sammendraget var kanskje litt mer voldtekt enn det burde vært. Kremt',
-      ),
-    ),
-    1093747818 => 
-    array (
-      1093801907 => 
-      array (
-        'parentcid' => '',
-        'name' => 'Øivind',
-        'email' => NULL,
-        'url' => 'http://appelsinjuice.org/',
-        'ip' => '213.145.179.140',
-        'browser' => '',
-        'content' => 'Tøsas united.',
-      ),
-    ),
-    1084999189 => 
-    array (
-      1107092765 => 
-      array (
-        'parentcid' => '',
-        'name' => 'knippo',
-        'email' => NULL,
-        'url' => 'http://www.knippo.org',
-        'ip' => '151.47.133.220',
-        'browser' => '',
-        'content' => 'Please, help me to reach <b>168</b> comments !!! =)',
       ),
     ),
   ),

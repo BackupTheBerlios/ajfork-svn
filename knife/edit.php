@@ -146,12 +146,11 @@ if ($_POST[id] && !$_POST[editlist][submit]) {
 if (!$_GET[id] && !$_POST[editlist]) {
 
 	$KAclass = new KArticles;
-	$allarticles = $KAclass->listarticles();
+	$allarticles = $KAclass->listarticles("", "");
 		
 	$dataclass = new SettingsStorage('settings');
 	$allcats = $dataclass->settings['categories'];
 	
-	krsort($allarticles);
 	$moduletitle = i18n("edit_module_list");
 	$main_content .= "
 	<form id=\"edit_article_list\" method=\"post\" class=\"cpform\">

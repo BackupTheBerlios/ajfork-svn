@@ -297,4 +297,18 @@ function available_languages($ffl) {
 	return $available_languages;
 }
 
+
+function array_slice_key($array, $offset, $len=-1){
+
+   if (!is_array($array))
+       return FALSE;
+
+   $length = $len >= 0? $len: count($array);
+   $keys = array_slice(array_keys($array), $offset, $length);
+   foreach($keys as $key) {
+       $return[$key] = $array[$key];
+   }
+ 
+   return $return;
+}
 ?>

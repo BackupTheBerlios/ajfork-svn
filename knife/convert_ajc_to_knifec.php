@@ -4,15 +4,20 @@
 	include("inc/functions.php");								# get needed functions/classes
 	$ajforkdb = file("comments.txt");							# load ajfork database
 	$knifedb = array();											# set up the knife database array
+	
+			$articledatabase = new ArticleStorage('storage');
+			$allarticles = $articledatabase->settings['articles'];
+	
 	foreach ($ajforkdb as $null => $commentline) {	
 		unset($comment);
 		$commentline = trim($commentline);
 		$commentline = explode("|>|", $commentline);
 		$articleid = $commentline[0];
+		if (array_key_exists($articleid, $allarticles)) {
 		$comments = explode("||", $commentline[1]);
 			foreach ($comments as $null => $comment) {
-					unset($email);
-		unset($url);
+				unset($email);
+				unset($url);
 				$comment = explode("|", $comment);
 				if ($comment[0] != "") {
 					if ($comment[2] != "none") {
@@ -34,6 +39,7 @@
 						);
 					}
 				}
+			}
 		}
 		
 echo "<pre>";

@@ -87,6 +87,7 @@
 			$output = str_replace("{date}", date("d/m/y H:i", $commentid), $output);
 			$output = str_replace("{url}", $comment[url], $output);
 			$output = str_replace("{email}", $comment[mail], $output);
+			$output .= '<a href="'.$_SERVER[PHP_SELF].'?replyto='.$commentid.'">reply</a>';
 			echo $output;
 			$i++;
 		}
@@ -118,13 +119,13 @@
 		if (!$errors) {
 			$newcommentid = time();
 			$savecomment = array(
-				'parentcid' => $_POST[comment][parent],
-				'name' => $_POST[comment][name],
-				'email' => $_POST[comment][email],
-				'url' => $_POST[comment][url],
+				'parentcid' => stripslashes($_GET[replyto]),
+				'name' => stripslashes($_POST[comment][name]),
+				'email' => stripslashes($_POST[comment][email]),
+				'url' => stripslashes($_POST[comment][url]),
 				'ip' => '127.0.0.1',
 				'browser' => 'firefox ofcourse',
-				'content' => $_POST[comment][content],
+				'content' => stripslashes($_POST[comment][content]),
 				);
 			$commentsclass = new CommentStorage('comments');
 			$commentsclass->settings[$date][$newcommentid] = $savecomment;
