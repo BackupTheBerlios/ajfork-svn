@@ -67,10 +67,15 @@
 	else {
 	
 		foreach ($articlescomments as $commentid => $comment) {
-			echo "<p>".date("dmyH:i", $commentid)."<br />name: $comment[name]<br />
-			url: $comment[url]<br />
-			ip: $comment[ip]<br />
-			comment: $comment[content]</p>";
+			$output = $template[comment];
+			$output = str_replace("{comment}", Markdown($comment[content]), $output);
+			$output = str_replace("{ip}", $comment[ip], $output);
+			$output = str_replace("{author}", $comment[name], $output);
+			$output = str_replace("{date}", date("d/m/y H:i", $commentid), $output);
+			$output = str_replace("{url}", $comment[url], $output);
+			$output = str_replace("{email}", $comment[mail], $output);
+			
+			echo $output;
 		}
 	}
 		echo '</div>';

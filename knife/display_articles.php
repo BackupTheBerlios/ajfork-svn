@@ -2,6 +2,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>knife</title>
+<style type="text/css">
+.comment {
+background: #fafef1;
+color: #333;
+}
+.commentheader {
+background: #fff;
+color: #999;
+}
+
+</style>
 </head>
 <body>
 

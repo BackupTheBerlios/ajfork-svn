@@ -23,7 +23,12 @@ $array = array (
 {extended}
 <p>views: {views}</p>
 </div>',
-        'comment' => '',
+        'comment' => '<div class="comment">
+<div class="commentheader">
+Comment posted {date} by <a href="{url}">{author}</a> (<a href="mailto:{mail}">@</a>)
+</div>
+{comment}
+</div>',
         'commentform' => '',
       ),
       2 => 
