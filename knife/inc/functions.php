@@ -1,6 +1,6 @@
 <?php
 
-function FileFolderList($path, $depth = 0, $current = '', $level=0) {
+function FileFolderList($path, $depth = 0, $current = '', $level=0, $ignore=FALSE) {
 	if ($level==0 && !@file_exists($path))
 		return false;
 	if (is_dir($path)) {
@@ -191,7 +191,7 @@ return $file_size;
 #	knife Login function
 #
 
-function c_login($gusername, $gpassword, $cookie=FALSE) {
+function c_login($gusername, $gpassword, $cookie=FALSE, $glanguage=FALSE) {
 	global $users, $configuration;
 	
 	$unique = UNIQUE;
@@ -216,6 +216,7 @@ function c_login($gusername, $gpassword, $cookie=FALSE) {
 					"password" => $gpassword,
 					"status" => "verified",
 					"level" => $userdata[level],
+					"language" => $glanguage,
 					);
 				}
 			}
@@ -227,6 +228,7 @@ function c_login($gusername, $gpassword, $cookie=FALSE) {
 			"password" => $gpassword,
 			"status" => "unverified",
 			"level" => 0,
+			"language" => $glanguage,
 			);
 		}
 	
@@ -237,6 +239,36 @@ function c_login($gusername, $gpassword, $cookie=FALSE) {
 function i18n( $messageid ) {
 	global $lang;
 	return $lang->$messageid;
+}
+
+
+function available_languages($ffl) {
+	$languages = $ffl[file];
+	if (!empty($languages))
+		foreach ($languages as $null => $languagefile) {
+			if (stristr($pluginfile, ".htaccess")) { continue; }
+			
+			$language_data = GetContents($languagefile);
+			preg_match("{Filename:(.*)}i", $language_data, $language[name]);
+			preg_match("{Language National:(.*)}i", $language_data, $language[lang_nat]);
+			preg_match("{Language International:(.*)}i", $language_data, $language[lang_int]);
+			preg_match("{Author:(.*)}i", $language_data, $language[author]);
+			preg_match("{Author URI:(.*)}i", $language_data, $language[author_uri]);
+			preg_match("{Version:(.*)}i", $language_data, $language[version]);
+
+			$available_languages[] = array(
+				name		=> trim($language[name][1]),
+				langnational => trim($language[lang_nat][1]),
+				author		=> trim($language[author][1]),
+				author_uri	=> trim($language[author_uri][1]),
+				version		=> trim($language[version][1]),
+				langinternational	=> trim($language[lang_int][1]),
+				file		=> basename($languagefile),
+			);
+		}
+	else
+		$available_languages = array();
+	return $available_languages;
 }
 
 ?>

@@ -12,7 +12,7 @@
 */
 
 $lang->login_modtitle			= 'Authentication required';
-$lang->login_AuthReq  			= 'You need to provide valid credentials to view any sections of this software. This requires a browser that supports cookies.';
+$lang->login_AuthReq  			= 'You need to provide valid credentials to view any sections of this software.<br /> This requires a browser that supports cookies.';
 $lang->login_Username 			= 'Username';
 $lang->login_Password 			= 'Password';
 $lang->login_Login				= 'Login';

@@ -6,8 +6,21 @@
 
 	include('./inc/functions.php');					# load common functions
 	include('./config.php');						# load temporary config
-	include('./lang/nb_no.php');					# load norwegian locale
-#	include('./lang/en_gb.php');					# load english locale
+
+
+# Load default locale or chosen locale
+# including en_gb is too static.
+# this needs a config option -> default language for admin panels
+# also, figure out why this doesn't work in the first screen.
+#  - what's wrong with the order??
+
+if	(!$_COOKIE[klanguage]) {
+	include('./lang/en_gb.php');
+	}
+	else {
+		include("./lang/".$_COOKIE[klanguage]);
+		}
+	
 
 
 #
@@ -15,6 +28,11 @@
 #
 
 unset($_GET[check], $_POST[check]);
+
+
+#
+#	check avail languages
+#
 
 
 
@@ -29,12 +47,13 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 
 	if ($_POST[username] and $_POST[password]) {
 	
-		$check = c_login($_POST[username], $_POST[password]);
+		$check = c_login($_POST[username], $_POST[password], "", $_POST[language]);
 		if ($check[status] == "verified") {
 			$statusmessage = i18n("login_YouAre").$check[nickname];
 			$c_md5password = md5($check[password]);
 			setcookie("kusername", $check[user], time()+3600);
-			setcookie("kmd5password", $c_md5password, time()+3600);		
+			setcookie("kmd5password", $c_md5password, time()+3600);	
+			setcookie("klanguage", $check[language]);
 			}
 		
 		else {
@@ -44,7 +63,7 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 		
 	elseif ($_COOKIE["kusername"] && $_COOKIE["kmd5password"]) {
 	
-			$check = c_login($_COOKIE["kusername"], $_COOKIE["kmd5password"], "yes");
+			$check = c_login($_COOKIE["kusername"], $_COOKIE["kmd5password"], "yes", $_COOKIE["klanguage"]);
 		if ($check[status] == "verified") {
 			$statusmessage = i18n("login_YouAre").$check[nickname];
 			$c_md5password = md5($check[password]);
@@ -65,14 +84,33 @@ if ($check[status] == "unverified" or !$_COOKIE["kusername"] or !$_COOKIE["kmd5p
 	$menus[0] = "";
 	
 	# FIXME: Insert menu filter?
-	
-	$main_content = '<div id="login_div"><p>'.i18n("login_AuthReq").'</p>
+
+	$i18nfiles = FileFolderList("./lang/", $depth = 1, $current = '', $level=0);
+	$available_languages = available_languages($i18nfiles);
+
+	foreach ($available_languages as $null => $languagedata) {
+		$lang_input_fields .= '<input id="ls'.$languagedata[file].'" type="radio" name="language" value="'.$languagedata[file].'" /> 
+		<label for="ls'.$languagedata[file].'">'.$languagedata[langinternational].' ( '.$languagedata[langnational].' )</label><br />';
+		}
+
+	$main_content = '
+	<div id="login_wrapper">
+		<div class="div_normal">
+		<fieldset>
+		<legend>Login (i18nhere)</legend><p>'.i18n("login_AuthReq").'</p>
 	<form id="login" method="post" action="">
 	<input type="hidden" name="panel" value="dashboard" />
 <p><input class="inshort" type="text" name="username" id="login_username" /> <label for="login_username">'.i18n("login_Username").'</label></p>
 <p><input class="inshort" type="password" name="password" id="login_password" /> <label for="login_password">'.i18n("login_Password").'</label></p>
+</fieldset>
 <p><input type="submit" name="sendlogin" value="'.i18n("login_Login").'" /></p>
-	</form></div>';
+</div>
+<div class="div_extended">
+<fieldset>
+	<legend>Language(i18n!)</legend>
+<p>'.$lang_input_fields.'</p>
+
+	</div></form></div>';
 	}
 
 
@@ -142,6 +180,8 @@ if ($check[status] == "verified") {
 		$menus[0] = "";
 		setcookie("kusername", "", time() - 3600);
 		setcookie("kmd5password", "", time() - 3600);
+		setcookie("klanguage", "", time() - 3600);
+		# header reload?
 		
 		# status message
 		$moduletitle = "Logout";

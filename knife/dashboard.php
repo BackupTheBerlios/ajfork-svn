@@ -59,6 +59,7 @@ $moduletitle = "Dashboard";
 							</ul></li>
 					</ul>
 					</li>
+					<li>Language selected on login, saved in expireless cookie?</li>
 				</ul>
 			</li>
 			<li>Categories<ul><li>Add</li><li>Edit</li><li>Delete</li><li>Default template</li></ul></li>

@@ -1,7 +1,7 @@
 <?php
 /*
 
-	Filename: nb_no.php
+	Filename: nb_no
 	Language National: Norsk Bokmål
 	Language International: Norwegian
 	Version: 0.1
