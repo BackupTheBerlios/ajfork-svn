@@ -12,54 +12,83 @@ $menus["sub_edit"] = "
 if ($_GET[id] && !$_POST[id] && !$_GET[action]) {
 	$articledatabase = new ArticleStorage('storage');
 	$allarticles = $articledatabase->settings['articles'];
+	$settingsclass = new SettingsStorage('settings');
+	$currentcats = $settingsclass->settings['categories'];
 	
 	$editentry = $allarticles[$_GET[id]];
 	
 	$moduletitle = "Edit &quot;$editentry[title]&quot;";
 	# form stuff here
 	
+	# set up category checkboxes
+	foreach ($currentcats as $catid => $catinfo) {
+		$catformfields .= "<input type=\"checkbox\" name=\"article[category][]\" id=\"catbox$catid\" value=\"$catid\" />
+							<label for=\"catbox$catid\">$catinfo[name]</label><br />";
+	}
+	
 $main_content .= '
 <script src="inc/quicktags.js" language="JavaScript" type="text/javascript"></script>
+<div id="edit_article_wrapper">
+	<form id="edit_article_form" method="post">
+	<div class="div_normal">
+		Written by '.$editentry[author].' at '.date("j F Y, H:i", $_GET[id]).'
 
-<div id="edit_single_article_screen">Written by '.$editentry[author].' at '.date("j F Y, H:i", $_GET[id]).'<form id="edit_article_form" class="cpform" method="post">
-	<input type="hidden" name="panel" value="edit" />
-	<input type="hidden" name="id" value="'.$_GET[id].'" />
-	<p><label for="edit_article_title">Title</label> and <label for="edit_article_category">Category (fixme)</label><br /><input class="inlong" value="'.$editentry[title].'" type="text" id="edit_article_title" name="article[title]" /> <input value="'.$editentry[category].'" type="text" id="edit_article_category" value="General" name="article[category]" /></p>
-	<p><label for="edit_article_content">Content</label><br />
-	<script language="JavaScript" type="text/javascript">edToolbar();</script>
-	<textarea class="tamedium" id="edit_article_content" name="article[content]">'.$editentry[content].'</textarea>
-	<script type="text/javascript" language="JavaScript">
-<!--
-edCanvas = document.getElementById(\'edit_article_content\');
-//-->
-</script>
-</p>
-	<p><input type="submit" value="Edit article" /></p>
+		<input type="hidden" name="panel" value="edit" />
+		<input type="hidden" name="id" value="'.$_GET[id].'" />
+		<p>
+			<label for="edit_article_title">Title</label>
+			<input class="inlong" value="'.$editentry[title].'" type="text" id="edit_article_title" name="article[title]" />
+		</p>
+		
+		<p>
+			<label for="edit_article_content">Content</label><br />
+			<script language="JavaScript" type="text/javascript">edToolbar();</script>
+			<textarea class="tamedium" id="edit_article_content" name="article[content]">'.$editentry[content].'</textarea>
+		</p>
+		<p>
+			<input type="submit" value="Edit article" />
+		</p>
+	</div>
 	
-	</form></div>';
+	<script type="text/javascript" language="JavaScript">
+	<!--
+	edCanvas = document.getElementById(\'edit_article_content\');
+	//-->
+	</script>
+
+	<div class="div_extended">
+		<fieldset>
+			<legend>Category</legend>
+			<input value="'.$editentry[category].'" type="text" id="edit_article_category" value="General" name="article[category]" />
+		</fieldset>
+	</div>
+	</form>
+</div>';
 }
 
 #
-#
+#	Edit article routine
 #
 
 if ($_POST[id] && !$_POST[editlist][submit]) {
 
 	$id = $_POST[id];
 	$dataclass = new ArticleStorage('storage');
+	$articles = $dataclass->settings['articles'];
 
+	$oldart = $articles[$id];
 	# Remove unwanted stuff!
 	$_POST[article][content] = sanitize_variables($_POST[article][content]);
 	$_POST[article][title] = sanitize_variables($_POST[article][title]);
 	$_POST[article][category] = sanitize_variables($_POST[article][category]);
-	$_POST[article][author] = sanitize_variables($_POST[article][author]);
 
 	# Put the posted and santitized stuff into an array for saving
 	$data = array(
 		# "timestamp" => $now,
 		"content" 	=> stripslashes($_POST[article][content]),
 		"title" 	=> stripslashes($_POST[article][title]),
-		"author" 	=> stripslashes($_POST[article][author]),
+		"author" 	=> stripslashes($oldart[author]),
+		"lastedit"	=> stripslashes($check[user]),
 		"category" 	=> stripslashes($_POST[article][category]),
 		);
 # hook to add custom fields here.

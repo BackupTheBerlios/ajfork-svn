@@ -41,7 +41,7 @@ include("plugins/markdown.php");
 	
 	# set the number of articles to display
 	$amount = $_GET[amount] ? $_GET[amount] : "5";
-	$cat = $_GET[cat] ? $_GET[cat] : false;
+	$cat = $_GET[cat];
 	foreach($allarticles as $date => $article) {
 		$output = $template[listing];
 		
@@ -117,6 +117,12 @@ include("plugins/markdown.php");
 		$output = str_replace("{author}", $article[author], $output);
 		$output = str_replace("{category}", $thiscatnamelisting, $output);
 		$output = str_replace("{date}", date("dmy H:i", $date), $output);
+		
+		if ($article[lastedit]) {
+			$output = str_replace("{lastedit}", $article[lastedit], $output);
+			}
+			else { $output = str_replace("{lastedit}", "", $output);
+				}
 
 		echo $output;
 		$i++;

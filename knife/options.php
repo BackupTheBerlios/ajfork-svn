@@ -45,7 +45,7 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 	$alltemplates = $dataclass->settings['templates'];
 	
 	$main_content = '
-	<div id="manage_cats_main" style="float: left; width: 60%;">
+	<div id="manage_cats_main" class="div_normal options_categorylist">
 	<table><thead><th>ID</th><th>Name</th><th>Default template</th><th>Actions</th></thead>';
 	
 	foreach ($currentcats as $catid => $catinfo) {
@@ -53,9 +53,10 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 		}
 	$main_content .='
 	</table>
-	</div><div style="float: right;">
-	<h2>Add category</h2>
+	</div><div class="div_extended"">
 	<form id="add_cat_form" class="cpform" method="post">
+	<fieldset>
+	<legend>Add category</legend>
 	<input type="hidden" name="	panel" value="options" />
 	<p><label for="add_cat_name">Name and default Template</label><br /><input class="inshort" type="text" id="add_cat_name" name="addcat[name]" />';
 	
@@ -63,7 +64,7 @@ if ($_GET[screen] == "categories" && !$_POST[addcat]) {
 	$main_content .= makeDropDown($alltemplates, "addcat[template]", "");
 
 	$main_content .= '</p>
-	<p><input type="submit" value="Add category" /></p>
+	<p><input type="submit" value="Add category" /></p></fieldset>
 	</form>	
 	</div>';
 	
@@ -81,7 +82,7 @@ if ($_POST[addcat]) {
 	
 	# Remove unwanted stuff!
 	$_POST[addcat][name] = sanitize_variables($_POST[addcat][name]);
-	$_POST[addcat][template] = sanitize_variables($_POST[addcat][password]);
+	$_POST[addcat][template] = sanitize_variables($_POST[addcat][template]);
 		
 		$data = array(
 		"name"	=> stripslashes($_POST[addcat][name]),

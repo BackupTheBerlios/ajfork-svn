@@ -4,20 +4,6 @@ $array = array (
   array (
     'articles' => 
     array (
-      1107874975 => 
-      array (
-        'content' => 'attaat',
-        'title' => 'taat',
-        'author' => '',
-        'category' => '0, 1, 3',
-      ),
-      1107875437 => 
-      array (
-        'content' => 'fasasfasf',
-        'title' => 'fasfas',
-        'author' => 'eruin',
-        'category' => '0',
-      ),
       1107875442 => 
       array (
         'content' => '',
@@ -45,6 +31,15 @@ $array = array (
         'title' => 'Bare webdesign',
         'author' => 'eruin',
         'category' => '2',
+      ),
+      1107956500 => 
+      array (
+        'content' => 'yioåp
+lastedited by me',
+        'title' => 'More than two',
+        'author' => 'eruin',
+        'lastedit' => 'eruin',
+        'category' => '1, 2, 3',
       ),
     ),
   ),

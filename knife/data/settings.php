@@ -8,8 +8,8 @@ $array = array (
       array (
         'name' => 'Default',
         'listing' => '<div class="article" style="margin-bottom: 40px;">
-<h1>{title}</h1>
-<strong>Posted by {author} in {category} ({date}) - [friendlylink]Friendly Link[/friendlylink] | [link]ID-Link[/link]</strong>
+<h1>[friendlylink]{title}[/friendlylink]</h1>
+<strong>Posted by {author} (last edited by {lastedit}) in {category} ({date}) - [friendlylink]Friendly Link[/friendlylink] | [link]ID-Link[/link]</strong>
 <div class="article_text">
 {content}
 </div>',
@@ -125,6 +125,16 @@ Sju
       array (
         'name' => 'About knife',
         'template' => '',
+      ),
+      4 => 
+      array (
+        'name' => 'TemplateTesting',
+        'template' => '',
+      ),
+      5 => 
+      array (
+        'name' => 'TempTesttwo',
+        'template' => '1',
       ),
     ),
   ),

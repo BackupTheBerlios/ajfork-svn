@@ -3,7 +3,10 @@
 	[wed 09 feb]
 	
 	New: Menus are named
+	New: Preliminary {lastedit} support
 	
+	Fix: HTML Cleanups in edit/write
+	Fix: Default template for categories now saved
 	Fix: Option subscreens all include $menu["sub_options"]
 	Fix: Display articles sorts listed items by $_GET[cat] [1]
 	Bug: Problem with [1] renders $_GET[cat] = 0 useless. 0 = false :/

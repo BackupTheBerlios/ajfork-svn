@@ -46,29 +46,39 @@ if (!$_POST[article]) {
 	}
 
 	$main_content = '
-	<script src="inc/quicktags.js" language="JavaScript" type="text/javascript"></script>
+<script src="inc/quicktags.js" language="JavaScript" type="text/javascript"></script>
+<div id="add_article_wrapper">
 	<form id="add_article_form" class="cpform" method="post">
-	<div id="add_article_main" style="float: left; width: 80%;">
-	<input type="hidden" name="panel" value="write" />
-	<p><label for="add_article_title">Title</label><br /><input class="inlong" type="text" id="add_article_title" name="article[title]" /></p>
-	<p><label for="add_article_content">Content</label>	
-	<script language="JavaScript" type="text/javascript">edToolbar();</script>
-	<textarea class="tamedium" id="add_article_content" name="article[content]"></textarea></p>
-	
-<script type="text/javascript" language="JavaScript">
-<!--
-edCanvas = document.getElementById(\'add_article_content\');
-//-->
-</script><p><input type="submit" value="Write article" /></p>
+	<div class="div_normal">
+		<input type="hidden" name="panel" value="write" />
+		<p>
+			<label for="add_article_title">Title</label><br />
+			<input class="inlong" type="text" id="add_article_title" name="article[title]" />
+		</p>
+		<p>
+			<label for="add_article_content">Content</label>	
+			<script language="JavaScript" type="text/javascript">edToolbar();</script>
+			<textarea class="tamedium" id="add_article_content" name="article[content]"></textarea>
+		</p>
+		<p>
+			<input type="submit" value="Write article" />
+		</p>
 	</div>
 	
-	<div id="div_extended_options">
+	<script type="text/javascript" language="JavaScript">
+	<!--
+	edCanvas = document.getElementById(\'add_article_content\');
+	//-->
+	</script>
+	
+	<div class="div_extended">
 		<fieldset>
 			<legend>Category</legend>
 			'.$catformfields.'
 		</fieldset>
 	</div>
-	</form>';
+	</form>
+</div>';
 	
 	}
 

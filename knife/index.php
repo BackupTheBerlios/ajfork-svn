@@ -221,7 +221,11 @@ h1, h2, h3 {
 	margin-bottom: 10px;
 }
 
-#div_extended_options {
+.div_normal {
+	float: left;
+}
+
+.div_extended {
 	padding-right: 10px;
 	float: right;
 }
@@ -255,6 +259,7 @@ input.delete {
 input, textarea {
 	background: #f6f7f8;
 	border: 1px solid #dae4ea;
+	margin: 0 5px 1px 0;
 	}
 
 input:focus, textarea:focus {
@@ -262,7 +267,7 @@ input:focus, textarea:focus {
 	}
 
 textarea {
-	width: 90%;
+	width: 700px;
 	}
 
 .inshort {
@@ -285,10 +290,6 @@ textarea {
 	height: 550px;
 }
 	
-form.cpform input {
-	margin: 0 5px 0 0;
-	}
-	
 #edit_template_switch {
 	border: 1px solid #dae4ea;
 	padding: 5px;
@@ -302,6 +303,7 @@ fieldset {
 }
 fieldset legend {
 	font-weight: bold;
+	font-size: 130%;
 	}
 
 
@@ -322,6 +324,11 @@ th {
 	font-size: 120%;
 }
 
+
+
+.options_categorylist {
+	width: 60%;
+	}
 
 </style>
 </head>

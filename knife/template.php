@@ -105,13 +105,13 @@ $tvars_listing = array(
 	"{title}" => "Display Article Title",
 	"{content}" => "Displays article content",
 	"{extended}" => "Displays extended article content (if the &quot;more&quot; button was used)",
-	"{author}" => "Displays a link to the author's email",
-	"{author-name}" => "Displays the author's name in plain text",
+#	"{author}" => "Displays a link to the author's email",
+	"{lastedit}" => "Displays the name of the last editor for this article",
 	"{date}" => "Displays the article's date (check system config for formatting)",
 	"{category}" => "Displays the name of the article's category",
 	"{category-id}" => "Displays the integer ID of the article's category",
 	"[link]...[/link]" => "Displays a permanent link to the article",
-	"[extended]...[/extended]" => "Displays a link to the article (only if the article contains extended content",
+	"[friendlylink]...[/friendlylink]" => "Displays a permanent link to the article using its title",
 	"[com-link]...[/com-link]" => "Displays a link to the article (only if comments are enabled for it)",
 	);
 	ksort($tvars_listing);
