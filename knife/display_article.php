@@ -104,40 +104,42 @@
 		#
 		
 		if ($_POST[comment] && $valid) {
-		
-		#
-		#	Needs i18n-love
-		
+				
 		if (!$_POST[comment][name] or $_POST[comment][name] == "") {
-			$errors .= "<li><p>No name submitted. You'll have to identify yourself, I'm afraid!</p></li>";
+			$errors .= "<li><p>" . i18n("visible_comment_error_name") . "</p></li>";
 			}
-		if ($_POST[comment][email] && !preg_match("/^[\.A-z0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z]{1,4}$/", $_POST[comment][email])) {
-			$errors .= "<li><p>Given email is invalid, a real email is needed</p></li>";
+		if ($_POST[comment][email] and !preg_match("/^[\.A-z0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z]{1,4}$/", $_POST[comment][email])) {
+			$errors .= "<li><p>" . i18n("visible_comment_error_email") . "</p></li>";
 			}
-		if (!stristr($_POST[comment][url], "http://")) {
-			$errors .= "<li><p>Given url is invalid. Check that it contains the required http:// part</p></li>";
+		if ($_POST[comment][url] and !preg_match('#^http\\:\\/\\/[a-z0-9\-]+\.([a-z0-9\-]+\.)?[a-z]+#i', $_POST[comment][url])) {
+			$errors .= "<li><p>" . i18n("visible_comment_error_url") . "</p></li>";
 			}
 		if (!$_POST[comment][content] or $_POST[comment][content] == "") {
-			$errors .= "<li><p>Sorry to break the news to you, but blank comments are quite useless</p></li>";
+			$errors .= "<li><p>" . i18n("visible_comment_error_content") . "</p></li>";
 			}
+
+	if (!errors) {
+	$_POST[comment][name] = trim($_POST[comment][name]);		# clean the submitted name for db lkp
+	$match = $Userclass->indatabase($allusers);
 		
-	#FIXME: Recognize nicks too
-		if (array_key_exists(urlTitle($_POST[comment][name]), $allusers)) {
-				$userverifymessage = "<li><p>This name is registered.<br />If you are the owner of this name, please supply the password below:</p>
+		if ($match[match]) {
+				$userverifymessage = "<li><p>" . i18n("visible_comment_error_registered") . "</p>
 				<form method=\"post\" action=\"\"><p><input type=\"text\" name=\"comment[password]\" /></p>
-				<!--hidden--><p>
+				<p><!--hidden-->
 					<input type=\"hidden\" value=\"". $_POST[comment][name]. "\" name=\"comment[name]\" />
 					<input type=\"hidden\" value=\"". $_POST[comment][email]. "\" name=\"comment[email]\" />
 					<input type=\"hidden\" value=\"". $_POST[comment][url]. "\" name=\"comment[url]\" />
 					<input type=\"hidden\" value=\"". $_POST[comment][content]. "\" name=\"comment[content]\" />
-				</p><!--endhidden-->
-				<p><input type=\"submit\" value=\"Verify\" /></p></form></li>";
+				<!--endhidden--></p>
+				<p><input type=\"submit\" value=\"" . i18n("generic_add") . "\" /></p></form></li>";
 			if ($_POST[comment][password]) {
+				if ($match[type] = "nick") {
+					$_POST[comment][name] = $match[user];
+					}
 				$null = $Userclass->verify();
 				if ($Userclass->username) {
+					$_POST[comment][name] = $match[name];
 					# No error, we're good to go
-#					$errors .= "<li><p>Verified as ". $Userclass->nickname . "</p></li>";
-					$_POST[comment][name] = $Userclass->nickname . ' (' . $Userclass->username . ')';
 					}
 				else {
 					$errors .= $userverifymessage;
@@ -148,6 +150,7 @@
 				$errors .= $userverifymessage;
 				}
 			}
+		}
 		
 		if (!$errors) {
 			$newcommentid = time();
@@ -157,18 +160,18 @@
 				'email' => stripslashes($_POST[comment][email]),
 				'url' => stripslashes($_POST[comment][url]),
 				'ip' => '127.0.0.1',
-				'browser' => 'firefox ofcourse',
+				'browser' => $_SERVER["HTTP_USER_AGENT"],
 				'content' => stripslashes($_POST[comment][content]),
 				);
 			$commentsclass = new CommentStorage('comments');
 			$commentsclass->settings[$date][$newcommentid] = $savecomment;
 			$commentsclass->save();
 			#FIXME: Redirect javascript doesn't work on all servers
-			echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}';</script>";
+			echo "<script type=\"text/javascript\">self.location.href='http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}';</script>";
 			}
 			
 		else {
-			echo "<div id=\"Commentposterrors\"><h1>Trouble in the hills!</h1><p>There was a problem processing the material you submitted. The specific problems are detailed below, and you are encouraged to sort out the problems and try again:</p><ol>$errors</ol></div>";
+			echo "<div id=\"Commentposterrors\"><h1>". i18n("generic_error") ."</h1><p>". i18n("visible_comment_error_info"). "</p><ol>$errors</ol></div>";
 			}
 		}
 		

@@ -99,4 +99,12 @@ $lang->generic_regdate			= 'Registrasjonsdato';
 $lang->generic_language			= 'Språk';
 $lang->generic_preview			= 'Forhåndsvisning';
 $lang->generic_click			= 'Klikk';
+$lang->generic_error			= 'Feil';
+
+$lang->visible_comment_error_info			= 'Det oppstod et problem under verifiseringen av kommentaren. De spesifikke problemene finner du under, og du oppfordres til  å rette opp i dem og prøve igjen:';
+$lang->visible_comment_error_name			= 'Du må identifisere deg med et navn';
+$lang->visible_comment_error_email			= 'Du må oppgi en ekte email-adresse';
+$lang->visible_comment_error_url			= 'Du må oppgi en ekte URL. Gjorde du det? Sjekk at den starter med den nødvendige http://-delen';
+$lang->visible_comment_error_content		= 'En kommentar uten innhold er vel egentlig ikke særlig verdifull, er du ikke enig?';
+$lang->visible_comment_error_registered		= 'Dette navnet er registrert.<br />Hvis det er ditt navn, vennligst send ditt passord under:';
 ?>

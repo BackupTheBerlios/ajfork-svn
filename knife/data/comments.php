@@ -1987,6 +1987,126 @@ using markdown?!',
         'browser' => 'firefox ofcourse',
         'content' => 'My comment using a registered name',
       ),
+      1109609214 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'f33f3',
+      ),
+      1109609381 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'yayaya',
+      ),
+      1109609644 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'yayaya',
+      ),
+      1109610674 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel (eruin)',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'yayaya',
+      ),
+      1109610798 => 
+      array (
+        'parentcid' => '',
+        'name' => 'eruin',
+        'email' => '',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Jaja, dette er meg da...',
+      ),
+      1109611606 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Dette er meg for pokker',
+      ),
+      1109611631 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Dette er meg for pokker',
+      ),
+      1109611884 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Dette er meg for pokker',
+      ),
+      1109612504 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Dette er meg for pokker',
+      ),
+      1109612586 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Dette er meg for pokker',
+      ),
+      1109612776 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsinjuice.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Dette er meg for pokker',
+      ),
+      1109614681 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => 'oivind.hoel@appelsinjuice.org',
+        'url' => 'http://appelsiner.org',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'hgfhgf',
+      ),
     ),
   ),
 );

@@ -32,15 +32,14 @@ background: #fff;
 	include(KNIFE_PATH.'/class.articles.php');
 	include(KNIFE_PATH.'/class.comments.php');
 	include(KNIFE_PATH.'/class.users.php');				# load userclass - can't live without
+	include(KNIFE_PATH.'/lang/nb_no.php');				# load a language
 	
-include("inc/functions.php");
-include("plugins/markdown.php");
-$pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
-print_r($pathinfo_array);
-
-#$commentsclass = new CommentStorage('comments');
-$commentsclass = new KComments;
-
+	include("inc/functions.php");
+	include("plugins/markdown.php");
+	$pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
+	$commentsclass = new KComments;
+	$Userclass = new KUsers;
+	$KAclass = new KArticles;
 #
 #	Reset some variables
 #
@@ -55,8 +54,8 @@ $timestamp = 0;
 	$settingsdatabase = new SettingsStorage('settings');
 	$alltemplates = $settingsdatabase->settings['templates'];
 	$allcats = $settingsdatabase->settings['categories'];
-	$Userclass = new KUsers;
-	$allusers = $settingsdatabase->settings['users'];
+	
+	$allusers = $Userclass->getusers();
 	
 	$template = $alltemplates[1];
 	
@@ -64,7 +63,7 @@ $timestamp = 0;
 	$cat = $_GET[cat];
 	$from = $_GET[from];
 	
-	$KAclass = new KArticles;
+	
 	$allarticles = $KAclass->listarticles($amount, $from);
 	
 	if (!$_GET[k] and !$pathinfo_array[1]) {

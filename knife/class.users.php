@@ -33,6 +33,46 @@ function getusers() {
 	return $users;
 }
 
+function getnicks($allusers="FALSE") {
+	if ($allusers) {
+		$allusers = KUsers::getusers();
+		}
+	
+	foreach ($allusers as $username => $userdata) {
+		$username = trim($username);
+		$userdata[nickname] = trim($userdata[nickname]);
+		$usernicks[$userdata[nickname]] = $username;
+		}
+		
+	return $usernicks;
+	}
+	
+function indatabase($allusers="FALSE") {
+	if ($allusers) {
+		$allusers = KUsers::getusers();
+		}
+		
+	if (array_key_exists(urlTitle($_POST[comment][name]), $allusers)) {
+		$match = array(
+			"match" => true,
+			"type" => "name",
+			"name" => $_POST[comment][name],
+			);
+		}
+	else {
+		$usernicks = KUsers::getnicks($allusers);
+		if (array_key_exists($_POST[comment][name], $usernicks)) {
+			$match = array(
+				"match" => true,
+				"type" => "nick",
+				"name" => $_POST[comment][name],
+				"user" => $usernicks[$_POST[comment][name]],
+				);
+			}
+		}
+	return $match;
+	}
+	
 function collectlogin() {
 	$checkpost = array();
 	
