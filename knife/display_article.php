@@ -3,6 +3,7 @@
 #
 #		File loaded when displaying a single article
 #
+include(KNIFE_PATH.'/plugins/kses.php');
 		$k = $_GET[k];
 #		if (!$k) { $k = $pathinfo_array[1]; }
 		if (!$k) { $k = $KAclass->urldeconstructor($pathinfo_array, "title"); }
@@ -79,13 +80,13 @@
 				$quotecomment = $articlescomments[$comment[parentcid]];
 				$quoteout = $template[quote];
 				$quoteout = str_replace("{name}", $quotecomment[name], $quoteout);
-				$quoteout = str_replace("{quote}", Markdown($quotecomment[content]), $quoteout);
+				$quoteout = str_replace("{quote}", Markdown(kses_filter($quotecomment[content])), $quoteout);
 				
 				$output = str_replace("{parentquote}", $quoteout, $output);
 				}
 			else { $output = str_replace("{parentquote}", "", $output); }
 			
-			$output = str_replace("{comment}", Markdown($comment[content]), $output);
+			$output = str_replace("{comment}", Markdown(kses_filter($comment[content])), $output);
 			$output = str_replace("{ip}", $comment[ip], $output);
 			$output = str_replace("{author}", $comment[name], $output);
 			$output = str_replace("{date}", date("d/m/y H:i", $commentid), $output);
@@ -180,6 +181,7 @@
 		
 		$output = '<form method="post" style="margin-top: 20px; padding: 15px; border: 1px solid #999;">';
 		$output .= $template[commentform];
+		$output = str_replace("{allowedtags}", kses_filter("gettags"), $output);
 		$output .= '</form>';
 		echo $output;
 	

@@ -8,9 +8,9 @@
     	define( "KNIFE_PATH", dirname(__FILE__)."/");	# Absolute path to current script
     	}
     	
-	include(KNIFE_PATH.'/inc/functions.php');			# load common functions
-	include(KNIFE_PATH.'/config.php');					# load temporary config
-	include(KNIFE_PATH.'/inc/class.users.php');				# load userclass - can't live without
+	include_once(KNIFE_PATH.'/inc/functions.php');			# load common functions
+	include_once(KNIFE_PATH.'/config.php');					# load temporary config
+	include_once(KNIFE_PATH.'/inc/class.users.php');				# load userclass - can't live without
 
 
 
@@ -26,10 +26,10 @@ $null = $User->verify();
 #
 #	Now, load the language file chosen or load default one
 	if ($User->language) {
-		include(KNIFE_PATH.'/lang/'.$User->language);
+		include_once(KNIFE_PATH.'/lang/'.$User->language);
 		}
 	else {
-		include(KNIFE_PATH.'/lang/en_gb.php');
+		include_once(KNIFE_PATH.'/lang/en_gb.php');
 		}
 #
 #	We need to display the login form if no good login data is found
@@ -89,27 +89,27 @@ if ($User->username) {
 	# FIXME: Insert menu filter?
 	
 	if($_POST[panel] == "write" || $_GET[panel] == "write") {
-		include(KNIFE_PATH."/write.php");
+		include_once(KNIFE_PATH."/write.php");
 	}
 
 	if($_POST[panel] == "template" || $_GET[panel] == "template") {
-		include(KNIFE_PATH."/template.php");
+		include_once(KNIFE_PATH."/template.php");
 	}
 	
 	if($_POST[panel] == "edit" || $_GET[panel] == "edit") {
-		include(KNIFE_PATH."/edit.php");
+		include_once(KNIFE_PATH."/edit.php");
 	}
 
 	if($_POST[panel] == "users" || $_GET[panel] == "users") {
-		include(KNIFE_PATH."/users.php");
+		include_once(KNIFE_PATH."/users.php");
 	}
 
 	if($_POST[panel] == "options" || $_GET[panel] == "options") {
-		include(KNIFE_PATH."/options.php");
+		include_once(KNIFE_PATH."/options.php");
 		}
 		
 	if($_POST[panel] == "help" || $_GET[panel] == "help") {
-		include(KNIFE_PATH."/help.php");
+		include_once(KNIFE_PATH."/help.php");
 		}
 		
 	if($_POST[panel] == "logout" || $_GET[panel] == "logout") {
@@ -129,7 +129,7 @@ if ($User->username) {
 	#
 	#	Surrender, insert the dashboard
 	if (!$_GET[panel] && !$_POST[panel] or $_POST[panel] == "dashboard") {
-		include(KNIFE_PATH."/dashboard.php");
+		include_once(KNIFE_PATH."/dashboard.php");
 	}
 }
 	

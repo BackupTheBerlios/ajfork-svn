@@ -2117,6 +2117,21 @@ using markdown?!',
         'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
         'content' => 'New javascript redirect test',
       ),
+      1109629196 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind Hoel',
+        'email' => '',
+        'url' => '',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Comment with 
+
+<strong>html in it</strong>
+like strong and here<pre>preprepre      </pre>
+
+hell yeah',
+      ),
     ),
     1109615976 => 
     array (
@@ -2162,6 +2177,19 @@ Rewrite javascript. Fixed classes.',
         'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
         'content' => 'Posting a comment with configurable urls   
 v.0.0.1',
+      ),
+    ),
+    1109627134 => 
+    array (
+      1109630172 => 
+      array (
+        'parentcid' => '',
+        'name' => 'Øivind',
+        'email' => '',
+        'url' => '',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => '\',',
       ),
     ),
   ),

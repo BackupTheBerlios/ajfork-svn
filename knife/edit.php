@@ -3,8 +3,8 @@ if ($User->level < 3) {
 	die(i18n("login_noaccess"));
 	}
 
-include(KNIFE_PATH.'/inc/class.articles.php');
-include(KNIFE_PATH.'/inc/class.comments.php');
+include_once(KNIFE_PATH.'/inc/class.articles.php');
+include_once(KNIFE_PATH.'/inc/class.comments.php');
 
 #
 #	Show edit for for single article

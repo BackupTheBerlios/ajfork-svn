@@ -8,6 +8,10 @@
 #	be saved in data/articles.php
 #
 
+	if (!defined( "KNIFE_PATH" )) {
+    	define( "KNIFE_PATH", dirname(__FILE__)."/");	# Absolute path to current script
+    	}
+
 	include("inc/functions.php");								# get needed functions/classes
 	$ajforkdb = file("news.txt");								# load ajfork database
 	$knifedb = array();											# set up the knife database array
@@ -24,8 +28,16 @@
 			);
 		}
 	$dataclass = new ArticleStorage('storage');					# load a knife article class
-	$dataclass->settings['articles'] = $knifedb;				# overwrite the knife db with our db
-	$dataclass->save();											# save it all
+	$olddb = $dataclass->settings['articles'];
+	if ($olddb) {
+		$knifedb = $olddb + $knifedb;
+		krsort($knifedb);
+		reset($knifedb);
+		echo "<p>Old article database found. Merging with AJ-Fork database.</p>";
+		}
+$dataclass->settings['articles'] = $knifedb;				# overwrite the knife db with our db
+$dataclass->save();											# save it all
+		echo "<p>Database saved</p>";
 
 																# FINISHED
 ?>

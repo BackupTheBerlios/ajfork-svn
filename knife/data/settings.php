@@ -48,7 +48,7 @@ Comment posted {date} by <a href="{url}">{author}</a> (<a href="mailto:{mail}">@
 <input type="text" name="comment[name]" /> Name<br />
 <input type="text" name="comment[email]" /> Email<br />
 <input type="text" name="comment[url]" /> URL<br /><br />
-Comment<br />
+Comment <small>(allowed html: {allowedtags})</small><br />
 <textarea name="comment[content]" rows="7" cols="50"></textarea>
 <input type="submit" name="comment[submit]" value="Add" />',
       ),
