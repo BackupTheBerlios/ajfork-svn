@@ -1,5 +1,7 @@
 <?php
-
+if ($User[level] < 3) { 
+	die(i18n("login_noaccess"));
+	}
 
 include(KNIFE_PATH.'/class.articles.php');
 include(KNIFE_PATH.'/class.comments.php');

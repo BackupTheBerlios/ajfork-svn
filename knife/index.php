@@ -18,59 +18,17 @@
 #	variable murdering
 #
 
-unset($_GET[check], $_POST[check]);
+$Userclass = new KUsers;
+$User = $Userclass->verify();
 
-#
-#	authorization is ofcourse required
-#
-
-	$settingsdatabase = new SettingsStorage('settings');
-	$users = $settingsdatabase->settings['users'];
-	
-if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKIE["kmd5password"])) {
-
-	if ($_POST[username] and $_POST[password]) {
-	
-		$check = c_login($_POST[username], $_POST[password], "", $_POST[language]);
-		if ($check[status] == "verified") {
-			$c_md5password = md5($check[password]);
-			setcookie("kusername", $check[user], time()+3600);
-			setcookie("kmd5password", $c_md5password, time()+3600);	
-			setcookie("klanguage", $check[language]);
-			}
+	if ($User) {
+		include(KNIFE_PATH.'/lang/'.$User[language]);
 		}
-		
-	elseif ($_COOKIE["kusername"] && $_COOKIE["kmd5password"]) {
-	
-			$check = c_login($_COOKIE["kusername"], $_COOKIE["kmd5password"], "yes", $_COOKIE["klanguage"]);
-		if ($check[status] == "verified") {
-			$c_md5password = md5($check[password]);
-			}		
-		}
-	
-	}
-	
-# Load default locale or chosen locale
-# including en_gb is too static.
-# this needs a config option -> default language for admin panels
-# also, figure out why this doesn't work in the first screen.
-#  - what's wrong with the order??
-
-if	(!$_COOKIE[klanguage]) {
-		if(!$check[language]) {
-			include(KNIFE_PATH.'/lang/en_gb.php');
-			}
-		else {
-			include(KNIFE_PATH."/lang/".$check[language]);
-		}
-	}
 	else {
-		include(KNIFE_PATH."/lang/".$_COOKIE[klanguage]);
+		include(KNIFE_PATH.'/lang/en_gb.php');
 		}
-	
-	
 
-if ($check[status] == "unverified" or !$_COOKIE["kusername"] or !$_COOKIE["kmd5password"]) {
+if (!$User) {
 
 	$moduletitle = "knife - ". i18n("login_modtitle");
 	$menus[0] = "";
@@ -112,7 +70,9 @@ if ($check[status] == "unverified" or !$_COOKIE["kusername"] or !$_COOKIE["kmd5p
 #		  while fine-grained access restriction should be done in the modules.
 #
 
-if ($check[status] == "verified") {
+#if ($check[status] == "verified") {
+
+if ($User) {
 
 #	Set up the first menu
 
@@ -131,31 +91,19 @@ if ($check[status] == "verified") {
 	# FIXME: Insert menu filter?
 	
 	if($_POST[panel] == "write" || $_GET[panel] == "write") {
-		if ($check[level] >= 2) {
 		include(KNIFE_PATH."/write.php");
-		}
-		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "template" || $_GET[panel] == "template") {
-		if ($check[level] >= 4) {
 		include(KNIFE_PATH."/template.php");
-		}
-		else { $main_content = i18n("login_noaccess"); }
 	}
 	
 	if($_POST[panel] == "edit" || $_GET[panel] == "edit") {
-		if ($check[level] >= 3) {
 		include(KNIFE_PATH."/edit.php");
-		}
-		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "users" || $_GET[panel] == "users") {
-		if ($check[level] >= 4) {
 		include(KNIFE_PATH."/users.php");
-		}
-		else { $main_content = i18n("login_noaccess"); }
 	}
 
 	if($_POST[panel] == "options" || $_GET[panel] == "options") {
@@ -170,10 +118,11 @@ if ($check[status] == "verified") {
 		
 		# delete cookies
 		$menus[0] = "";
-		setcookie("kusername", "", time() - 3600);
-		setcookie("kmd5password", "", time() - 3600);
+#		setcookie("kusername", "", time() - 3600);
+#		setcookie("kmd5password", "", time() - 3600);
 		# header reload?
-		
+
+		$logout = $Userclass->logout();
 		# status message
 		$moduletitle = "Logout";
 		$statusmessage = "Successfully logged out.";
@@ -544,6 +493,7 @@ th {
 				print_r($_POST);
 				echo "\n\n-----------&lt;- post | cookie -&gt;---------------\n\n;";
 				print_r($_COOKIE);
+				print_r($Userclass->collectlogin());
 				echo "</pre></fieldset>";
 				}
 				?>

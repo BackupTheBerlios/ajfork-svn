@@ -1,4 +1,8 @@
 <?php
+if ($User[level] < 4) { 
+	die(i18n("login_noaccess"));
+	}
+	
 include("options.php");
 $moduletitle = "Manage users";
 

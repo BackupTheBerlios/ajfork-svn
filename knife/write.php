@@ -1,4 +1,7 @@
 <?php
+if ($User[level] < 2) { 
+	die(i18n("login_noaccess"));
+	}
 	
 	#
 	#	Setup
