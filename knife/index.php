@@ -9,10 +9,82 @@
 
 
 #
-#	Default menu
+#	variable murdering
 #
 
-	$menu = "
+unset($_GET[check], $_POST[check]);
+
+
+
+#
+#	authorization is ofcourse required
+#
+
+	$settingsdatabase = new SettingsStorage('settings');
+	$users = $settingsdatabase->settings['users'];
+	
+if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKIE["kmd5password"])) {
+
+	if ($_POST[username] and $_POST[password]) {
+	
+		$check = c_login($_POST[username], $_POST[password]);
+		if ($check[status] == "verified") {
+			$statusmessage = "You are logged in, $check[nickname]!";
+			$c_md5password = md5($check[password]);
+			setcookie("kusername", $check[user], time()+3600);
+			setcookie("kmd5password", $c_md5password, time()+3600);		
+			}
+		
+		else {
+			$statusmessage = "Sorry, $check[user], but I couldn't verify you...";
+			}
+		}
+		
+	elseif ($_COOKIE["kusername"] && $_COOKIE["kmd5password"]) {
+	
+			$check = c_login($_COOKIE["kusername"], $_COOKIE["kmd5password"], "yes");
+		if ($check[status] == "verified") {
+			$statusmessage = "You are logged in, $check[nickname]!";
+			$c_md5password = md5($check[password]);
+			}
+		
+		else {
+			$statusmessage = "Sorry, $check[user], but I couldn't verify you...";
+			}
+		
+		}
+	
+	}
+	
+
+if ($check[status] == "unverified" or !$_COOKIE["kusername"] or !$_COOKIE["kmd5password"]) {
+
+	$moduletitle = "knife - Authorization required";
+	$menus[0] = "";
+	
+	# FIXME: Insert menu filter?
+	
+	$main_content = '<div id="login_div"><p>You need to provide valid credentials to view any sections of this software. This requires a browser that supports cookies.</p>
+	<form id="login" method="post" action="">
+	<input type="hidden" name="panel" value="dashboard" />
+<p><input class="inshort" type="text" name="username" id="login_username" /> <label for="login_username">Username</label></p>
+<p><input class="inshort" type="password" name="password" id="login_password" /> <label for="login_password">Password</label></p>
+<p><input type="submit" name="sendlogin" value="Login" /></p>
+	</form></div>';
+	}
+
+
+#
+#	If we're successfully logged in ($check[status] says verified), we can start including the modules
+#		- Permission levels should be taken care of roughly in the includes below,
+#		  while fine-grained access restriction should be done in the modules.
+#
+
+if ($check[status] == "verified") {
+
+#	Set up the first menu
+
+	$menus[0] = "
 	<ul>
 		<li><a href=\"index.php\">dashboard</a></li>
 		<li><a href=\"?panel=write\">write</a></li>
@@ -20,56 +92,73 @@
 		<li><a href=\"?panel=options\">options</a></li>
 		<li>help</li>
 		<li>plugins</li>
-		<li>Øivind (logout)</li>
+		<li><a href=\"?panel=logout\">$check[nickname] (logout)</a></li>
 	</ul>
 	";
 
-#
-#	Include modules
-#
+	# FIXME: Insert menu filter?
+	
+	if($_POST[panel] == "write" || $_GET[panel] == "write") {
+		if ($check[level] >= 2) {
+		include("write.php");
+		}
+		else { $main_content = "Insufficient access"; }
+	}
 
-if($_POST[panel] == "write" || $_GET[panel] == "write") {
-	include("write.php");
-}
-
-if($_POST[panel] == "template" || $_GET[panel] == "template") {
-	include("template.php");
+	if($_POST[panel] == "template" || $_GET[panel] == "template") {
+		if ($check[level] >= 4) {
+		include("template.php");
+		}
+		else { $main_content = "Insufficient access"; }
 	}
 	
-if($_POST[panel] == "edit" || $_GET[panel] == "edit") {
-	include("edit.php");
-}
-
-if($_POST[panel] == "users" || $_GET[panel] == "users") {
-	include("users.php");
-}
-
-if($_POST[panel] == "options" || $_GET[panel] == "options") {
-	include("options.php");
-}
-
-
-if (!$_GET[panel] && !$_POST[panel]) {
-	include("dashboard.php");
+	if($_POST[panel] == "edit" || $_GET[panel] == "edit") {
+		if ($check[level] >= 3) {
+		include("edit.php");
+		}
+		else { $main_content = "Insufficient access"; }
 	}
 
-#
-#	If loaded module doesn't output a status message, Print this
-#
-
-if (!$statusmessage) { 
-	$statusmessage = "Login successful";
+	if($_POST[panel] == "users" || $_GET[panel] == "users") {
+		if ($check[level] >= 4) {
+		include("users.php");
+		}
+		else { $main_content = "Insufficient access"; }
 	}
-	
+
+	if($_POST[panel] == "options" || $_GET[panel] == "options") {
+		include("options.php");
+		}
+		
+	if($_POST[panel] == "logout" || $_GET[panel] == "logout") {
+		
+		# delete cookies
+		$menus[0] = "";
+		setcookie("kusername", "", time() - 3600);
+		setcookie("kmd5password", "", time() - 3600);
+		
+		# status message
+		$moduletitle = "Logout";
+		$statusmessage = "Successfully logged out.";
+		$main_content = "Cookies cleared. Do you want to <a href=\"index.php\">log in again?</a>";
+	}
+
+	if (!$_GET[panel] && !$_POST[panel] or $_POST[panel] == "dashboard") {
+		include("dashboard.php");
+	}
+}
 	
 ?>
-
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>knife: <?php echo "$moduletitle (Øivind)"; ?></title>
+<title><?php echo "$moduletitle ($check[user])"; ?></title>
 <style type="text/css">
+
+/*
+	Tag redefinition
+*/
 
 html,body {
 	background: #fffaee;
@@ -83,14 +172,30 @@ a {
 	display: inline-block;
 	}
 
+h1, h2, h3 {
+	margin-top: 3px;
+/*	font-family: "Georgia";*/
+	}
+/*
+	Major ID's
+*/
+
 #body {
 	margin: auto;
 	background: #fff;
 	width: 900px;
 	}
 #mainframe {
-	padding: 5px;
+	padding: 0 5px 5px 5px;
 	border: 1px solid #f3eedc;
+	}
+	
+#header {
+	background: #fff url(graphics/logo.png) no-repeat bottom right;
+}
+
+#header h1:first-letter {
+	color: #f32988;
 	}
 	
 #menu li {
@@ -109,11 +214,16 @@ a {
 	margin-left: auto;
 	margin-right: 10px;
 	text-align: right;
-	width: 70%;
-	background: #fffaee url(graphics/fade-butt.png) repeat-x;
-	border: 1px solid #333;
-	padding: 3px;
+	width: 100%;
+	background: #e5f363;
+	border: 1px solid #e5f3c3;
+	padding: 0px;
 	margin-bottom: 10px;
+}
+
+#div_extended_options {
+	padding-right: 10px;
+	float: right;
 }
 
 #footer {
@@ -124,48 +234,12 @@ a {
 	clear: both;
 	}
 
-	
-form.cpform textarea {
-		width: 90%;
-		height: 150px;
-		}
-
-input, textarea {
-	background: #f6f7f8;
-	border: 1px solid #dae4ea;
-	}
-
-input:focus, textarea:focus {
-	background: #fff;
-	}
-	
-form.cpform input {
-	margin: 0 5px 0 0;
-	}
-	
-#edit_template_switch {
-	border: 1px solid #dae4ea;
-	padding: 5px;
-	}
-	
-
-table {
-	width: 100%;
-	font-size: 0.87em;
-	text-align: left;
-	}
-td {
-	padding: 1px 25px 1px 1px;
-}
-
-
 /*
-	text-mode buttons
+	buttons and form stuff
 */
 
 span.delete a {
 	color: fff;
-	display: inline-block;
 	padding: 0 3px 0 3px;
 	text-align: center;
 	background: #d94848;
@@ -178,6 +252,77 @@ input.delete {
 	color: #fff;
 	}
 
+input, textarea {
+	background: #f6f7f8;
+	border: 1px solid #dae4ea;
+	}
+
+input:focus, textarea:focus {
+	background: #fff;
+	}
+
+textarea {
+	width: 90%;
+	}
+
+.inshort {
+	width: 150px;
+}
+.inmedium {
+	width: 250px;
+}
+.inlong {
+	width: 350px;
+}
+
+.tasmall {
+	height: 150px;
+}
+.tamedium {
+	height: 350px;
+}
+.talarge {
+	height: 550px;
+}
+	
+form.cpform input {
+	margin: 0 5px 0 0;
+	}
+	
+#edit_template_switch {
+	border: 1px solid #dae4ea;
+	padding: 5px;
+	}
+
+
+fieldset {
+	border: 1px solid #f3e3ac;
+	-moz-border-radius: 5px;
+	padding: 5px;
+}
+fieldset legend {
+	font-weight: bold;
+	}
+
+
+
+/*
+	tables
+*/
+
+table {
+	width: 100%;
+	font-size: 0.87em;
+	text-align: left;
+	}
+td {
+	padding: 1px 25px 1px 1px;
+}
+th {
+	font-size: 120%;
+}
+
+
 </style>
 </head>
 
@@ -189,8 +334,11 @@ input.delete {
 		<div id="menu">
 		<?php
 #			$menu = run_filters('admin-menu-content',$menu);
-			echo $menu;
-			echo $secondarymenu;
+			foreach ($menus as $null => $menu) {
+				echo $menu;
+			}
+#			echo $menu;
+#			echo $secondarymenu;
 			?>
 		</div>
 	</div>
@@ -210,13 +358,18 @@ input.delete {
 	</div>
 	
 	<div id="footer">
-		<span style="color: #f32988;">k</span>nife 0.1 &quot;U2 - cutting edge stuff&quot; <?php $_GET[debug] = 1; if ($_GET[debug]) { echo "(debug mode)"; } ?>
-		<?php
-			if ($_GET[debug]) {
-				echo "<pre>";
+		<span style="color: #f32988;">k</span>nife 0.2 &quot;cutting edge personal publishing - do we need a new name?&quot; - Licensed under the <strong>GPL</strong>
+		<?php 
+			if (!$_GET[debug]) { 
+				$_GET[debug] = 1;
+				} 
+			if ($_GET[debug] == 1) {
+				echo " (debug mode)<br /><pre>";
 				print_r($_GET);
-				echo "\n\n-----------&lt;- get | post -&gt;---------------\n\n";
+				echo "\n\n-----------&lt;- get  | post   -&gt;---------------\n\n";
 				print_r($_POST);
+				echo "\n\n-----------&lt;- post | cookie -&gt;---------------\n\n;";
+				print_r($_COOKIE);
 				echo "</pre>";
 				}
 				?>

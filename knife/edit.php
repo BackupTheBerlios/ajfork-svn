@@ -14,16 +14,25 @@ if ($_GET[id] && !$_POST[id] && !$_GET[action]) {
 	$moduletitle = "Edit &quot;$editentry[title]&quot;";
 	# form stuff here
 	
-$main_content .= '<form id="edit_article_form" class="cpform" method="post">
+$main_content .= '
+<script src="inc/quicktags.js" language="JavaScript" type="text/javascript"></script>
+
+<div id="edit_single_article_screen">Written by '.$editentry[author].' at '.date("j F Y, H:i", $_GET[id]).'<form id="edit_article_form" class="cpform" method="post">
 	<input type="hidden" name="panel" value="edit" />
 	<input type="hidden" name="id" value="'.$_GET[id].'" />
-	<p><input value="'.$editentry[title].'" type="text" id="edit_article_title" name="article[title]" /><label for="edit_article_title">Title</label></p>
-	<p><input value="'.$editentry[category].'" type="text" id="edit_article_category" value="General" name="article[category]" /><label for="edit_article_category">Category</label></p>
-	<p><input value="'.$editentry[author].'" type="text" id="edit_article_author" name="article[author]" /><label for="edit_article_author">Author</label></p>
-	<p><label for="edit_article_content">Content</label><br /><textarea id="edit_article_content" name="article[content]">'.$editentry[content].'</textarea></p>
+	<p><label for="edit_article_title">Title</label> and <label for="edit_article_category">Category (fixme)</label><br /><input class="inlong" value="'.$editentry[title].'" type="text" id="edit_article_title" name="article[title]" /> <input value="'.$editentry[category].'" type="text" id="edit_article_category" value="General" name="article[category]" /></p>
+	<p><label for="edit_article_content">Content</label><br />
+	<script language="JavaScript" type="text/javascript">edToolbar();</script>
+	<textarea class="tamedium" id="edit_article_content" name="article[content]">'.$editentry[content].'</textarea>
+	<script type="text/javascript" language="JavaScript">
+<!--
+edCanvas = document.getElementById(\'edit_article_content\');
+//-->
+</script>
+</p>
 	<p><input type="submit" value="Edit article" /></p>
 	
-	</form>';
+	</form></div>';
 }
 
 #
@@ -72,19 +81,31 @@ if (!$_GET[id] && !$_POST[editlist]) {
 	$articledatabase = new ArticleStorage('storage');
 	$allarticles = $articledatabase->settings['articles'];
 	
+	$dataclass = new SettingsStorage('settings');
+	$allcats = $dataclass->settings['categories'];
+	
 	krsort($allarticles);
 	$moduletitle = "Edit articles";
-	$main_content .= "<form id=\"edit_article_list\" method=\"post\" class=\"cpform\"><table><thead><th>Title</th><th>Date</th><th>Category</th><th>Actions</th></thead>";
+	$main_content .= "<form id=\"edit_article_list\" method=\"post\" class=\"cpform\"><table><tr><th>Title</th><th>Date</th><th>Category</th><th>Author</th><th style=\"text-align: right;\">Actions</th></tr>";
 	foreach($allarticles as $date => $article) {
 	
+	$catarray = explode(", ", $article[category]);
+
+	# Replace the category numbers with their names
+		foreach ($catarray as $null => $thiscatid) {
+			$thiscatinfo = $allcats[$thiscatid];
+			$catarray[$null] = $thiscatinfo[name];
+			}
+	$thiscatnamelisting = implode(", ", $catarray);
 	$main_content .= "<tr>
 			<td><a href=\"?panel=edit&amp;id=$date\">$article[title]</a></td>
 			<td>".date("d/m/y", $date)."</td>
-			<td>$article[category]</td>
-			<td><span class=\"delete\"><a href=\"?panel=edit&amp;id=$date&amp;action=delete\" title=\"Quick-Erase $article[title] ?\">X</a></span> <input type=\"checkbox\" name=\"id\" value=\"$date\" /></td>
+			<td><acronym title=\"$thiscatnamelisting\">$article[category]</acronym></td>
+			<td>$article[author]</td>
+			<td style=\"text-align: right;\"><span class=\"delete\"><a href=\"?panel=edit&amp;id=$date&amp;action=delete\" title=\"Quick-Erase $article[title] ?\">X</a></span> <input type=\"checkbox\" name=\"id[]\" value=\"$date\" /></td>
 		</tr>";	
 	}
-	$main_content .= "</table><div style=\"text-align: right;\"><input type=\"submit\" name=\"editlist[submit]\" value=\"Perform\" /></div></form>";
+	$main_content .= "</table><div style=\"text-align: right;\"><br /><input type=\"submit\" name=\"editlist[submit]\" value=\"Perform\" /></div></form>";
 
 }
 
@@ -93,24 +114,27 @@ if (!$_GET[id] && !$_POST[editlist]) {
 #
 if ($_GET[action] == "delete" || $_POST[editlist]) {
 
-	$id = $_GET[id];
-	if (!$id) { $id = $_POST[id]; }
-	
-	if (!is_array($id)) {
-	echo "id = $id";
-	$dataclass = new ArticleStorage('storage');
-	$articles = $dataclass->settings['articles'];
+		$dataclass = new ArticleStorage('storage');
+		$articles = $dataclass->settings['articles'];
 
-#	$dataclass->delete($id);
+	if ($_GET[action] == "delete") {
+		$id = $_GET[id];
 	
-	$moduletitle = "Delete article";
+		$dataclass->delete($id);
 	
-	# Give the user a status message
-	$statusmessage = "Article successfully deleted!".print_r($id);
+		$moduletitle = "Delete article";
+	
+		# Give the user a status message
+		$statusmessage = "Article successfully deleted!";
 	}
-	
+
 	else {
-		$statusmessage = "Many selected!".print_r($id);
+	$id = $_POST[id];
+	$statusmessage = "All selected articles deleted<br /><a href=\"?panel=edit\">Back to list?</a>";
+	foreach ($id as $null => $thisid) {
+		$dataclass->delete($thisid);
 		}
+	}
+
 }
 ?>

@@ -1,5 +1,19 @@
 # Changelog
 
+	[tue 08 feb]
+	
+	New: Add categories (multiple)
+	New: Quicktag buttons off AJ-Fork implemented
+	
+	Fix: New article screen uses stored categories
+	Fix: Edit articles list uses stored categories
+
+	[mon 07 feb]
+	
+	New: Login system in place.
+	Fix: Write article uses logged in user
+	Fix: Multiple article deletion works
+
 	[sun 06 feb]
 	
 	New: Add template

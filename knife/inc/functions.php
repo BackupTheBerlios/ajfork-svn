@@ -109,15 +109,11 @@ function msg_status($message) {
 function sanitize_variables($variable) {
 		
 		$search = array(
-				"\"",
 				"\'",
-#				"'\t'",
 				);
 				
 		$replace = array(
-				"&quot;",
 				"&#39;",
-#				"",
 				);
 
 		$variable = str_replace($search, $replace, $variable);
@@ -194,5 +190,51 @@ function formatsize($file_size){
 return $file_size;
 }
 
+#
+#	Login function
+#
+
+function c_login($gusername, $gpassword, $cookie=FALSE) {
+	global $users, $configuration;
+	
+	$unique = UNIQUE;
+	$unique_password = $gpassword . $unique;
+
+	if (!$cookie) {
+		$e_given = md5($gpassword);
+		$e_given = sha1($e_given.$unique);
+	}
+	
+	if ($cookie) {
+		$e_given = sha1($gpassword.$unique);
+		}
+	
+		
+	foreach ($users as $user => $userdata) {
+		if (urlTitle($gusername) == urlTitle($user)) {
+			if ($e_given == $userdata[password]) {
+				$return = array(
+					"user" => $user,
+					"nickname" => $userdata[nickname],
+					"password" => $gpassword,
+					"status" => "verified",
+					"level" => $userdata[level],
+					);
+				}
+			}
+		}
+				
+	if (!$return) {
+		$return = array(
+			"user" => $gusername, 
+			"password" => $gpassword,
+			"status" => "unverified",
+			"level" => 0,
+			);
+		}
+	
+	return $return;
+
+}
 
 ?>

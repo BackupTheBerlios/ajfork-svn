@@ -1,4 +1,5 @@
 <?php
+include("options.php");
 $moduletitle = "Manage users";
 
 if($_POST[adduser]) {
@@ -17,8 +18,8 @@ if($_POST[adduser]) {
 	$_POST[adduser][name] = sanitize_variables($_POST[adduser][name]);
 	$_POST[adduser][password] = sanitize_variables($_POST[adduser][password]);
 	
-			$postaddpassu = $_POST[adduser][password].UNIQUE;
-	$_POST[adduser][password] = sha1(md5($postaddpassu));
+	$_POST[adduser][password] = md5($_POST[adduser][password]);
+	$_POST[adduser][password] = sha1($_POST[adduser][password].UNIQUE);
 	
 	$_POST[adduser][email] = sanitize_variables($_POST[adduser][email]);
 	$_POST[adduser][url] = sanitize_variables($_POST[adduser][url]);
@@ -84,8 +85,8 @@ if($_POST[edituser]) {
 		# has the password changed?
 		
 		if ($_POST[edituser][password] != "") {
-			$postaddpassu = $_POST[edituser][password].UNIQUE;
-			$_POST[edituser][password] = sha1(md5($postaddpassu));
+			$_POST[edituser][password] = md5($_POST[edituser][password]);
+			$_POST[edituser][password] = sha1($_POST[edituser][password].UNIQUE);
 			$passchange = "y";
 			}
 		# guess not
@@ -147,11 +148,11 @@ if($_GET[edit] && !$_POST[edituser] && !$_GET[action]) {
 		
 		
 		$main_content .='
-		</select></p><p><input type="text" id="edit_user_nname" name="edituser[nickname]" value="'.$usertoedit[nickname].'" /><label for="edit_user_nname">Nickname</label></p>
-		<p><input type="text" id="edit_user_password" name="edituser[password]" /><label for="edit_user_password">Password</label></p>
-		<p><input type="text" id="edit_user_email" name="edituser[email]" value="'.$usertoedit[email].'" /><label for="edit_user_email">Email</label></p>
-		<p><input type="text" id="edit_user_url" name="edituser[url]" value="'.$usertoedit[url].'" /><label for="edit_user_url">Website</label></p>
-		<p><label for="edit_user_profile">Profile</label><br /><textarea id="edit_user_profile" name="edituser[profile]">'.$usertoedit[profile].'</textarea></p>
+		</select></p><p><input class="inshort" type="text" id="edit_user_nname" name="edituser[nickname]" value="'.$usertoedit[nickname].'" /><label for="edit_user_nname">Nickname</label></p>
+		<p><input class="inshort" type="text" id="edit_user_password" name="edituser[password]" /><label for="edit_user_password">Password</label></p>
+		<p><input class="inmedium" type="text" id="edit_user_email" name="edituser[email]" value="'.$usertoedit[email].'" /><label for="edit_user_email">Email</label></p>
+		<p><input class="inmedium" type="text" id="edit_user_url" name="edituser[url]" value="'.$usertoedit[url].'" /><label for="edit_user_url">Website</label></p>
+		<p><label for="edit_user_profile">Profile</label><br /><textarea class="tamedium" id="edit_user_profile" name="edituser[profile]">'.$usertoedit[profile].'</textarea></p>
 		<p><input type="submit" value="Save changes" /></p>
 		</form></div><div style="float: right;"><p>Extended options</p></div>';
 		}
@@ -181,18 +182,18 @@ if (!$_POST[adduser] && !$_GET[edit]) {
 	<div id="manage_users_main" style="float: left; width: 80%;"><h2>Add user</h2>
 	<form id="add_user_form" class="cpform" method="post">
 	<input type="hidden" name="	panel" value="users" />
-	<p><label for="add_user_name">Name</label><br /><input type="text" id="add_user_name" name="adduser[name]" /> 
+	<p><label for="add_user_name">Name</label><br /><input class="inshort" type="text" id="add_user_name" name="adduser[name]" /> 
 	<select id="add_user_level" name="adduser[level]">
 		<option value="4">Admin</option>
 		<option value="3">Editor</option>
 		<option value="2">Journalist</option>
 		<option value="1">Commenter</option>
 	</select> <label for="add_user_level">Access level</label></p>
-	<p><input type="text" id="add_user_nname" name="adduser[nickname]" /><label for="add_user_nname">Nickname</label></p>
-	<p><input type="text" id="add_user_password" name="adduser[password]" /><label for="add_user_password">Password</label></p>
-	<p><input type="text" id="add_user_email" name="adduser[email]" /><label for="add_user_email">Email</label></p>
-	<p><input type="text" id="add_user_url" name="adduser[url]" /><label for="add_user_url">Website</label></p>
-	<p><label for="add_user_profile">Profile</label><br /><textarea id="add_user_profile" name="adduser[profile]"></textarea></p>
+	<p><input class="inshort" type="text" id="add_user_nname" name="adduser[nickname]" /><label for="add_user_nname">Nickname</label></p>
+	<p><input class="inshort" type="text" id="add_user_password" name="adduser[password]" /><label for="add_user_password">Password</label></p>
+	<p><input class="inmedium" type="text" id="add_user_email" name="adduser[email]" /><label for="add_user_email">Email</label></p>
+	<p><input class="inmedium" type="text" id="add_user_url" name="adduser[url]" /><label for="add_user_url">Website</label></p>
+	<p><label for="add_user_profile">Profile</label><br /><textarea class="tamedium" id="add_user_profile" name="adduser[profile]"></textarea></p>
 	<p><input type="submit" value="Add user" /></p>
 	</form>
 	
@@ -202,7 +203,7 @@ if (!$_POST[adduser] && !$_GET[edit]) {
 	foreach ($currentusers as $username => $userdata) {
 		$level = $userdata[level];
 		$level = $leveltotext[$level];
-		$main_content .= "<tr><form method=\"get\"><input type=\"hidden\" name=\"panel\" value=\"users\" /><input type=\"hidden\" name=\"edit\" value=\"$username\" /><td>$username</td><td>$level</td><td>$userdata[registered]</td><td></td><td><input type=\"submit\" value=\"Edit\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"Delete\" /></td></form></tr>";
+		$main_content .= "<tr><form method=\"get\"><input type=\"hidden\" name=\"panel\" value=\"users\" /><input type=\"hidden\" name=\"edit\" value=\"$username\" /><td>$username</td><td>$level</td><td>".date("j. F Y", $userdata[registered])."</td><td></td><td><input type=\"submit\" value=\"Edit\" /><input type=\"submit\" name=\"action\" class=\"delete\" value=\"Delete\" /></td></form></tr>";
 		}
 	$main_content .='
 	</table>

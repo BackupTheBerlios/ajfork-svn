@@ -90,7 +90,7 @@ if (!$_POST[template] && !$_POST[changet] || $_POST[tswitch][submit]) {
 	$main_content = "";
 	$main_content .= '<form id="edit_template_switch" class="cpform" method="post">';
 	$main_content .= makeDropDown($alltemplates, "id", $templateid);
-	$main_content .= ' <input type="submit" name="tswitch[submit]" value="Edit" /><input type="submit" class="delete" name="changet[delete]" value="Delete" /><input type="submit" name="changet[new]" value="New based on this" /> named <input type="text" name="changet[name]" /></form>';
+	$main_content .= ' <input type="submit" name="tswitch[submit]" value="Edit" /><input type="submit" class="delete" name="changet[delete]" value="Delete" /><input type="submit" name="changet[new]" value="New based on this" /> named <input type="text" name="changet[name]" class="inshort" /></form>';
 
 
 #	load selected template
@@ -141,7 +141,7 @@ $tvars_commentform = array(
        <form id="edit_template" class="cpform" method="post">
        <input type="hidden" name="template[id]" value="'.$templateid.'" />
        <input type="hidden" name="panel" value="template" />
-	<label for="edit_template_name">Template name</label><input type="text" id="edit_template_name" name="template[name]" value="'.$template[name].'"/>
+	<label for="edit_template_name">Template name</label><input type="text" class="inshort" id="edit_template_name" name="template[name]" value="'.$template[name].'"/>
 	<label for="edit_template_articlelist"><h2>Articlelist template</h2></label>
 
 	<table>';
@@ -151,7 +151,7 @@ $tvars_commentform = array(
 		}
 		
 	$main_content .= '
-	</table><textarea id="edit_template_articlelist" name="template[listing]">'.$template[listing].'</textarea>
+	</table><textarea class="tamedium" id="edit_template_articlelist" name="template[listing]">'.$template[listing].'</textarea>
 	<label for="edit_template_view"><h2>Article template</h2></label>
 	<table>';
 	
@@ -160,7 +160,7 @@ $tvars_commentform = array(
 		}
 		
 	$main_content .= '
-	</table><textarea id="edit_template_view" name="template[view]">'.$template[view].'</textarea>
+	</table><textarea class="tamedium" id="edit_template_view" name="template[view]">'.$template[view].'</textarea>
 	<label for="edit_template_comment"><h2>Comment template</h2></label>
 	<table>';
 	
@@ -169,7 +169,7 @@ $tvars_commentform = array(
 		}
 		
 	$main_content .= '
-	</table><textarea id="edit_template_comment" name="template[comment]">'.$template[comment].'</textarea>
+	</table><textarea class="tasmall" id="edit_template_comment" name="template[comment]">'.$template[comment].'</textarea>
 	<label for="edit_template_commentform"><h2>Commentform template</h2></label>
 	<table>';
 	
@@ -178,7 +178,7 @@ $tvars_commentform = array(
 		}
 		
 	$main_content .= '
-	</table><textarea id="edit_template_commentform" name="template[commentform]">'.$template[commentform].'</textarea>
+	</table><textarea class="tasmall" id="edit_template_commentform" name="template[commentform]">'.$template[commentform].'</textarea>
 	<div><input type="submit" value="Save template" /></div>
 	</form>';
 }
