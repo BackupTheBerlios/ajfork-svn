@@ -1,0 +1,129 @@
+/* AJ-Fork example css */
+html,body {
+	background: #CDD798;
+	font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+	color: #777777;
+	font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+}
+/* Link text */
+a {
+	text-decoration: none;
+	border-bottom: 1px solid #eee;
+	color: #DF6A00;
+	}
+/* Link text with mouse on it */
+a:hover {
+	color: #FDB101;
+	border-bottom: 1px solid #DDD;
+	}
+/* Beautify the form fields */
+input, textarea {
+	font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+	font-size: 12px;
+	color: #777777;
+	background: #F1F3E5;
+	border: 1px solid #D9DDC4;
+	}
+/* Icons should _never_ have borders around them unless you say so, right? */	
+img {
+	border: 0px;
+	}
+/* The following five styles are used for articles. */
+div.article {
+	margin: 0px 0px 35px 0px;
+	}
+div.articletext {
+	padding-left: 5px;
+	}
+h1 {
+	margin: 0px 0px 5px 0px;
+	padding: 0;
+	font: 18px "Trebuchet MS", Arial,Helvetica,sans-serif;
+	text-transform: uppercase;
+	color: #98A174;
+	letter-spacing: 2px;
+	}
+h2 {
+	margin: 5px 0px 0px 0px;
+	padding: 0;
+	font: 10px "Trebuchet MS", Arial,Helvetica,sans-serif;
+	text-transform: uppercase;
+	color: #666;
+	}
+h2 em {
+	font-family: "Trebuchet MS", Arial,Helvetica,sans-serif;
+	font-style: normal;
+	color: #999;
+	}	
+.cn_comment_even {
+	border-top: 1px dashed #D9DDC4;
+	margin-top: 5px;
+	background: #fbffe6;
+	padding-top: 3px;
+	}
+.cn_comment_odd {
+	border-top: 1px dashed #D9DDC4;
+	}
+.desc {
+	margin-left: 15px;
+	}
+.specials {
+	margin: 5px 0px 0px 0px;
+	padding: 0;
+	font: 10px "Trebuchet MS", Arial,Helvetica,sans-serif;
+	text-transform: uppercase;
+	color: #666;
+	}
+.specials em {
+	font-family: "Trebuchet MS", Arial,Helvetica,sans-serif;
+	font-style: normal;
+	color: #999;
+	}
+#latestcomments {
+	padding-right: 5px;
+	}
+
+/* Contains all the content, including menus and such */
+#body {
+	width: 700px;
+	padding: 10px;
+	border-right: 20px solid #336699;
+	background: #fff;
+	height: 100%;
+	}
+/* The top box */
+#header {
+	font-size: 15px;
+	font-weight: bold;
+	background: #CDD798;
+	border: 1px solid #D9DDC4;
+	margin-bottom: 10px;
+	color: #fff;
+	padding: 5px;
+	}
+/* The menu floating left of content */
+#menu {
+	float: left;
+	width: 120px;
+	margin-right: 30px;
+	border-right: 1px dashed #D9DDC4;
+	height: 100%;
+	}
+/* Main content in here */
+#news {
+	width: 500px;
+	margin-left: 150px;
+	}
+/* Footer (powered / valid xhtml / blablabla) */
+#footer {
+	width: 100%;
+	font-size: 9px;
+	border-top: 1px solid #D9DDC4;
+	}
+/* Used to force browsers to draw everything as it should be drawn */
+div.spacer {
+	font-size: 1px;
+  	clear: both;
+  }

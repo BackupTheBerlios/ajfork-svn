@@ -1,0 +1,27 @@
+<?PHP
+	$translations_vis = available_languages();
+	echoheader("credits", "Credits");
+	$i = 1;
+	$t = count($translations_vis);
+	foreach ($translations_vis as $null => $language) {
+		if ($i == $t) { $sep = ""; } else { $sep = "<br />"; }
+		$transvislist .= "<strong>$language[name]</strong>: <a href=\"$language[uri]\">$language[author]</a>$sep";
+		$i++;
+		}
+    echo"
+    <div id=\"creditsmdu\">
+	<p>This project was initiated by <a href=\"http://appelsinjuice.org/\">Øivind Hoel</a>, is based on <a href=\"http://cutephp.com\">Cutenews</a> by Georgi Amrov, and 
+	forked off version 1.3.1 of that project. Since then, AJ-Fork development has been mostly independent of Cutenews. What many people consider the 
+	main advantage of AJ-Fork; the fantastic plugin system, was implemented by <a href=\"http://brandedthoughts.co.uk\">Dave Carrington</a>, based on that of 
+	<a href=\"http://wordpress.org\">Wordpress</a>, another great web publishing tool geared even more towards blogging. The menu above is credited <a href=\"http://alistapart.com\">A list apart</a>.</p>
+	<h2>Huge thanks to</h2>
+	<p><a href=\"http://www.jubbag.com\">Jared Judge</a> (aka JubbaG), <a href=\"http://lifeinjersey.co.uk\">John Patrick</a> (aka John/Will), <a href=\"http://cutephp.com/forum/index.php?showuser=4\">StealthEye</a> (Mastermind behind Xfields), <a href=\"http://jimmac.musichall.cz/\">Jakub Steiner</a> (aka jimmac)</p>
+	<h2>Official betatesters</h2>
+	<p>Heitor Real (aka Xamataca), <a href=\"http://www.digitalday.de\">Lars Wohlfahrt</a> (aka |yoda), F. C. (aka Mohican), Anonymous (aka k0nsl), Bartosz Brzezinski (aka bartoszbr), <a href=\"http://ajfork.berlios.de/forum/groupcp.php?g=3\">and more</a></p>
+	<h2>Translators</h2>
+	<p>$transvislist</p>
+
+    </div>";
+
+	echofooter();
+?>

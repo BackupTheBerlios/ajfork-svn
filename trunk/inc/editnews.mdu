@@ -1,0 +1,719 @@
+<?PHP
+
+if($member_db[1] > 3){ msg("error", "Access Denied", "You don't have permission to edit news"); }
+// ********************************************************************************
+// List all news available for editing
+// ********************************************************************************
+if($action == "list")
+{
+	if (!$source) { echoheader("editnews","Edit News"); }
+	else { echoheader("editnews","Edit Archives"); }
+
+    $cat_lines = @file("./data/category.db.php");
+    foreach($cat_lines as $null => $single_line){
+		$cat_arr = explode("|", $single_line);
+        $cat[$cat_arr[0]] = $cat_arr[1];
+    }
+	$cat = run_filters('edit-define-categories',$cat);
+	
+    // How Many News to show on one page
+    if($news_per_page == ""){ $news_per_page = 21; }
+
+    $all_db = array();
+    if($source == ""){ $all_db = file("./data/news.txt"); }
+    else{ $all_db = file("./data/archives/${source}.news.arch"); }
+
+
+
+// choose only needed news items
+if ($category != "" or $author != "" or $member_db[1] == 3){
+	foreach($all_db as $null => $raw_line){
+		$raw_arr = explode("|", $raw_line);
+        if (($category == "" or $raw_arr[6] == $category) and ($author == "" or $raw_arr[1] == $author) and( $member_db[1] != 3 or $raw_arr[1] == $member_db[2] )){
+ 			$all_db_tmp[] = $raw_line;
+        }
+    }
+$all_db = $all_db_tmp;
+}
+
+
+// Prelist Entries
+    $flag = 1;
+	if($start_from == "0"){ $start_from = ""; }
+    $i = $start_from;
+    $entries_showed = 0;
+
+if(!empty($all_db)){
+	// Three lines to type, Three lines to sort alphabetically (by actual date in this case)
+		asort($all_db);
+		reset($all_db);
+		$all_db = array_reverse($all_db);
+
+    foreach ($all_db as $null => $line){
+        if($j < $start_from){ $j++; continue; }
+        $i++;
+
+        $item_db = explode("|",$line);
+     	$itemdate = date("d/m/y",$item_db[0]);
+
+	     	if($flag == 1){ $bg="alternate"; $flag = 0; }
+	     	else {$bg = "alternate2"; $flag = 1;}
+
+	     	if(strlen($item_db[2]) > 74){ $title = substr($item_db[2],0,70)." ..."; }
+            $title = stripslashes( preg_replace(array("'\|'", "'\"'", "'\''"), array("I", "&quot;", "&#039;"), $item_db[2]) );
+	     	$entries .= "<tr>
+
+		<td class=\"$bg\">
+	         <!-- ID: $item_db[0]--><a title='EDIT: $item_db[2]' href=\"$PHP_SELF?mod=editnews&amp;action=editnews&amp;id=$item_db[0]&amp;source=$source\">$title</a></td>
+    	     <td class=\"$bg\">";
+             $count_comments = countComments($item_db[0], $source);
+             if($count_comments == 0){$entries .= "$count_comments";}
+             else{$entries .= "$count_comments";}
+
+             $entries .= "</td><td class=\"$bg\">";
+
+             if($item_db[6] == ""){ $my_cat = "---"; }
+             elseif($cat[$item_db[6]] == ""){ $my_cat = "<span class=\"warning\">ID <strong>$item_db[6]</strong></span>"; }
+             else{ $my_cat = $cat[$item_db[6]]; }
+
+             $entries .= "$my_cat</td><td class=\"$bg\">
+	         $itemdate</td>
+	         <td class=\"$bg\">
+	      	 $item_db[1]</td>
+
+	       	<td align=center class=\"$bg\"><input name=\"selected_news[]\" value=\"{$item_db[0]}\" type=\"checkbox\" /></td>
+
+             </tr>
+            ";
+        	$entries_showed ++;
+
+    	if($i >= $news_per_page + $start_from){ break; }
+    }//foreach news line
+}
+// End prelisting
+
+
+
+    $all_count_news = count($all_db);
+    if($category != ""){ $cat_msg = "Category: <b>$cat[$category]</b>;"; }
+    if($source != ""){
+
+		$news_lines = file("./data/archives/$source.news.arch");
+		$count = count($news_lines);
+		$last = $count-1;
+		$first_news_arr = explode("|", $news_lines[$last]);
+		$last_news_arr	= explode("|", $news_lines[0]);
+		$first_timestamp = $first_news_arr[0];
+		$last_timestamp	 = $last_news_arr[0];
+		$source_msg = "Archive: <b>". date("d M Y",$first_timestamp) ." - ". date("d M Y",$last_timestamp) ."</b>;";
+	}
+
+
+
+///////////////////////////////////////////
+// Options Bar
+echo"
+<div id=\"edit_options\" class=\"panel\">
+<form action=\"$PHP_SELF?mod=editnews&amp;action=list\" method=POST name=options_bar>
+<table>
+<tr>
+<td>Source</td>
+<td>Category</td>
+<td>Author</td>
+<td>Per page</td>
+<td></td>
+</tr>
+
+<tr>
+<td>
+<!-- TODO: should use the makedropdown function -->
+<select name=\"source\" size=\"1\"><option value=\"\">Active News</option>";
+	if(!$handle = opendir("./data/archives")){ die("<center>Can not open directory ./data/archives "); }
+   		while (false !== ($file = readdir($handle)))
+           {
+   			if($file != "." and $file != ".." and !is_dir("./data/archives/$file") and eregi("news.arch", $file))
+            {
+            	$file_arr = explode(".", $file);
+                $id		  = $file_arr[0];
+
+                $news_lines = file("./data/archives/$file");
+                $count = count($news_lines);
+                $last = $count-1;
+                $first_news_arr = explode("|", $news_lines[$last]);
+                $last_news_arr	= explode("|", $news_lines[0]);
+
+                $first_timestamp = $first_news_arr[0];
+                $last_timestamp	 = $last_news_arr[0];
+		
+		$desc = substr(trim(implode(file("./data/archives/$id.desc.arch"))),0,20);
+		if ($desc != "") { $desc = "&quot;$desc&quot;"; }
+
+				$arch_date = date("d M Y",$first_timestamp) ." - ". date("d M Y",$last_timestamp);
+                $ifselected = "";
+                if($source == $file_arr[0]){ $ifselected = "selected"; }
+                echo "<option $ifselected value=\"$file_arr[0]\">Archive: $desc $arch_date ($count)</option>";
+   			}
+   		}
+	closedir($handle);
+
+echo"</select></td>
+<td><select name=\"category\" ><option selected value=\"\">- All -</option>";
+    $cat_lines = file("./data/category.db.php");
+	foreach($cat_lines as $null => $single_line){
+		$cat_arr = explode("|", $single_line);
+		$ifselected = "";
+		if($category == $cat_arr[0]){ $ifselected = "selected"; }
+        echo"<option $ifselected value=\"$cat_arr[0]\">$cat_arr[1]</option>\n";
+   	}
+
+    echo"</select></td>
+";
+
+if($member_db[1] != 3){
+echo"<td><select name=author size=\"1\"><option value=\"\">- Any -</option>";
+    $user_lines = file("./data/users.db.php");
+	foreach($user_lines as $null => $single_line){
+        if(!eregi("<\?", $single_line)){
+	        $user_arr = explode("|", $single_line);
+    		$ifselected = "";
+            if($user_arr[1] != 4){
+	            if($author == $user_arr[2]){ $ifselected = "selected"; }
+		        echo"<option $ifselected value=\"$user_arr[2]\">$user_arr[2]</option>\n";
+			}
+		}
+   	}
+    echo"</select></td>
+";
+}
+
+echo"
+<td><input style=\"text-align: center\" name=\"news_per_page\" value=\"$news_per_page\" type=\"text\" size=\"3\" /></td>
+<td><input type=\"submit\" value=\"Show\" /></td>
+</tr>
+</table>
+</form>
+Showing <b>$entries_showed</b> articles from a total of <b>$all_count_news</b>; $cat_msg $source_msg</div>";
+
+// End Options Bar
+////////////////////////////////////////////////////////////////////////////////    Showing List of News
+if($entries_showed == 0){
+    echo"<table style=\"width:100%;\">
+	<form method=\"post\" name=\"editnews\">
+	<td colspan=\"6\"><div class=\"panel\" style=\"text-align: center;\">- No articles found -</div>";
+}
+else{
+echo<<<JSCRIPT
+<script type="text/javascript">
+<!--
+function ckeck_uncheck_all() {
+	var frm = document.editnews;
+	for (var i=0;i<frm.elements.length;i++) {
+		var elmnt = frm.elements[i];
+		if (elmnt.type=='checkbox') {
+			if(frm.master_box.checked == true){ elmnt.checked=false; }
+            else{ elmnt.checked=true; }
+		}
+	}
+	if(frm.master_box.checked == true){ frm.master_box.checked = false; }
+    else{ frm.master_box.checked = true; }
+}
+
+-->
+</script>
+JSCRIPT;
+
+    echo"<table border=0 cellpading=0 cellspacing=0 width=99% >
+	<form method=post name=editnews>
+	<td width=347>
+	Title
+	<td width=65>
+	Comments
+
+	<td width=65>
+	Category
+
+	<td width=58>
+	Date
+
+	<td width=78>
+	Author
+
+	<td width=21 align=center> <input style=\"border: 0px; background:transparent;\" type=\"checkbox\" name=\"master_box\" title=\"Check All\" onclick=\"javascript:ckeck_uncheck_all()\" /> </a> ";
+}
+#####################################################################################################################
+echo $entries;
+#####################################################################################################################
+
+if($start_from > 0)
+{
+
+	$previous = $start_from - $news_per_page;
+        $npp_nav .= "<a href=\"$PHP_SELF?mod=editnews&amp;action=list&amp;start_from=$previous&amp;category=$category&amp;author=$author&amp;source=$source&amp;news_per_page=$news_per_page\">&lt;&lt; Previous</a>";
+	//$tmp = 1;
+}
+
+// pagination
+
+	if(count($all_db) > $news_per_page){
+	$npp_nav .= " [ ";
+    $enpages_count = @ceil($all_count_news/$news_per_page);
+    $enpages_start_from = 0;
+    $enpages = "";
+    for($j=1;$j<=$enpages_count;$j++){
+            if($enpages_start_from != $start_from){ $enpages .= "<a href=\"$PHP_SELF?mod=editnews&amp;action=list&amp;start_from=$enpages_start_from&amp;category=$category&amp;author=$author&amp;source=$source&amp;news_per_page=$news_per_page\">$j</a> "; }
+		else{ $enpages .= " <strong> <u>$j</u> </strong> "; }
+        $enpages_start_from += $news_per_page;
+	}
+	$npp_nav .= $enpages;
+	$npp_nav .= " ] ";
+	}
+
+
+// pagination
+
+if(count($all_db) > $i)
+{
+	$how_next = count($all_db) - $i;
+        if($how_next > $news_per_page){ $how_next = $news_per_page; }
+        $npp_nav .= "<a href=\"$PHP_SELF?mod=editnews&amp;action=list&amp;start_from=$i&amp;category=$category&amp;author=$author&amp;source=$source&amp;news_per_page=$news_per_page\">Next $how_next &gt;&gt;</a>";
+}
+
+if($entries_showed != 0){
+echo<<<HTML
+<tr>
+<td colspan=7 align=right>
+</tr>
+
+<tr>
+<td>
+$npp_nav
+<td colspan=7 align=right>
+
+With selected:
+<select name=action>
+<option value="">-- Choose Action --</option>
+<option title="delete all selected news" value="mass_delete">Delete</option>
+HTML;
+
+if($member_db[1] == 1){ echo"<option title=\"make new archive with all selected news\" value=\"mass_archive\">Send to Archive</option>"; }
+
+echo<<<HTML
+<option title="move all selected news to one category" value="mass_move_to_cat">Change Category</option>
+</select>
+<input type="hidden" name="source" value="$source" />
+<input type="hidden" name="mod" value="massactions" />
+<input type="submit" value="Go" />
+</tr>
+HTML;
+}
+
+
+echo<<<HTML
+</tr>
+<tr>
+<td  colspan=1>
+</tr>
+<tr>
+<td colspan=6>
+</tr>
+</form></table>
+HTML;
+
+    echofooter();
+}
+// ********************************************************************************
+// Edit News Article
+// ********************************************************************************
+elseif($action == "editnews")
+{
+// Show The Article for Editing
+	if($source == ""){ $all_db = file("./data/news.txt"); }
+    else{ $all_db = file("./data/archives/$source.news.arch"); }
+	$found = FALSE;
+	foreach ($all_db as $null => $line)
+    {
+		$item_db=explode("|",$line);
+		if ($id == $item_db[0]){ $found = TRUE; break;}
+	}//foreach news line
+
+	$have_perm = 0;
+   	if(($member_db[1] == 1) or ($member_db[1] == 2)){$have_perm = 1;}
+   	elseif($member_db[1] == 3 and $item_db[1] == $member_db[2]) {$have_perm = 1;}
+    if(!$have_perm){ msg("error", "NO Access", "You dont have access for this action", "$PHP_SELF?mod=editnews&amp;action=list"); }
+
+    if (!$found){ msg("error","Error","The selected news item can <b>not</b> be found."); }
+	$newstime   = date("D, d F Y h:i:s",$item_db[0]);
+    $item_db[2] = stripslashes( preg_replace(array("'\|'", "'\"'", "'\''"), array("I", "&quot;", "&#039;"), $item_db[2]) );
+    $item_db[3] = replace_news("admin", $item_db[3]);
+    $item_db[4] = replace_news("admin", $item_db[4]);
+
+	echoheader("editnews","Edit &quot;$item_db[2]&quot;");
+	//WPA
+	echo "<script src=\"inc/quicktags.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
+	run_actions('admin_head');
+	
+	// XFields v2.1 - addblock
+$xfieldsaction = "categoryfilter";
+include("xfields.mdu");
+// XFields v2.1 - End addblock
+	
+	
+	$aorg_currentdate = date("D, d F Y H:i:s",$item_db[0]);
+	if ($config_update_edit_time == "yes") {
+	// if automatic dateupdates is set in config, change date to current time.
+	$aorg_currentdate = date("D, d F Y H:i:s");
+	} 
+	
+    echo"
+    <script type=\"text/javascript\">
+    function confirmDelete(url){
+	var agree=confirm(\"Do you really want to permanently delete this article ?\");
+	if (agree)
+	document.location=url;
+	}
+	</script>
+		<script type=\"text/javascript\">
+	 function insertext(text,area){
+	document.addnews.short_story.focus(); document.addnews.short_story.value=document.addnews.short_story.value +\" \"+ text; document.addnews.short_story.focus()
+     }
+    </script>
+	<h2>posted by $item_db[1],<em> timestamp: $item_db[0].</em></h2>
+    <form method=POST name=addnews action=\"$PHP_SELF\">
+    
+<div id=\"main_boxcontent\">
+	<div class=\"boxcontent_box\">
+	<h3>Advanced Options</h3>
+	<input onclick=\"javascript:ShowOrHide('cdate','')\" type=\"checkbox\" name=\"customdate\" id=\"customdate\" value=\"customdate\" />
+	<label for=\"customdate\">Change Date</label>
+	<div class=\"panel\" id=\"cdate\" style=\"display:none;\">
+	<input size=\"35\" type=\"text\" id=\"aorg_newdate\" name=\"aorg_newdate\" value=\"$aorg_currentdate\" />
+	</div><table>
+	";
+		$buffer = run_actions('edit-advanced-options');
+	echo $buffer;
+	echo "</table>
+	</div>
+	
+	<div class=\"boxcontent_box\">
+	<h3>Delete?</h3>
+	<input value=\"Delete this article\" style=\"width: 100%; font-weight: bold;\" type=\"button\" onclick=\"javascript:confirmDelete('$PHP_SELF?mod=editnews&amp;action=doeditnews&amp;source=$source&amp;ifdelete=yes&amp;id=$id')\">
+
+	</div>
+</div>
+	<table>
+
+	
+<tr>
+	<td>
+	<label for=\"title\">Title</label> and <label for=\"category\">Category</label><br />
+	<input type=\"text\" id=\"title\" name=\"title\" value=\"$item_db[2]\" size=\"50\" tabindex=\"1\" />";
+
+if(run_filters('edit-show-categories', true)) {
+
+echo "	<select id=\"category\" name=\"category\" onchange=\"onCategoryChange(this.value)\" tabindex=\"2\">";
+    $cat_lines = file("./data/category.db.php");
+	foreach($cat_lines as $null => $single_line){
+		$cat_arr = explode("|", $single_line);
+        if($item_db[6] == $cat_arr[0]){
+			echo"<option selected=\"selected\" value=\"$cat_arr[0]\">$cat_arr[1]</option>\n";
+            $selected = TRUE;
+		}else{ echo"<option value=\"$cat_arr[0]\">$cat_arr[1]</option>\n"; }
+	}
+    if(!$selected){ echo"<option selected value=\"\"></option>"; }
+    else{ echo"<option value=\"\"></option>"; }
+
+    echo "</select>";	}
+echo "	</td>
+	</tr><tr>";
+
+				
+	if($config_use_avatar == "yes"){
+	    echo"
+		<tr><td><label for=\"editavatar\">Avatar URL</label><br />
+		<input type=text id=\"editavatar\" name=editavatar value=\"$item_db[5]\" size=\"35\" />
+		</td></tr>";
+	}
+	
+	
+	$new_fieldset = run_actions('edit-fieldset');
+	echo $new_fieldset;
+	
+  // XFields Call
+
+  $xfieldsaction = "list";
+  $xfieldsid = $id;
+  $xfieldscat = $item_db[6];
+  include("xfields.mdu");
+
+  // End XFields Call
+  
+     echo"</table>
+    <label for=\"short_story\">Content</label><small>
+    [ smilies: 
+    ";
+echo insertSmilies('short', 4);
+echo " ]</small>
+<br />
+<script language=\"JavaScript\" type=\"text/javascript\">edToolbar();</script>
+	<textarea id=\"short_story\" name=\"short_story\" tabindex=\"4\">$item_db[3]</textarea><br />
+	<script type=\"text/javascript\" language=\"JavaScript\">
+<!--
+edCanvas = document.getElementById('short_story');
+//-->
+</script>";
+ 	
+	echo"<p>
+	<input type=\"hidden\" name=\"id\" value=\"$id\" />
+	<input type=\"hidden\" name=\"action\" value=\"doeditnews\" />
+	<input type=\"hidden\" name=\"mod\" value=\"editnews\" />
+	<input type=\"hidden\" name=\"source\" value=\"$source\" />
+
+	<input type=\"submit\" value=\"Save Changes\" accesskey=\"s\" tabindex=\"6\" />
+    </p>
+	</form>
+
+";
+	
+	
+	echo<<<JSCRIPT
+<script type="text/javascript">
+<!--
+function check_uncheck_all() {
+	var frm = document.comments;
+	for (var i=0;i<frm.elements.length;i++) {
+		var elmnt = frm.elements[i];
+		if (elmnt.type=='checkbox') {
+			if(frm.cmbox.checked == true){ elmnt.checked=true; }
+            else{ elmnt.checked=false; }
+		}
+	}
+	if(frm.cmbox.checked == true){ frm.cmbox.checked = true; }
+    else{ frm.cmbox.checked = false; }
+}
+
+-->
+</script>
+JSCRIPT;
+
+
+echo "<h1>Comments for this article</h3>";
+#comments were here
+
+// Show the Comments for Editing
+    if($source == ""){ $all_comments_db = file("./data/comments.txt"); }
+    else{ $all_comments_db = file("./data/archives/${source}.comments.arch"); }
+
+    $found_newsid = FALSE;
+	foreach($all_comments_db as $null => $comment_line)
+    {
+		$comment_line = trim($comment_line);
+		$comments_arr = explode("|>|",$comment_line);
+        if($comments_arr[0] == $id)
+        {//if these are comments for our story
+            $found_newsid = TRUE;
+			if ($comments_arr[1] != "")
+            {
+                echo"
+<form method=post name=comments action=\"$PHP_SELF\">
+<table id=\"edit_commentlist\"><tr>
+<th>Submitted by</span></th>
+<th>Excerpt</th>
+<th>Submitted</th>
+<th>Block</th>
+<th>Delete</th>
+</tr>
+";
+
+                $flag = 1;
+          		$different_posters = explode("||",$comments_arr[1]);
+          		foreach($different_posters as $null => $individual_comment)
+          		{
+            		if($flag == 1){ $bg = "alternate"; $flag = 0;}
+                	else{$bg = "alternate2"; $flag = 1;}
+
+		            $comment_arr = explode("|",$individual_comment);
+            		$comtime = date("d/m/y h:i:s",$comment_arr[0]);
+            		$com_excerpt = substr(strip_tags($comment_arr[4]),0,$config_commentexcerpt);
+            		if($comment_arr[1])
+                    {
+					   if(strlen($comment_arr[1]) > 25){ $comment_arr[1] = substr($comment_arr[1],0,22)."..."; }
+ 					   echo"
+<tr id=\"$comment_arr[0]\" class=\"$bg\">
+<td><span class=\"comment_by\"><a title=\"edit this comment\" href=\"$PHP_SELF?mod=editcomments&amp;action=editcomment&amp;newsid=$id&amp;comid=$comment_arr[0]&amp;source=$source\" onclick=\"window.open('$PHP_SELF?mod=editcomments&amp;action=editcomment&amp;newsid=$id&amp;comid=$comment_arr[0]&amp;source=$source', 'Comments', 'width=700,height=590,resizable=yes,scrollbars=yes');return false;\">$comment_arr[1]</a></span></td>
+<td><span class=\"comment_excerpt\">$com_excerpt</span></td>
+<td><span class=\"comment_date\"><a title=\"edit this comment\" href=\"$PHP_SELF?mod=editcomments&amp;action=editcomment&amp;newsid=$id&amp;comid=$comment_arr[0]&amp;source=$source\" onclick=\"window.open('$PHP_SELF?mod=editcomments&amp;action=editcomment&amp;newsid=$id&amp;comid=$comment_arr[0]&amp;source=$source', 'Comments', 'width=700,height=590,resizable=yes,scrollbars=yes0');return false;\">$comtime</a></span></td>
+<td><span class=\"comment_ipban\"><a href=\"$PHP_SELF?mod=ipban&amp;add_ip=$comment_arr[3]&amp;action=add&amp;mod=ipban\" title=\"Block IP ($comment_arr[3]) from posting\"><img src=\"skins/images/block.png\" alt=\"Block IP from posting\" style=\"border: 0px;\" /></a></span></td>
+<td><input type=\"checkbox\" name=\"delcomid[]\" value=\"{$comment_arr[0]}\" /></td>
+</tr>";
+                    }//if not blank
+          		}//foreach comment
+
+            	echo"<tr>
+            	<td></td>
+            	<td></td>
+	            <td colspan=\"2\"><p style=\"text-align:right;\">delete all? </p></td>
+	            <td>
+	            <input type=\"checkbox\" name=\"cmbox\" value=\"all\" onclick=\"javascript:check_uncheck_all()\" />
+	            </td>
+	            </tr>
+	            
+	            <tr>
+	            <td></td>
+	            <td></td>
+	            <td colspan=\"3\"><p style=\"text-align:right;\"><input type=\"submit\" value=\"Delete Selected\" /></p></td>
+	            </tr>
+
+	            <input type=\"hidden\" name=\"newsid\" value=\"$id\" />
+	            <input type=\"hidden\" name=\"deletecomment\" value=\"yes\" />
+	            <input type=\"hidden\" name=\"action\" value=\"doeditcomment\" />
+	            <input type=\"hidden\" name=\"mod\" value=\"editcomments\" />
+                <input type=\"hidden\" name=\"source\" value=\"$source\" />
+	            </form>
+	            </table>";
+
+	            break;//foreach comment line
+           }//if there are any comments
+           else
+           {
+		 	   echo"<tr>
+			<td colspan=\"4\">
+			   <strong>No comments yet</strong></td>
+				</tr>
+			   </table>";
+           }
+        }//if these are comments for our story
+    }//foreach comments line
+    if($found_newsid == FALSE){
+		 	   echo"<tr>
+			<td colspan=\"4\">
+			   <strong>No comments yet</strong></td>
+				</tr>
+			   </table>";
+    }
+
+    run_actions('edit-extra-content');
+    run_actions('admin_footer');
+    echofooter();
+}
+// ********************************************************************************
+// Do Edit News
+// ********************************************************************************
+elseif($action == "doeditnews")
+{
+	run_actions('edit-validate-entry');
+	
+	if(trim($title) == "" and $ifdelete != "yes"){ msg("error","Error","The title can not be blank.", "javascript:history.go(-1)"); }
+	if($short_story == "" and $ifdelete != "yes"){ msg("error","Error","The story can not be blank.", "javascript:history.go(-1)"); }
+
+	#if($if_convert_new_lines	== "yes"){ $n_to_br		= TRUE; }
+    #if($if_use_html				== "yes"){ $use_html	= TRUE; }
+
+	$short_story = 	replace_news("add", rtrim($short_story), $n_to_br, $use_html);
+	$title = 		stripslashes( preg_replace(array("'\|'", "'\n'", "''"), array("I", "<br />", ""), $title) );
+    $avatar =		stripslashes( preg_replace(array("'\|'", "'\n'", "''"), array("I", "<br />", ""), $avatar) );
+    
+	$short_story = stripslashes($short_story);
+	
+    if($source == ""){ $news_file = "./data/news.txt"; $com_file = "./data/comments.txt"; }
+    else{ $news_file = "./data/archives/$source.news.arch"; $com_file = "./data/archives/$source.comments.arch";}
+
+// XFields v2.1 - addblock
+if ($ifdelete != "yes") {
+  $xfieldsaction = "init";
+  $xfieldsid = $id;
+  include("xfields.mdu");
+}
+// XFields v2.1 - End addblock
+	$old_db = file("$news_file");
+	$new_db = fopen("$news_file", w);
+	foreach($old_db as $null => $old_db_line){
+		$old_db_arr = explode("|", $old_db_line);
+		if($id != $old_db_arr[0]){
+			fwrite($new_db,"$old_db_line");
+        }
+        else
+        {
+
+		$have_perm = 0;
+	   	if(($member_db[1] == 1) or ($member_db[1] == 2)){$have_perm = 1;}
+	   	elseif($member_db[1] == 3 and $old_db_arr[1] == $member_db[2]) {$have_perm = 1;}
+	    if($have_perm){
+// XFields v2.1 - addblock
+$xfieldsaction = ($ifdelete == "yes" ? "delete" : "save");
+$xfieldsid = $id;
+include("xfields.mdu");
+// XFields v2.1 - End addblock
+  
+  $item_db = $old_db_arr;
+  
+        	if($ifdelete != "yes")
+            {
+            	$okchanges = TRUE;
+            	$old_db_arr[0] = strtotime($aorg_newdate);
+				run_actions('edit-save-entry');
+				
+                fwrite($new_db,"$old_db_arr[0]|$old_db_arr[1]|$title|$short_story||$editavatar|$category||||||\n");
+				// END Hack DATE + MUSIC update.
+				
+				// ADD Hack: Reassign comments/xfields if the news date has changed
+				if ($item_db[0] != $old_db_arr[0]) {
+					run_actions('post-edit-datechange');
+					// Comments Updater
+					$aj_update_file = file("$com_file");
+					$aj_update_file_updated = str_replace($item_db[0], $old_db_arr[0], $aj_update_file);
+					$aj_update_file_updated = implode("", $aj_update_file_updated);
+					
+					$updatehandler = fopen("$com_file", "w");
+					
+					fwrite($updatehandler, "$aj_update_file_updated");
+					fclose($updatehandler);
+					$commentsupdated = TRUE;
+					// END Commentsupdate
+					
+					// Xfields2 Updater
+					$aj_xf_file = file("./data/xfieldsdata.txt");
+					$aj_xf_file_ud = str_replace($item_db[0], $old_db_arr[0], $aj_xf_file);
+					$aj_xf_file_ud = implode("", $aj_xf_file_ud);
+					
+					$aj_xf_handler = fopen("./data/xfieldsdata.txt", "w");
+
+					fwrite($aj_xf_handler, "$aj_xf_file_ud");
+					fclose($aj_xf_handler);
+					$xfieldsupdated = TRUE;
+					// END Xfieldsupdate
+					
+					}
+				else { $commentsupdated = FALSE; }
+				// END Hack: Reassign
+
+				
+            }
+			else {
+            	$okdeleted = TRUE;
+            	run_actions('edit-deleted');
+				$all_file = file("$com_file");
+                $new_com=fopen("$com_file","w");
+                foreach($all_file as $null => $line) {
+					$line_arr = explode("|>|",$line);
+					if($line_arr[0] == $id){ $okdelcom = TRUE; }
+                    else{ fwrite($new_com,"$line"); }
+                	}
+                fclose($new_com);
+                run_actions('deleted-single-entry');
+            	}
+		}else{ fwrite($new_db,"$old_db_line"); $no_permission = TRUE; }
+        }
+    }
+    fclose($new_db);
+    run_actions('edit-saved-entry');
+    if($no_permission){ msg("error", "No access", "You dont have access for this action", "$PHP_SELF?mod=editnews&amp;action=list"); }
+	if($okdeleted and $okdelcom){ msg("info","News Deleted","The news item was successfully deleted.<br />If there were comments for this article they were also deleted."); }
+    if($okdeleted and !$okdelcom){ msg("info","News Deleted","The news item was successfully deleted.<br />No comments were deleted."); }
+    elseif($okchanges && !$commentsupdated){ msg("info","Changes Saved","The changes were successfully saved", "$PHP_SELF?mod=editnews&amp;action=editnews&amp;id=$item_db[0]&amp;source=$source"); }
+	elseif($okchanges && $commentsupdated && $xfieldsupdated){ msg("info","Changes Saved","The changes were successfully saved, and the comments/xfields reassigned.", "$PHP_SELF?mod=editnews&amp;action=editnews&amp;id=$item_db[0]&amp;source=$source"); }
+	else{ msg("error","Error","The news item can not be found or there is an error with the news database file."); }
+
+}
+
+
+?>

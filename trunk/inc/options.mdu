@@ -1,0 +1,970 @@
+<?PHP
+
+
+// ****************************
+// Options Menu
+// ********************************************************************************
+if($action == "options" or $action == '')
+{
+    echoheader("options","Options");
+
+    //----------------------------------
+    // Predefine Options
+    //----------------------------------
+
+    // access means the lowert userlevel allowed; 1:admin, 2:editor+admin, 3:editor+admin+journalist, 4:all
+    $options = array(
+                    array(
+                   	'name'		=> "Personal Options",
+                   	'url'		=> "$PHP_SELF?mod=options&action=personal",
+                   	'access'	=> "4",
+                    ),
+
+                    array(
+					'name'		=> "Plugin Manager",
+					'url'		=> "$PHP_SELF?mod=options&action=plugins",
+					'access'	=> "1",
+                    ),
+                    
+                    array(
+					'name'		=> "Block IP's from posting comments",
+					'url'		=> "$PHP_SELF?mod=ipban",
+					'access'	=> "1",
+                    ),
+
+                    array(
+					'name'		=> "System Configurations",
+					'url'		=> "$PHP_SELF?mod=options&action=syscon&rand=".time(),
+					'access'	=> "1",
+                    ),
+                    
+                    array(
+                   	'name'		=> "Edit Templates",
+                   	'url'		=> "$PHP_SELF?mod=options&action=templates",
+                   	'access'	=> "1",
+                    ),
+                   
+                    array(
+                   	'name'		=> "Manage Users",
+                   	'url'		=> "$PHP_SELF?mod=editusers&action=list",
+                   	'access'	=> "1",
+                    ),
+
+                    array(
+                   	'name'		=> "Archives Manager",
+                   	'url'		=> "$PHP_SELF?mod=tools&action=archive",
+                   	'access'	=> "1",
+                    ),
+                    
+                    array(
+                   	'name'		=> "RSS 2.0 Configuration",
+                   	'url'		=> "$PHP_SELF?mod=rss",
+                   	'access'	=> "1",
+                    ),
+
+                    array(
+                   	'name'		=> "Backup Tool",
+                   	'url'		=> "$PHP_SELF?mod=tools&action=backup",
+                  	'access'	=> "1",
+                    ),
+
+                    array(
+                   	'name'		=> "Edit Categories",
+                   	'url'		=> "$PHP_SELF?mod=categories",
+                   	'access'	=> "1",
+                    ),
+					
+					 array(
+				    'name' 		=> "Configure XFields v2",
+				    'url' 		=> "$PHP_SELF?mod=xfields&xfieldsaction=configure",
+				    'access' 	=> "1",
+					),
+					
+					array(
+     				'name'		=> "Search and Replace Tool",
+     				'url'		=> "$PHP_SELF?mod=snr",
+     				'access'	=> "1",
+     				),
+
+                    );
+
+$options = run_filters('cutenews-options',$options);
+
+    //------------------------------------------------
+    // Cut the options for wich we don't have access
+    //------------------------------------------------
+    $count_options = count($options);
+    for($i=0; $i<$count_options; $i++){
+    	if($member_db[1] > $options[$i]['access']){
+			unset($options[$i]);
+        }
+    }
+    echo'<table border="0" width="100%"><tr>';
+    $i = 0;
+	foreach($options as $null => $option){
+        if($i%2 == 0){ echo"</tr>\n<tr>\n<td width='47%'><a href='".$option['url']."'><b>".$option['name']."</b></a></td>\n"; }
+        else{ echo"\n<td width='53%'><a href='".$option['url']."'><b>".$option['name']."</b></a></td>\n"; }
+    	$i++;
+    }
+
+    echo'</tr></table>';
+    echofooter();
+}
+// Start plugins hack
+elseif($action == 'plugins') {
+
+	$trusted_servers = array(
+		'Berlios.de Repository' => 'http://ajfork.berlios.de/plugin-repo/',
+	);
+	
+	$server_locations = '';
+	foreach ($trusted_servers as $name => $url)
+		$server_locations .= '<option value='.$url.'>'.$name.'</option>';
+
+	$available_plugins = available_plugins();
+	
+	function SortByName($a, $b) {
+	   return $a[name] > $b[name] ? 1 : -1;
+	}
+	uasort($available_plugins, 'SortByName');
+
+	if (isset($_GET[enable])) {
+		$id = stripslashes($_GET[enable]);
+		$filename = $available_plugins[$id][file];
+		enable_plugin($filename);
+		$buffer .= '<div id="plugin_manager_status"><p>Enabled plugin: <strong>'.$available_plugins[$id][name].'</strong></p></div>';
+	}
+
+	if (isset($_GET[disable])) {
+		$id = stripslashes($_GET[disable]);
+		$filename = $available_plugins[$id][file];
+		disable_plugin($filename);
+		$buffer .= '<div id="plugin_manager_status"><p>Disabled plugin: <strong>'.$available_plugins[$id][name].'</strong></p></div>';
+	}
+	
+	if (isset($_GET['install'])) {
+		$uri = $_GET['install'];
+
+		$found = false;
+		foreach ($trusted_servers as $server_name => $server_uri)
+			if (substr($uri, 0, strlen($server_uri)) == $server_uri)
+				$found = $server_name;
+		
+		
+		
+		if (!$found || strpos($uri, '@') !== false) {
+			msg('error','Invalid Plugin URI','The plugin address was invalid.','?mod=options&amp;action=plugins');
+			exit();
+		}
+		
+		$file[contents] = @implode('',file($_GET['install']));
+		$file[name] = str_replace('.txt', '.php', basename($_GET['install']));
+		
+		if (!$file[contents])
+			msg('error','Failed downloading plugin','The plugin did not download.','?mod=options&amp;action=plugins');
+		
+		WriteContents($file[contents], PLUGINS_DIRECTORY.'/'.$file[name]);
+		
+		$buffer = '<p>Successfully installed new plugin: <strong>"'.$file[name].'"</strong></p>';
+		
+		$available_plugins = available_plugins();
+		
+	}
+	
+	if (isset($_POST['pm-search-location'])) {
+		$remote_raw_data = @file($_POST['pm-search-location'].'list.php'); //.'?search='.$_POST['pm_search']
+		if ($remote_raw_data) {
+			echoheader("user","Plugin Manager - Download Plugins");
+			$remote_plugins = unserialize($remote_raw_data[0]);
+			
+			foreach ($remote_plugins as $id => $plugin) {
+				$found = false;
+				foreach ($available_plugins as $null => $local_plugin)
+					if ($local_plugin[name] == $plugin[name]) {
+						$found = true;
+						if (version_compare($local_plugin[version], $plugin[version], '>='))
+							unset($remote_plugins[$id]);
+						else
+							$remote_plugins[$id][actions] = '<a href="?mod=options&amp;action=plugins&amp;install='.urlencode($_POST['pm-search-location'].'download/'.$plugin[file]).'"><img src="skins/images/plugin_install.gif" alt="Upgrade '.$plugin[name].'" /></a>';
+					}
+				if (!$found)
+					$remote_plugins[$id][actions] = '<a href="?mod=options&amp;action=plugins&amp;install='.urlencode($_POST['pm-search-location'].'download/'.$plugin[file]).'"><img src="skins/images/plugin_download.gif" alt="Install" title="Install '.$plugin[name].'"/></a>';
+			}
+			
+			$buffer = '
+	<p>Found <strong>'.count($remote_plugins).'</strong> plugins to Install / Upgrade.</p>
+	<table class="grid" id="plugins">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Version</th>
+				<th>Description</th>
+				<th>Author</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>';
+
+		
+		if (empty($remote_plugins))
+			$buffer .= '
+				<tr>
+					<td colspan="5">No plugins found matching search string.</td>
+				</tr>';
+		else
+			foreach ($remote_plugins as $id => $plugin)
+				$buffer .= '
+				<tr class="'.$class.'">
+					<td>'.($plugin[uri] ?  '<a href="'.$plugin[uri].'">'.$plugin[name].'</a>': $plugin[name]).'</td>
+					<td>'.$plugin[version].'</td>
+					<td>'.run_filters('plugin-description',$plugin[description]).'</td>
+					<td>'.($plugin[author_uri] ?  '<a href="'.$plugin[author_uri].'">'.$plugin[author].'</a>': $plugin[author]).'</td>
+					<td style="text-align: center;">'.$plugin[actions].'</td>
+				</tr>';
+
+		$buffer .= '
+		</tbody>
+		</table>
+		<p>Current plugin framework <strong>v'.PLUGIN_FRAMEWORK_VERSION.'</strong>.</p>';
+			echo $buffer;
+			echofooter();
+		} else {
+			msg('error', 'Search Failure', "The plugin manager could not retrieve a list of plugins from the server you chose.", "$PHP_SELF?mod=options&action=plugins");
+		}
+		exit();
+	}
+	
+	echoheader("user","Plugin Manager");
+		
+	$buffer .= '
+	<table class="grid" id="plugins">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Version</th>
+				<th>Description</th>
+				<th>Author</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>';
+	
+	$querystring = '?mod=options&amp;action=plugins';
+	
+	foreach ($available_plugins as $id => $plugin) {
+		$enabled = plugin_enabled($plugin[file]);
+		$class = $enabled ? 'enabled' : 'disabled';
+		$class = $plugin[compatible] ? $class : 'incompatible';
+		$buffer .= '
+			<tr class="'.$class.'"'.($plugin[compatible] ? '' : ' title="Requires framework version: '.$plugin[framework].'"').'>
+				<td>'.($plugin[uri] ?  '<a href="'.$plugin[uri].'">'.$plugin[name].'</a>': $plugin[name]).'</td>
+				<td>'.$plugin[version].'</td>
+				<td>'.run_filters('plugin-description',$plugin[description]).'</td>
+				<td>'.($plugin[author_uri] ?  '<a href="'.$plugin[author_uri].'">'.$plugin[author].'</a>': $plugin[author]).'</td>
+				<td>'.($plugin[compatible] ? ($enabled ? '<a href="'.$querystring.'&amp;disable='.$id.'">Disable</a>' : '<a href="'.$querystring.'&amp;enable='.$id.'">Enable</a>') : 'Incompatible')
+				.'</td>
+			</tr>';
+	}
+		
+	$buffer .= '
+		</tbody>
+</table>
+<form method="post" action="?mod=options&amp;action=plugins">
+		<div>
+			<label for="txtSearch">Search for new plugins at</label>
+			<select name="pm-search-location">'.$server_locations.'</select>
+			<input type="submit" value="Search" />
+		</div>
+	</form>
+<p>Current plugin framework <strong>v'.PLUGIN_FRAMEWORK_VERSION.'</strong>.</p>';
+
+	echo $buffer;
+	
+	echofooter();
+}
+// End plugins hack
+// ********************************************************************************
+// Show Personal Options
+// ********************************************************************************
+elseif($action == "personal")
+{
+
+    $registrationdate = date("D, d F Y",$member_db[0]);	//registration date
+    if($member_db[7] == 1){ $ifchecked = "Checked"; }		//if user wants to hide his e-mail
+
+     foreach($member_db as $key=>$value){
+     	$member_db[$key]  = stripslashes(preg_replace(array("'\"'", "'\''"), array("&quot;", "&#039;"),$member_db[$key]));
+    }
+	if ($member_db[4]) { $foruser = "$member_db[4] ($member_db[2])"; }
+	if (!$foruser || $foruser == "") { $foruser = "$member_db[2] (please create nickname)"; }
+	echoheader("user","Personal Options for $foruser");
+
+ 
+     echo"
+     <table>
+     <form method=POST action=\"$PHP_SELF\" name=personal>
+     <tr>
+     <td style=\"width: 150px;\">New Password</td>
+<td><input type=\"text\" name=\"editpassword\" /> Only if you want to change the current</td>
+     </tr>
+
+     <tr>
+     <td>Nickname</td>
+     <td><input type=\"text\" name=\"editnickname\" value=\"$member_db[4]\"></td>
+     </tr>
+
+     <tr>
+     <td> Email</td>
+     <td> <input type=\"text\" name=\"editmail\" value=\"$member_db[5]\" /><input type=\"checkbox\" name=\"edithidemail\" $ifchecked />Hide e-mail</td>
+     </tr>";
+
+     if($member_db[1] != 4){echo"<tr>
+     <td>
+	         Default Avatar URL</td>
+     <td>
+     <input type=\"text\" name=\"change_avatar\" value=\"$member_db[8]\" /></td>
+     </tr>"; }
+
+	$member_db[13] = replace_news("show", $member_db[13]);
+     echo"<tr>
+     <td>
+	     Access Level
+     <td colspan=2>";
+
+	 if		($member_db[1] == 4){ echo "Commenter"; }
+	 elseif	($member_db[1] == 3){ echo "Journalist"; }
+	 elseif	($member_db[1] == 2){ echo "Editor"; }
+	 elseif	($member_db[1] == 1){ echo "Administrator"; }
+
+     if($member_db[1] != 4){ echo"</tr>
+     <tr>
+     <td>
+	         Written news</td>
+     <td >
+     $member_db[6]</td>
+     </tr>"; }
+
+     echo"<tr>
+     <td>
+	         Registration date</td>
+     <td>
+     $registrationdate</td>
+     </tr>
+    <tr>
+      <td >MSN Alias</td>
+      <td ><input size=21 type=text name=regmsn value=\"$member_db[11]\"></td>
+    </tr>
+    <tr>
+      <td >Website</td>
+      <td ><input size=21 type=text name=regwebsite value=\"$member_db[12]\"></td>
+    </tr>
+    <tr>
+      <td >Profile</td>
+      <td ><textarea class=\"medium\" name=regprofile>$member_db[13]</textarea></td>
+    </tr>
+     <tr>
+     <td></td>
+	<td><br /><input type=submit value=\"Save Changes\" accesskey=\"s\"></td>
+     </tr>
+     <input type=hidden name=mod value=options>
+     <input type=hidden name=action value=dosavepersonal>
+     </form>
+     </table>";
+
+    echofooter();
+}
+// ********************************************************************************
+// Save Personal Options
+// ********************************************************************************
+elseif($action == "dosavepersonal")
+{
+
+	# no extended profile for commenters
+	if ($reglevel == "4") { $regmsn = ""; $regwebsite = ""; $regprofile = ""; }
+
+$regmsn = spostr_replace($regmsn);
+$regwebsite = spostr_replace($regwebsite);
+$regprofile = replace_news("add", $regprofile);
+$editpassword = spostr_replace($editpassword);
+$editnickname = spostr_replace($editnickname);
+$edithidemail = spostr_replace($edithidemail);
+$editmail = spostr_replace($editmail);
+$change_avatar = spostr_replace($change_avatar);
+
+	if($edithidemail){ $edithidemail = 1;}else{ $edithidemail = 0; }
+
+	$avatars = preg_replace(array("'\|'","'\n'","' '"), array("","","_"), $avatars);
+
+    $old_user_db = file("./data/users.db.php");
+	$new_user_db = fopen("./data/users.db.php", w);
+    $personal_success = FALSE;
+    foreach($old_user_db as $null => $old_user_db_line){
+		$old_user_db_arr = explode("|", $old_user_db_line);
+		if(strtolower($username) != strtolower($old_user_db_arr[2])){
+			fwrite($new_user_db,"$old_user_db_line");
+        }
+		else{
+			if($editpassword != ""){
+            	$old_user_db_arr[3] = md5(md5($editpassword));
+                if($config_use_cookies == TRUE){ setcookie("md5_password", $old_user_db_arr[3]); }
+                $_SESSION['md5_password'] = $old_user_db_arr[3];
+			}
+			fwrite($new_user_db,"$old_user_db_arr[0]|$old_user_db_arr[1]|$old_user_db_arr[2]|$old_user_db_arr[3]|$editnickname|$editmail|$old_user_db_arr[6]|$edithidemail|$change_avatar|$old_user_db_arr[9]|$old_db_arr[10]|$regmsn|$regwebsite|$regprofile||\n");
+ 			$personal_success = TRUE;
+        }
+	}
+	fclose($new_user_db);
+	if($personal_success){ msg("info", "Changes Saved", "Your personal information was saved.", "$PHP_SELF?mod=options&action=personal"); }
+    else{ msg("error", "Error !", "Error while listing users, $username not found", "$PHP_SELF?mod=options&action=personal"); }
+}
+// ********************************************************************************
+// Edit Templates
+// ********************************************************************************
+elseif($action == "templates")
+{
+	if($member_db[1] != 1){ msg("error", "Access Denied", "You don't have permissions for this type of action"); }
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Detect all template packs we have
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+	$templates_list = list_templates();
+
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      If we want to create new template
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+	if($subaction == "new"){
+    	echoheader("options", "New Template");
+
+        echo"<form method=post action=\"$PHP_SELF\"><table border=0 cellpading=0 cellspacing=0 width=100% height=100%><tr><td >Create new template based on: <select name=base_template>";
+        foreach($templates_list as $null => $single_template){
+        	echo "<option value=\"$single_template\">$single_template</option>";
+        }
+        echo '</select> with name <input type=text name=template_name> <input type=submit value="Create Template">
+        <input type=hidden name=mod value=options>
+        <input type=hidden name=action value=templates>
+        <input type=hidden name=subaction value=donew>
+        </td></tr></table></form>';
+        echofooter();
+    	exit;
+    }
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Do Create the new template
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+	if($subaction == "donew"){
+        if(!eregi("^[a-z0-9_-]+$", $template_name)){ msg("error", "Error", "The name of the template must be only with letters and numbers", "$PHP_SELF?mod=options&subaction=new&action=templates"); }
+        if(file_exists("./data/${template_name}.tpl")){ msg("error", "Error", "Template with this name already exists", "$PHP_SELF?mod=options&subaction=new&action=templates"); }
+
+        if($base_template != ""){ $base_file = "./data/${base_template}.tpl"; }
+        else{ $base_file = "./data/Default.tpl"; }
+
+        if (!copy($base_file, "./data/${template_name}.tpl")) {
+        	msg("error", "Error", "Can not copy file $base_file to ./data/ folder with name ${template_name}.tpl");
+		}
+        @chmod("./data/${template_name}.tpl", 0777);
+
+        msg("info", "Template Created", "A new template was created with name <b>${template_name}</b><br>", "$PHP_SELF?mod=options&action=templates");
+    }
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Deleting template, preparation
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+	if($subaction == "delete"){
+    	if(strtolower($do_template) == "default"){ msg("Error", "Error !", "You can not delete the default template", "$PHP_SELF?mod=options&action=templates"); }
+        $msg = "<form method=post action=\"$PHP_SELF\">Are you sure you want to delete the template <b>$do_template</b> ?<br><br>
+        <input type=submit value=\" Yes, Delete This Template\"> <input onClick=\"document.location='$PHP_SELF?mod=options&action=templates';\" type=button value=\"Cancel\">
+        <input type=hidden name=mod value=options>
+        <input type=hidden name=action value=templates>
+        <input type=hidden name=subaction value=dodelete>
+        <input type=hidden name=do_template value=\"$do_template\">
+        </form>";
+
+        msg("info", "Deleting Template", $msg);
+    }
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      DO Deleting template
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+	if($subaction == "dodelete"){
+    	if(strtolower($do_template) == "default"){ msg("Error", "Error !", "You can not delete the default template", "$PHP_SELF?mod=options&action=templates"); }
+	    $unlink = unlink("./data/${do_template}.tpl");
+        if(!$unlink){ msg("error", "Error", "Can not delete file ./data/${do_template}.tpl <br>maybe the is no permission from the server"); }
+		else{ msg("info", "Template Deleted", "The template <b>${do_template}</b> was deleted.", "$PHP_SELF?mod=options&action=templates"); }
+    }
+
+
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Show The Template Manager
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    if($do_template == '' or !$do_template){
+    	$do_template = 'Default';
+    	$show_delete_link = '';
+    }elseif(strtolower($do_template) != 'default'){
+    	$show_delete_link = "<a href=\"$PHP_SELF?action=templates&mod=options&subaction=delete&do_template=$do_template\">[delete this template]</a>";
+	}
+    require("./data/${do_template}.tpl");
+
+
+
+    if(eregi("opera", $HTTP_USER_AGENT)){ $tr_hidden = ""; }
+    else{ $tr_hidden = " style='display:none'"; }
+
+
+    $templates_names = array("template_active", "template_comment", "template_form", "template_full", "template_prev_next", "template_dateheader");
+    foreach($templates_names as $null => $template)
+    {
+	$$template = htmlspecialchars($$template);
+	#	$$template = preg_replace("/</","&lt;",$$template);
+	#	$$template = preg_replace("/>/","&gt;",$$template);
+    }
+    echoheader("options","Templates");
+
+    echo'<table border=0 cellpading=0 cellspacing=0 height="77" >
+    <tr>
+	<td width=373 height="75">
+    <b>Manage Templates</b>
+
+
+	<table border=0 cellpading=0 cellspacing=0 width=347  class="panel" height="50" >
+    <form method=get action="'.$PHP_SELF.'">
+    <tr>
+    <td width=126height="23">
+    Editing Template
+	<td width=225height="23">
+    : <b>'.$do_template.'</b>
+    </tr>
+    <tr>
+	<td width=126 height="27">
+    Switch to Template
+	<td width=225 height="27">
+    : <select size=1 name=do_template>';
+
+    foreach($templates_list as $null => $single_template){
+    	if($single_template == $do_template){ echo"<option selected value=\"$single_template\">$single_template</option>"; }
+        else{ echo"<option value=\"$single_template\">$single_template</option>"; }
+    }
+
+    echo'</select>
+    <input type=submit value=Go>
+    </tr>
+    <tr>
+	<td width=351 height="25" colspan="2">
+    <a href="'.$PHP_SELF.'?mod=options&subaction=new&action=templates">[create new template]</a>
+    '.$show_delete_link.'</tr>
+	<input type=hidden name=action value=templates><input type=hidden name=mod value=options>
+	</form>
+	</table>
+
+	<td width=268 height="75" align="center">
+  <!-- HELP -->
+   <table cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25" align=middle><img border="0" src="skins/images/help_small.gif"></td>
+      <td ><a onClick="javascript:Help(\'templates\')" href="#">Understanding Templates</a></td>
+    </tr>
+   </table>
+  <!-- END HELP -->
+
+    </tr>
+	</table>
+    <img height=20 border=0 src="skins/images/blank.gif" width=1>
+    <br>
+    <b>Edit Template Parts</b>
+    
+    <div id="edittemplates">
+    
+    <table width="100%"><form method=post action="'.$PHP_SELF.'">
+<tr> <!- start active news -->
+    <td height="7"  class="alternate" colspan="2">
+    <b><a style="font-size:16px" href="javascript:ShowOrHide(\'active-news1\',\'active-news2\')" >Active News</a></b>
+    </tr>
+    <tr id=\'active-news1\' '.$tr_hidden.'>
+    <td>Available variables:<br />';
+$template_variables_active = array(
+	"{title}" => "Display Article Title",
+	"{avatar}" => "Show avatar image (if any)",
+	"{alternating}" => "Prints either cn_news_odd or cn_news_even (use for css styling)",
+	"{short-story}" => "Displays article content",
+	"{full-story}" => "Displays extended article content (if the &quot;more&quot; button was used)",
+	"{author}" => "Displays a link to the author's email",
+	"{author-name}" => "Displays the author's name in plain text",
+	"[mail]Email[/mail]" => "Displays a link to the author's mail labelled Email",
+	"{date}" => "Displays the article's date (check system config for formatting)",
+	"{date-elapsed}" => "Time elapsed since the article was written",
+	"[link]...[/link]" => "Displays a permanent link to the article",
+	"[full-link]...[/full-link]" => "Displays a link to the article (only if the article contains extended content",
+	"[com-link]...[/com-link]" => "Displays a link to the article (only if comments are enabled for it)",
+	"{comments-num}" => "Displays the number of comments added to the article",
+	"{category}" => "Displays the name of the article's category",
+	"{category-id}" => "Displays the integer ID of the article's category",
+	"{category-icon}" => "Displays the icon of the article's category (if any)",
+	"[xfvalue_X]" => "Dispalys the value of Xfield named &quot;X&quot;",
+	"[xfgiven_X]Text[/xfgiven_X]" => "Displays &quot;Text&quot; if xfield &quot;X&quot; is set for the article",
+	);
+$template_variables_active = run_filters('template-variables-active',$template_variables_active);
+ksort($template_variables_active);
+reset($template_variables_active);
+echo '<table>';
+	foreach ($template_variables_active as $variable_active => $variable_active_description) {
+		echo "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$variable_active_description\">$variable_active</span></td><td>$variable_active_description</td></tr>";
+		}
+echo '</table>';
+
+echo '
+	</td>
+    </tr>
+    <tr id=\'active-news2\' '.$tr_hidden.'>
+    <td colspan="2">
+    <textarea rows="9" style="width: 100%" name="edit_active">'.$template_active.'</textarea>
+    <br />
+    </td>
+    
+</tr> <!-- End active news -->
+
+<tr> <!-- Start full story -->
+    <td height="7"  class="alternate" colspan="2">
+    <b><a style="font-size:16px" href="javascript:ShowOrHide(\'full-story1\',\'full-story2\')" >Full Story</a></b>
+    </tr>
+    <tr id=\'full-story1\' '.$tr_hidden.'>
+    <td>Available variables:<br />';
+$template_variables_full = array(
+	"{title}" => "Display Article Title",
+	"{avatar}" => "Show avatar image (if any)",
+	"{author-msn}" => "Displays the authors msn-address (if any)",
+	"{author-web}" => "Displays the authors website url (if any)",
+	"{author-profile}" => "Displays the authors profile (filtered)",
+	"{alternating}" => "Prints either cn_news_odd or cn_news_even (use for css styling)",
+	"{short-story}" => "Displays article content",
+	"{full-story}" => "Displays extended article content (if the &quot;more&quot; button was used)",
+	"{author}" => "Displays a link to the author's email",
+	"{author-name}" => "Displays the author's name in plain text",
+	"[mail]Email[/mail]" => "Displays a link to the author's mail labelled Email",
+	"{date}" => "Displays the article's date (check system config for formatting)",
+	"{date-elapsed}" => "Time elapsed since the article was written",
+	"{pagination}" => "Displays links to the various pages of an article (if any)", 
+	"{comments-num}" => "Displays the number of comments added to the article",
+	"{category}" => "Displays the name of the article's category",
+	"{category-id}" => "Displays the integer ID of the article's category",
+	"{category-icon}" => "Displays the icon of the article's category (if any)",
+	"[xfvalue_X]" => "Dispalys the value of Xfield named &quot;X&quot;",
+	"[xfgiven_X]Text[/xfgiven_X]" => "Displays &quot;Text&quot; if xfield &quot;X&quot; is set for the article",
+	);
+$template_variables_full = run_filters('template-variables-full',$template_variables_full);
+ksort($template_variables_full);
+reset($template_variables_full);
+
+echo '<table>';
+	foreach ($template_variables_full as $variable_full => $variable_full_description) {
+		echo "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$variable_full_description\">$variable_full</span></td><td>$variable_full_description</td></tr>";
+		}
+echo '</table>';
+
+echo '
+</td>
+    </tr>
+    <tr id=\'full-story2\' '.$tr_hidden.'>
+    <td height="8"  colspan="2">
+    <textarea rows="9" style="width: 100%" name="edit_full">'.$template_full.'</textarea>
+    <br />
+    
+</tr> <!-- End full story -->
+
+<tr> <!-- Start comment -->
+    <td height="7"  class="alternate" colspan="2">
+    <b><a style="font-size:16px" href="javascript:ShowOrHide(\'comment1\',\'comment2\')" >Comment</a></b>
+    </tr>
+    <tr id=\'comment1\' '.$tr_hidden.'>
+    <td>Available variables:<br />';
+$template_variables_comments = array(
+	"{alternating}" => "Prints either cn_news_odd or cn_news_even (use for css styling)",
+	"{author}" => "Name of the comment poster, linked to mail or url",
+	"{date}" => "Displays the comment's date (check system config for formatting)",
+	"{date-elapsed}" => "Time elapsed since the comment was written",
+	"{comment}" => "Displays the actual comment text",
+	"{mail}" => "Displays the poster's email",
+	"{favatar}" => "Displays the poster's <a href='http://www.noscope.com/journal/2004/12/favatars'>favatar</a>", 
+	);
+$template_variables_comments = run_filters('template-variables-comments',$template_variables_comments);
+ksort($template_variables_comments);
+reset($template_variables_comments);
+
+echo '<table>';
+	foreach ($template_variables_comments as $variable_comments => $variable_comments_description) {
+		echo "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$variable_comments_description\">$variable_comments</span></td><td>$variable_comments_description</td></tr>";
+		}
+echo '</table>';
+
+echo '
+</td>
+    </tr>
+    <tr id=\'comment2\' '.$tr_hidden.'>
+    <td height="8"  colspan="2">
+    <textarea  class="medium" style="width: 100%" name="edit_comment">'.$template_comment.'</textarea>
+    <br />
+    
+</tr> <!-- End comment -->
+
+<tr> <!-- Start add comment form -->
+    <td height="7"  class="alternate" colspan="2">
+    <b><a style="font-size:16px" href="javascript:ShowOrHide(\'add-comment-form1\',\'add-comment-form2\')" >Add comment form</a></b>
+    </tr>
+    <tr id=\'add-comment-form1\' '.$tr_hidden.'>
+    <td>Available variables:<br />';
+$template_variables_commentform = array(
+	"{savedname}" => "Prints name saved in a user's remember-me cookie",
+	"{savedmail}" => "Prints email or url saved in a user's remember-me cookie",
+	"{remember}" => "Prints the remember-me checkbox (you'll still need to add some text beside it)",
+	);
+$template_variables_commentform = run_filters('template-variables-commentform',$template_variables_commentform);
+ksort($template_variables_commentform);
+reset($template_variables_commentform);
+
+echo '<table>';
+	foreach ($template_variables_commentform as $variable_commentform => $variable_commentform_description) {
+		echo "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$variable_commentform_description\">$variable_commentform</span></td><td>$variable_commentform_description</td></tr>";
+		}
+echo '</table>';
+
+echo '</td>
+    </tr>
+    <tr id=\'add-comment-form2\' '.$tr_hidden.'>
+    <td height="8"  colspan="2">
+    <textarea rows="9" style="width: 100%" name="edit_form">'.$template_form.'</textarea>
+    <br />
+    
+</tr> <!-- End add comment form -->
+
+<tr> <!-- Start previous & next -->
+    <td height="7"  class="alternate" colspan="2">
+    <b><a style="font-size:16px" href="javascript:ShowOrHide(\'previous-next1\',\'previous-next2\')" >News pagination</a></b>
+    </tr>
+    <tr id=\'previous-next1\' '.$tr_hidden.'>
+    <td>Available variables:<br />';
+
+$template_variables_prevnext = array(
+	"[prev-link]...[/prev-link]" => "Generates a link to the previous page (if there is one)",
+	"[next-link]...[/next-link]" => "Generates a link to the next page (if there is one)",
+	"{pages}" => "Shows linked numbers of the pages; example: <a href=\'#\'>1</a> <a href=\'#\'>2</a> <a href=\'#\'>3</a> <a href=\'#\'>4</a>",
+	);
+$template_variables_prevnext = run_filters('template-variables-prevnext',$template_variables_prevnext);
+ksort($template_variables_prevnext);
+reset($template_variables_prevnext);
+
+echo '<table>';
+	foreach ($template_variables_prevnext as $variable_prevnext => $variable_prevnext_description) {
+		echo "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$variable_prevnext_description\">$variable_prevnext</span></td><td>$variable_prevnext_description</td></tr>";
+		}
+echo '</table>';
+
+echo '</td>
+    </tr>
+
+    <tr id=\'previous-next2\' '.$tr_hidden.'>
+    <td height="8"  colspan="2">
+    <textarea  class="small" style="width: 100%" name="edit_prev_next">'.$template_prev_next.'</textarea>
+</tr> <!-- End previous & next -->
+
+<tr> <!-- Start comments previous & next -->
+    <td height="7"  class="alternate" colspan="2">
+    <b><a style="font-size:16px" href="javascript:ShowOrHide(\'cprevious-next1\',\'cprevious-next2\')" >Comments pagination</a></b>
+    </tr>
+    <tr id=\'cprevious-next1\' '.$tr_hidden.'>
+    <td>Available variables:<br />';
+
+$template_variables_cprevnext = array(
+	"[prev-link]...[/prev-link]" => "Generates a link to the previous page (if there is one)",
+	"[next-link]...[/next-link]" => "Generates a link to the next page (if there is one)",
+	"{pages}" => "Shows linked numbers of the pages; example: <a href=\'#\'>1</a> <a href=\'#\'>2</a> <a href=\'#\'>3</a> <a href=\'#\'>4</a>",
+	);
+$template_variables_cprevnext = run_filters('template-variables-cprevnext',$template_variables_cprevnext);
+ksort($template_variables_cprevnext);
+reset($template_variables_cprevnext);
+
+echo '<table>';
+	foreach ($template_variables_cprevnext as $variable_cprevnext => $variable_cprevnext_description) {
+		echo "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$variable_cprevnext_description\">$variable_cprevnext</span></td><td>$variable_cprevnext_description</td></tr>";
+		}
+echo '</table>';
+
+echo '</td>
+    </tr>
+
+    <tr id=\'cprevious-next2\' '.$tr_hidden.'>
+    <td height="8"  colspan="2">
+    <textarea class="small" style="width: 100%"  name="edit_cprev_next">'.$template_cprev_next.'</textarea>
+</tr> <!-- End comments previous & next -->
+
+
+<tr> <!-- Start dateheader -->
+    <td height="7"  class="alternate" colspan="2">
+    <b><a style="font-size:16px" href="javascript:ShowOrHide(\'dateheader1\',\'dateheader2\')" >Dateheader</a></b>
+    </tr>
+    <tr id=\'dateheader1\' '.$tr_hidden.'>
+    <td>Available variables:<br />';
+
+$template_variables_dateheader = array(
+	"{dateheader}" => "Will generate a grouping date header for posts on the same day",
+	);
+$template_variables_dateheader = run_filters('template-variables-dateheader',$template_variables_dateheader);
+ksort($template_variables_dateheader);
+reset($template_variables_dateheader);
+
+echo '<table>';
+	foreach ($template_variables_dateheader as $variable_dateheader => $variable_dateheader_description) {
+		echo "<tr><td style=\"padding-right: 5px;\"><span class=\"vinfo\" title=\"$variable_dateheader_description\">$variable_dateheader</span></td><td>$variable_dateheader_description</td></tr>";
+		}
+echo '</table>';
+
+echo '</td></tr>
+
+    <tr id=\'dateheader2\' '.$tr_hidden.'>
+    <td height="8"  colspan="2">
+    <textarea class="small" style="width: 100%" name="edit_dateheader">'.$template_dateheader.'</textarea>
+</tr> <!-- End dateheader -->
+
+
+<tr>
+    <td height="8"  colspan="2">
+    <input type=hidden name=mod value=options>
+    <input type=hidden name=action value=dosavetemplates>
+    <input type=hidden name=do_template value="'.$do_template.'">
+    <br /><input type=submit value="   Save Changes   " accesskey="s">
+    </tr></form>
+    </table></div>';
+
+	echofooter();
+}
+// ********************************************************************************
+// Do Save Changes to Templates
+// ********************************************************************************
+elseif($action == "dosavetemplates")
+{
+   	if($member_db[1] != 1){ msg("error", "Access Denied", "You don't have permissions for this type of action"); }
+    $templates_names = array("edit_active", "edit_comment", "edit_form", "edit_full", "edit_prev_next", "edit_cprev_next", "edit_dateheader");
+    foreach($templates_names as $null => $template)
+    {
+		$$template = stripslashes($$template);
+    }
+
+    if($do_template == "" or !$do_template){ $do_template = "Default"; }
+    $template_file = "./data/${do_template}.tpl";
+
+	$handle = fopen("$template_file","w");
+    fwrite($handle, "<?PHP\n///////////////////// TEMPLATE $do_template /////////////////////\n");
+    fwrite($handle, "\$template_active = <<<HTML\n$edit_active\nHTML;\n\n\n");
+	fwrite($handle, "\$template_full = <<<HTML\n$edit_full\nHTML;\n\n\n");
+    fwrite($handle, "\$template_comment = <<<HTML\n$edit_comment\nHTML;\n\n\n");
+    fwrite($handle, "\$template_form = <<<HTML\n$edit_form\nHTML;\n\n\n");
+    fwrite($handle, "\$template_prev_next = <<<HTML\n$edit_prev_next\nHTML;\n\n\n");
+    fwrite($handle, "\$template_cprev_next = <<<HTML\n$edit_cprev_next\nHTML;\n\n\n");
+    fwrite($handle, "\$template_dateheader = <<<HTML\n$edit_dateheader\nHTML;\n\n\n");
+    fwrite($handle, "?>\n");
+
+    msg("info","Changes Saved","The changes to template <b>$do_template</b> were successfully saved.","$PHP_SELF?mod=options&action=templates&do_template=$do_template");
+}
+
+// ********************************************************************************
+// System Configuration
+// ********************************************************************************
+elseif($action == "syscon")
+{
+    echoheader("options", "System Configuration");
+	echo '<div class="systemconfig">';
+
+    echo"<form action=\"$PHP_SELF\" method=post>";
+
+    if(!$handle = opendir("./skins")){ die("Can not open directory ./skins "); }
+    while (false !== ($file = readdir($handle))) {
+    	$file_arr = explode(".",$file);
+		if($file_arr[1] == "skin"){
+			$sys_con_skins_arr[$file_arr[0]] = $file_arr[0];
+	} //elseif($file_arr[1] == "lang"){
+	//		$sys_con_langs_arr[$file_arr[0]] = $file_arr[0];
+	//	}
+	}
+	closedir($handle);
+	
+	// lang select
+	if(!$lhandle = opendir("./inc/lang")){ die("Can not open directory ./inc/lang "); }
+    while (false !== ($lfile = readdir($lhandle))) {
+    	$lfile_arr = explode(".",$lfile);
+		if($lfile_arr[1] == "visible"){
+			$sys_con_langs_arr[$lfile_arr[0]] = $lfile_arr[0];
+		}
+	}
+	closedir($lhandle);
+
+
+/* LIST LANGUAGES */
+$servertime = date("l d F Y H:i");
+echo '<div id="config_general_options"><table>';
+	showRow("Full URL to AJ-Fork Directory", "example: http://yoursite.com/ajfork", "<input type=text style=\"text-align: center;\"  name='save_con[http_script_dir]' value='$config_http_script_dir' size=40>");
+	showRow("Full URL to including page", "example: http://yoursite.com/news.php", "<input type=text style=\"text-align: center;\"  name='save_con[http_home_url]' value='$config_http_home_url' size=40>", "Yes");
+	showRow("CuteNews Skin", "you can make your own based on the default", makeDropDown($sys_con_skins_arr, "save_con[skin]", "$config_skin"));
+	showRow("Language displayed to visitors", "This is the language your visitors will see (and language dates will be in). See <a href=\"http://ajfork.berlios.de/translation/\">submission guide</a>.", makeDropDown(dropdownlangs(), "save_con[cn_lang]", "$config_cn_lang"), "Yes");
+	showRow("Smilies", "separate them with commas (<b>,</b>)", "<input type=text style=\"text-align: center;\"  name='save_con[smilies]' value=\"$config_smilies\" size=40>");
+	showRow("Storage", "whether to use flat files (original) or mysql for data storage (teaser)", "<label for=\"storage_ffdb\">Flat Files</label><input id=\"storage_ffdb\" type=\"radio\" name=\"save_con[storage]\" value=\"$config_storage\" size=\"40\" selected=\"selected\" /> | <label for=\"storage_mysql\">MySQL</label><input id=\"storage_mysql\" type=\"radio\" name=\"save_con[storage]\" value=\"$config_storage\" size=\"40\" disabled=\"disabled\" />");
+	showRow("Comment excerpt length", "how many characters to show in comment excerpts while editing articles", "<input type=text style=\"text-align: center;\"  name='save_con[commentexcerpt]' value='$config_commentexcerpt' size=\"40\">");
+echo '</table></div>
+<div id="config_date_options">
+	<h1 style="margin: 10px 0px 5px 0px;">Date &amp; Time</h1><table>';
+	showRow("Time Adjustment", "in minutes; ie <b>180</b>=+3 hours; <b>-120</b>=-2 hours.<br />(server time is now &quot;$servertime&quot;)", "<input type=text style=\"text-align: center;\"  name='save_con[date_adjust]' value=\"$config_date_adjust\" size=10>");
+	showRow("Time Format For News", "view help for time formatting <a href=\"http://www.php.net/manual/en/function.date.php\" target=\"_blank\">here</a>", "<input type=text style=\"text-align: center;\"  name='save_con[timestamp_active]' value='$config_timestamp_active' size=40>");
+	showRow("Time Format For Comments", "view help for time formatting <a href=\"http://www.php.net/manual/en/function.date.php\" target=\"_blank\">here</a>", "<input type=text style=\"text-align: center;\"  name='save_con[timestamp_comment]' value='$config_timestamp_comment' size=40>");
+	showRow("Time Format For Dateheader", "time format for above date-header. uses the php date()-function", "<input type=text style=\"text-align: center;\"  name='save_con[date_headerformat]' value='$config_date_headerformat' size=40>", "Yes");
+echo '</table></div>
+<div id="config_news_options">
+	<h1 style="margin: 10px 0px 5px 0px;">News Setup</h1><table>';
+	showRow("Show Dateheader", "if yes, a seperate date-header for posts on same day will show", makeDropDown(array("Yes"=>"Yes","No"=>"No"), "save_con[date_header]", "$config_date_header"), "Yes");
+	showRow("Auto-update Entry Dates", "whether or not to auto-update the date when editing news", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[update_edit_time]", "$config_update_edit_time"), "Yes");
+	showRow("Reverse News", "if yes, older news will be shown on the top", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[reverse_active]", "$config_reverse_active"));
+	showRow("Use Avatars", "if not, the avatar URL field wont be shown", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[use_avatar]", "$config_use_avatar"));
+	showRow("Show Full Story In PopUp", "full Story will be opened in PopUp window", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[full_popup]", "$config_full_popup"));
+	showRow("Settings for Full Story PopUp", "only if 'Show Full Story In PopUp' is enabled", "<input type=text style=\"text-align: center;\"  name='save_con[full_popup_string]' value=\"$config_full_popup_string\" size=40>");
+echo '</table></div>
+<div id="config_comment_options">	
+	<h1 style="margin: 10px 0px 5px 0px;">Comments Setup</h1><table>';
+	showRow("Auto Wrap Comments", "any word that is longer than this will be wrapped", "<input type=text style=\"text-align: center;\"  name='save_con[auto_wrap]' value=\"$config_auto_wrap\" size=10>");
+	showRow("Comments Flood Protection", "in seconds; 0 = no protection", "<input type=text style=\"text-align: center;\"  name='save_con[flood_time]' value=\"$config_flood_time\" size=10>");
+	showRow("Reverse Comments", "if yes, newest comments will be shown on the top", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[reverse_comments]", "$config_reverse_comments"));
+	showRow("Only Registered Users Can Post Comments", "if yes, only registered users can post comments", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[only_registered_comment]", "$config_only_registered_comment"));
+	showRow("Allow Mail Field to Act and as URL Field", "visitors will be able to put their site URL insted of mail", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[allow_url_instead_mail]", "$config_allow_url_instead_mail"));
+	showRow("Protect displayed emails from spamrobots", "crude, obscures the @ and . parts of emails displayed", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[comments_spamprotection]", "$config_comments_spamprotection"));
+	showRow("Comments Pagination", "if yes, comments will be divided over several pages", makeDropDown(array("Yes"=>"Yes","No"=>"No"), "save_con[comments_pagination]", "$config_comments_pagination"), "Yes");
+	showRow("Comments Per Page", "if yes to the previous, how many on each page?", "<input type=text style=\"text-align: center;\"  name='save_con[comments_pagination_number]' value='$config_comments_pagination_number' size=3>", "Yes");
+	showRow("{admin} setup", "What to show where {admin} is inserted in the comment template", "<input type=text style=\"text-align: center;\"  name='save_con[admin_template]' value='$config_admin_template' size=40>", "Yes");
+	showRow("Show Comments In PopUp", "comments will be opened in PopUp window", makeDropDown(array("yes"=>"Yes","no"=>"No"), "save_con[comments_popup]", "$config_comments_popup"));
+	showRow("Settings for Comments PopUp", "only if 'Show Comments In PopUp' is enabled", "<input type=text style=\"text-align: center;\"  name=\"save_con[comments_popup_string]\" value=\"$config_comments_popup_string\" size=40>");
+echo'</table></div>
+<div id="config_user_options">
+	<h1 style="margin: 10px 0px 5px 0px;">User Options</h1><table>';
+	showrow("Self-Registration", "if allowed, users visiting the login page will be allowed to register themselves without your intervention", makeDropDown(array("allow"=>"Allow","deny"=>"Deny"), "save_con[users_selfregister]", "$config_users_selfregister"));
+	showrow("Default SR Level", "default level for self-registered users", makeDropDown(array("a"=>"Admin","e"=>"Editor","j"=>"Journalist","c"=>"Commenter"), "save_con[users_deflevel]", "$config_users_deflevel"));
+	
+echo "</table></div>
+       
+    <input type=hidden name=mod value=options>
+    <input type=hidden name=action value=dosavesyscon>".
+    showRow("","","<br /><input type=submit value=\"     Save Changes     \" accesskey=\"s\">")."
+    </form></div>";
+	echofooter();
+}
+// ********************************************************************************
+// Save System Configuration
+// ********************************************************************************
+elseif($action == "dosavesyscon")
+{
+	if($member_db[1] != 1){ msg("error", "Access Denied", "You don't have permission for this section"); }
+	$handler = fopen("./data/config.php", "w");
+    fwrite($handler, "<?PHP \n\n//System Configurations\n\n\$config_version_name = \"$aj_version\";\n\n\$config_version_id = \"$aj_buildid\";\n\n");
+    foreach($save_con as $name=>$value)
+    {
+    	fwrite($handler, "\$config_$name = \"$value\";\n\n");
+    }
+    fwrite($handler, "?>");
+    fclose($handler);
+
+	include("./skins/".$save_con["skin"].".skin.php");
+    msg("info", "Configurations Saved", "The System Configurations were successfully saved.");
+}
+else {
+	run_actions('plugin-options');
+}
+
+?>

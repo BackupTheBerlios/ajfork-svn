@@ -1,0 +1,75 @@
+<?PHP
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Main Screen of SNR
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+if($action == "" or !isset($action)){
+	echoheader("options", "RSS 2.0 Configuration");    
+include("./data/config_rss.php");
+$form = <<<HTML
+<div id="rss_form" style="float: left;">
+	<form id="rss_settings_form" method="post" action="$PHP_SELF?mod=rss&amp;action=save">
+	<label for="rss_number">How many items should be displayed in feed?</label><br />
+	<input type="text" id="rss_number" name="rss_setup[number]" value="$rss_setup[number]" /><br />
+	
+	<label for="rss_title">Title of feed</label><br />
+	<input type="text" id="rss_title" name="rss_setup[title]" value="$rss_setup[title]" /><br />
+	
+	<label for="rss_link">URL to where you display your articles</label><br />
+	<input type="text" id="rss_link" name="rss_setup[link]" value="$rss_setup[link]" /><br />
+	
+	<label for="rss_language">Feed language</label><br />
+	<input type="text" id="rss_language" name="rss_setup[language]" value="$rss_setup[language]" /><br /><br />
+	
+	<label for="rss_description">Try to describe what your site is all about</label><br />
+	<textarea id="rss_description" name="rss_setup[description]" class="small">$rss_setup[description]</textarea><br /><br />
+
+	<label for="rss_template">Detailed control of each feed item</label><br />
+	<textarea id="rss_template" name="rss_setup[template]" class="medium" nowrap="nowrap">$rss_setup[template]</textarea><br />
+	
+	<input type="hidden" name="action" value="save" /> 
+	<br /><br />      
+	<input type="submit" value="Update configuration" />  
+	</form>
+</div>
+
+<div id="main_boxcontent">
+	<div class="boxcontent_box">
+	<h3>Table of contents</h3>
+	<p>Use <a href="rss.php?f=view">rss.php</a> to link to your rss feed.<br />
+	You can supply different variables like $category to the feed displayer by adding 
+	them to the url, like this:<br /><br /><span class="safe">?f=view&amp;category=sports&amp;language=no-nb</span><br /><br />
+	Template variables are the same as for the active news template.</p>
+	</div>
+</div>
+HTML;
+
+echo $form;
+
+	echofooter();
+	}
+	
+	elseif($action == "save") {
+		if($member_db[1] != 1){ 
+			msg("error", "Access Denied", "You don't have permission for this section.");
+			}
+
+		$rss_setup[number] = spostr_replace($rss_setup[number]);
+		$rss_setup[title] = spostr_replace($rss_setup[title]);
+		$rss_setup[link] = spostr_replace($rss_setup[link]);
+		$rss_setup[language] = spostr_replace($rss_setup[language]);
+		$rss_setup[description] = spostr_replace($rss_setup[description]);
+		$rss_setup[template] = str_replace("\r", "", $rss_setup[template]);
+		$rss_setup[template] = str_replace("&", "&amp;", $rss_setup[template]);
+		
+		$handler = fopen("./data/config_rss.php", "w");
+    	fwrite($handler, "<?PHP \n\n");
+    	foreach($rss_setup as $name => $value) {
+    		fwrite($handler, "\$rss_setup[$name] = \"$value\";\n\n");
+			}
+   		fwrite($handler, "?>");
+    	fclose($handler);
+
+    	msg("info", "Configurations Updated", "The RSS 2.0 Configuration was updated<br /><a href=\"?mod=rss\">Go back</a>");
+}
+?>

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+echo "
+		AJ-Fork ( øivind hoel / eruin )
+		Release script version 1 running:
+
+";
+
+rm -rf plugins/
+rm -rf data/
+rm -rf inc/
+rm -rf skins/
+rm -rf *.php
+mv ./web ../web
+cp -R /home/eruin/Desktop/ajforkdev/* /home/eruin/www/
+echo "* copy latest files					[ok]";
+
+chmod -R 777 data
+chmod 777 index.php
+chmod -R 777 plugins/ImageManager/
+chmod 777 inc/install.mdu
+echo "* chmod data/*, plugins/ImageManager/* and index.php 	[ok]";
+
+#for i in $(find ./ -iname *~); do rm -rf $i; done
+find . -name '*~' |xargs rm
+echo "* flush temporary files 				[ok]";
+
+rm -rf md5sums
+touch md5sums && for i in $(find ./ -type f); do md5sum $i >> md5sums; done
+echo "* generate healthy md5sums                              [ok]";
+
+rm -rf ajfork.tar.gz
+tar czf ajfork.tar.gz *
+echo "* generate ajfork.tar.gz  	                        [ok]";
+mv ../web ./web

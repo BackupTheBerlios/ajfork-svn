@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="skins/default.css" media="all" />
+		<title>AJ-Fork README</title>
+		<script type="text/javascript" src="skins/cute.js"></script>	
+	</head>
+
+<body>
+<!--tyle="position:absolute; left:25px; top:10px; height:13px; z-index:3"  -->
+
+<div id="mainframe">
+		<div id="main_head">
+		<!-- appelsinholder-->
+		</div>
+
+		<div id="main_menu">
+		</div>
+
+		<div id="main_content">
+<div style="float: left;">
+
+<div id="main_boxcontent">
+	<div class="boxcontent_box">
+	<h3>Table of contents</h3>
+		<div id="menu">
+			<p>
+			<a href="#ainf">info</a><br />
+			<a href="#ains">installing</a><br />
+			<a href="#aupg">upgrading</a><br />
+			<a href="#adis">displaying news</a><br />
+			<a href="#ainc">include-codes</a><br />
+			<a href="#apro">troubleshooting</a><br />
+			<a href="#acre">credits</a>
+			</p>
+			
+			<p>
+			<a href="http://cutephp.com/forum/">cutephp forums</a><br />
+			<a href="http://ajfork.berlios.de/">aj-fork home</a><br />
+			<a href="http://mozilla.org/products/firefox/">firefox</a>
+			</p>
+			
+			
+			</div>
+	</div>
+</div>
+<div id="readme_content">
+		<a id="ainf"></a><h1>Info</h1><p>
+		AJ-Fork is, as the name implies - a fork. Based on the <a href="http://cutephp.com">CuteNews</a> 1.3.1 core, the aim of the project is to improve what can be improved, and extend what can be extended without adding too much bloat (in fierce opposition to the mainstream blogging/light publishing tools of today). The project aims to be backwards-compatible with CuteNews in what areas are sensible.</p><p>AJ-Fork is licensed under the GLP license. The full license can be read <a href="LICENSE">in the accompanying LICENSE file</a> or <a href="http://www.gnu.org/licenses/gpl.txt">at gnu.org</a>.</p>
+		<a id="ains"></a><h1>Installing</h1><p>
+		Installing <small>CuteNews</small> AJ-Fork is really quite simple, but to make it even more simple for you, this step-by-step guide has been written:
+		</p>
+		<ol>
+			<li>Download the <a href="http://ajfork.berlios.de/">latest version</a> of AJ-Fork</li>
+			<li>Once downloaded, you'll need to unzip the contents to a temporary directory</li>
+			<li>FTP to your server and create a directory named ajfork</li>
+			<li>Upload all the files from the temporary directory you created in step two to the &quot;fork&quot;-folder you created in the previous step.</li>
+			<li>Use your FTP client to CHMOD:
+				<ul>
+					<li>777 (755 might work): all files and folders in the data/ folder</li>
+					<li>644 (or just 777): index.php</li>
+				</ul>
+				This will enable the script to read/write from/to its datafiles.</li>
+			<li>Open up a <a href="http://www.mozilla.org/products/firefox/">browser</a>, point it to http://yoursite.com/ajfork/ and follow the instructions given by the installer</li>
+			<li>Be sure to delete inc/install.mdu after the install has finished successfully (security reasons)</li>
+		</ol>
+		<a id="aupg"></a><h1>Upgrading?</h1>
+		<p><strong>If upgrading from a version of AJ-Fork older than 2.1 (168)</strong>, here's the relevant upgrade prodecure:</p>
+<ol>
+<li>Open your current system config. Change skin to the default one</li>
+<li>Backup your old AJ-Fork directory</li>
+ <li>Delete everything in this directory</li>
+<li>Copy the files from your downloaded AJ-Fork package to this directory</li>
+<li>Install AJ-Fork by opening this location in your browser</li>
+
+<li>Now, since 167, AJ-Fork has taken a huge step towards internationalization;
+	  All files are encoded UTF-8, which is similar to ISO-8859-1, etc, with a 
+	  noteable difference: It supports _ALL_ Languages. That's right; You can mix any 
+	  language in the same file. This eases the translation effort tremendeously.</li>
+	
+<li>To successfully deploy a UTF-8 site, the following two requirements need to be satisfied:<ul>
+<li>Including document needs to have it's codepage set to UTF-8 in the &lt;head&gt; section:
+		  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /%gt;</li>
+
+<li>All files involved need to be encoded UTF-8. If you have non-UTF-8 files in, say, your 
+		  /data/-directory, these need to be converted before you can start using 168. This is done 
+		  by downloading a text-editor that supports UTF-8 and your own charset (gedit among others on linux), opening 
+		  your non-UTF-8 files in it, then making sure the editor saves (save as) (converts) your file in (to)
+		  UTF-8 encoding.</li></ul>
+</li>
+<li>Copy your converted files to the cutenews /data/-directory</li>
+
+<li>If you haven't been participating in the 168 beta testing, you should now copy
+	  "ajfork/tools/convert.php" to "ajfork/" and open it in your browser.
+	  This tool will convert your news.txt to the new database format used by AJ-Fork 2.1.</li>
+	  
+ <li>AJ-Fork 168 and it's vast amount of new features/fixes is ready for action!</li>
+ <li>Be sure to check your system config before continuing use of AJ-Fork. A lot of items need values filled.</li>
+ </ol>
+		<p><strong>If you're upgrading from an original CuteNews-version</strong>, here's what you need to do (if upgrading from an older version of AJ-Fork, you can skip step 8 and 9):</p>
+		<ol>
+			<li>Backup your files!</li>
+			<li>Download the <a href="http://ajfork.berlios.de/">latest version</a> of AJ-Fork</li>
+			<li>Delete your current cutenews folder</li>
+			<li>Upload the contents of the ajfork archive you downloaded to your old (EMPTY!) cutenews folder</li>
+			<li>Open your browser and point it to http://yoursite.com/ajfork/index.php, and install the script</li>
+			<li>Convert your old *.tpl, news.txt, comments.txt, users.db.php, etc to utf8 if they aren't already (notepad in windows and gedit in linux can do this using save-as), then upload the files to your ajfork/data directory</li>
+			<li>Make sure all files and folders in ajfork/data, plus index.php is chmod 777</li>
+			<li>Copy auto_md5.php from the tools/ folder to the main folder of AJ-Fork</li>
+			<li>Open up a <a href="http://www.mozilla.org/products/firefox/">browser</a>, point it to http://yoursite.com/cutenews/auto_md5.php. This tool will update your users.db.php to be compatible with the double-md5-encryption used for passwords in AJ-Fork.</li>
+			<li>Delete inc/install.mdu for security reasons</li>
+			<li>Log in as usual! ;) - You might need to clear your cookies.</li>
+			<li>Make sure you stop by both System Configuration to save new options, and see if there are new template options in Options -&gt; Edit Templates</li>
+		</ol>
+		
+		<a id="adis"></a><h1>Displaying News</h1>
+		<p>One of the main strengths of cutenews aj-fork is its versability. You can include the news anywhere on any page (make sure the extension of the page is .php, not .htm) by simply using the include-codes described further down.</p>
+		<p>When including your news, you can use $number = &quot;x&quot;; to limit how many news are displayed simultaneously. If you have more news than this number is set to, prev/next-links will be generated at the bottom of your page. The same applies to comments if you've enabled comments-pagination in System Config. Just use $cnum = &quot;x&quot;; instead. You can customize the look of this and anything else aj-fork outputs in Options -&gt; Edit Templates inside the admin area.</p>
+		<p>If you want to show news and archives from a certain category you can use $category = &quot;ID&quot;; where ID is the id (number) of the category. You can select multiple categories like this: $category = "ID1,ID2,ID3";</p>
+
+<p>When you want to display news and headlines on one page for example, and want the headline clicked to be displayed where your news are included, you must use $static = TRUE; before including headlines.</p>
+
+<a id="ainc"></a><h1>Include-codes:</h1>
+<h2>Showing active news</h2>
+<pre>
+&lt;?PHP
+ include("path/to/show_news.php");
+?&gt;
+</pre>
+
+<h2>Showing active news with a specific template</h2>
+<pre>
+&lt;?PHP
+ $template = "YOUR_TEMPLATE_NAME";
+ include("path/to/show_news.php");
+?&gt;
+</pre>
+
+<h2>Showing archives</h2>
+<pre>
+&lt;?PHP
+ include("path/to/show_archives.php");
+?&gt;
+</pre>
+
+<h2>Showing the latest five articles</h2>
+<pre>
+&lt;?PHP
+ $number = "5";
+ include("path/to/show_news.php");
+?&gt;
+</pre>
+
+<h2>Showing the latest five articles from category with name &quot;foo&quot;</h2>
+<pre>
+&lt;?PHP
+ $number = "5";
+ if (!$category || !$ucat) { $category = "foo"; }
+ include("path/to/show_news.php");
+?&gt;
+</pre>
+
+<h2>Showing headlines and the latest article on the same page</h2>
+<pre>
+&lt;?PHP
+ $static = TRUE;
+ $template = "Headlines";
+ include("path/to/show_news.php");
+
+ $number = "1";
+ include("path/to/show_news.php");
+?&gt;
+</pre>
+
+
+<a id="apro"></a><h1>Problems? Questions?</h1>
+<p>
+In all of the above examples you must replace path/to/... with the path where you installed AJ-Fork (do not use the URL but the path)<br />
+    WRONG: include(&quot;http://site.com/cutenews/show_news.php&quot;);<br />
+    CORRECT: include(&quot;cutenews/show_news.php&quot;);</p>
+  <p>In most cases where you include both news and headlines in one page, you must
+    use $static = TRUE; .</p>
+  <p>When you use $number, $category, $template or any other variable, it must
+    be used BEFORE include(&quot;show_news.php&quot;);</p>
+  <p>If you have any problems, you can always go to <a href="http://appelsinjuice.org?vis=cutenews-aj">the official aj-fork site</a> or even to <a href="http://cutephp.com/forum/">the cutenews support forums</a> and
+    we'll be more than glad to help you out (check out the FAQ section of the forum before asking for help), AND make sure you state that you're using AJ-Fork and not standard CuteNews, as this will clear up alot of confusion.</p>
+
+
+<h1>New stuff</h1>
+<p>
+There's a few things you should know about AJ-Fork:
+
+To use the remember me-feature (so that commenters can check a box to make the script remember them till next time they comment), you need to update 
+your add comment form-template with the following:</p>
+
+<h2>Input boxes <em>for name and mail</em></h2>
+<p class="desc">Note {savedmail} and {savedname} - these are used to retrieve a users stored name and mail or url.</p>
+<pre>
+&lt;input id=&quot;name&quot; class=&quot;input&quot;  type=&quot;text&quot; 
+		size=&quot;28&quot; name=&quot;name&quot; tabindex=&quot;1&quot; value=&quot;{savedname}&quot; /&gt;
+&lt;input id=&quot;mail&quot; class=&quot;input&quot; type=&quot;text&quot; 
+		size=&quot;28&quot; name=&quot;mail&quot; tabindex=&quot;2&quot; value=&quot;{savedmail}&quot; /&gt;
+</pre>
+
+<h2>&quot;Remember me&quot;-checkbox</h2>
+<p class="desc">{remember} will print the actual checkbox, while the rest will place a label for it.</p>
+<pre>{remember}&lt;label for=&quot;rememberme&quot;&gt;Remember info&lt;/label&gt;</pre>
+
+<h2>Header for comments</h2>
+<p class="desc">You can place a header that should show up above comments in the full story template, if you enclose it with [comheader]. 
+The enable/disable comments-plugin will make sure the header is displayed where you have comments enabled, and that it is removed where comments are disabled.</p>
+<pre>
+[comheader]Comments:[/comheader]
+</pre>
+
+<h2>Image uploader / editor / manager</h2>
+<p class="desc">The old cutenews image-manager has been removed in favour of a WYSIWYG one. It's disabled by default since it requires some manual configuring. To use it, 
+go to the plugins screen, activate the Image Manager plugin and be sure to read its description. There should be a link to help you configure the manager. 
+Once you've set all the options, you should be presented with a screen containing a textarea. The content in this textarea should be copied to cutenews/plugins/ImageManager/config.inc.php. 
+After you 've uploaded your config.inc.php, the plugin should be ready to go. The manager will pop up when you press the &quot;img&quot; quicktag-button in add / edit news.</p>
+
+<h2>URLS</h2>
+<p class="desc">subaction has been removed and is now referred to as "aj_go". It can have one of two values: addcomment (used internally) and more, which shows the full story (with comments if enabled for the specific post).</p>
+
+
+<a id="acre"></a><h1>Credits</h1>
+<p>Plugin functionality based on that of <a href="http://www.wordpress.org">wordpress</a> - implemented by thox. Various standalone functions/ideas also based off the wordpress project.<br /><br />
+<strong>JubbaG</strong> (a <strong>lot</strong> of contributions), Will, Flexer, Stealtheye and others from the cutephp forums have been a great aid in developing AJ-Fork!<br />jimmac of the ubuntu/debian linux project gets credit for the idea behind the sleek new menu in the default skin.</p>
+</div>
+</div>
+<!--MAIN area-->
+	<!--/SELF-->
+		<br style="clear:both;"/>
+		</div>
+		
+
+	</div>
+
+	</body>
+	</html>

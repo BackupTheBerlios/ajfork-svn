@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="skins/default.css" media="all" />
+		<title>CuteNews AJ-Fork</title>
+		<script type="text/javascript" src="skins/cute.js"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+<body>
+<!--tyle="position:absolute; left:25px; top:10px; height:13px; z-index:3"  -->
+
+<div id="mainframe">
+		<div id="main_head">
+		<!-- appelsinholder-->
+		</div>
+
+		<div id="main_menu">
+		</div>
+
+		<div id="main_content">
+		<div style=\"float: left;\">
+
+	<form method=post action="<?PHP echo $PHP_SELF; ?>">
+<?PHP
+
+$my_path = dirname(__FILE__);
+$my_path = str_replace("\\", "/", substr($my_path, 0, -3));
+if(!file_exists($my_path.'index.php')){
+	$my_path = './';
+}
+
+// ********************************************************************************
+// CHMOD Check
+// ********************************************************************************
+if($action == "chmod_check")
+{
+	echo'<h1>Checking permissions and file health</h1><p>
+	Statistics for <b>important</b> files that must be CHMOD\'ed and writable:</p>
+	
+<table width="673" height="100%" cellpadding="0">
+  <td width="667" colspan="3">
+  <tr>
+    <td width="303" bgcolor="#F7F6F4" > File / Folder
+    <td bgcolor="#F7F6F4" width="150" >Current CHMOD
+    <td bgcolor="#F7F6F4" width="210" >Status
+  </tr>';
+  $important_files = array(
+                            'index.php',
+  			    'data/',
+			    'inc/install.mdu',
+                           );
+
+   if(!$handle = opendir("./data")){ die("<center>Cannot open directory ./data "); }
+   while (false !== ($file = readdir($handle))){
+	if($file != '.' and $file != '..'){
+    	$important_files[] = "data/$file";
+    }
+   }
+        closedir($handle);
+
+    $chmod_errors = 0;
+    $not_found_errors = 0;
+    foreach($important_files as $null => $file){
+        $file_name = $my_path . $file;
+
+        if(!file_exists($file_name)){
+        	$file_status = "<span class=\"warning\">not found, check whether it is uploaded!</span>";
+            $not_found_errors ++;
+        }
+        elseif(is_writable($file_name)){
+        	$file_status = "<span class=\"green\">writable</span>";
+        }
+        else{
+            @chmod("$file_name", 0777);
+            if(is_writable($file_name)){
+            	$file_status = "<span class=\"green\">writable</span>";
+			}else{
+            	@chmod("$file_name", 0755);
+				if(is_writable($file_name)){
+	            	$file_status = "<span class=\"green\">Writable</span>";
+                }else{
+					$file_status = "<span class=\"warning\">Not Writable</span>";
+                	$chmod_errors ++;
+                }
+			}
+        }
+    	$chmod_value = @decoct(@fileperms($my_path . $file)) % 1000;
+
+	echo"<tr>
+		 <td>$file_name</td>
+	     <td> $chmod_value</td>
+	     <td> $file_status</td>
+		 </tr>";
+    }
+
+    if($chmod_errors == 0 and $not_found_errors == 0){
+    	$status_report = 'The test were completed successfully and no errors were encountered. You may now proceed to the final installation step';
+    }else{
+	    if($chmod_errors > 0){
+	    	$status_report = "<span class=\"warning\">Error encountered</span> during the permissions check, <b>$chmod_errors</b> of the files were not writable, you must <a href='http://www.cutephp.com/faq/index.php?faqcategory=1&faqid=19' title='How To CHMOD ?'>CHMOD</a> them to 777 using your FTP program.<br />(basically the files that must be CHMODed are all files and folders in the data/ directory)<br /><br />Proceeding with installation is <span class=\"warning\"><b>NOT</b></span> recommended.<br />";
+	    }
+	    if($not_found_errors > 0){
+	    	$status_report .= "<span class=\"warning\">Error encountered</span> during the permissions check, <b>$not_found_errors</b> of the files were not found, make sure you uploaded them in the correct folder.<br /><br />Proceeding with installation is <span class=\"warning\"><b>NOT</b></span> recommended.<br />";
+	    }
+	}
+
+	echo"<tr>
+    	<td><br /></td>
+    	<td></td>
+	    <td></td>
+	</tr><tr>
+    	<td bgcolor='#F7F6F4'>Permission status report</td>
+    	<td></td>
+	    <td></td>
+	</tr><tr>
+    	<td style=\"padding:5px\" colspan=2>$status_report</td>
+	</tr>
+<tr><td bgcolor='#f7F6F4'>File-health report:</td><td></td><td></td></tr>
+<tr><td style=\"padding:5px\" colspan=2>";
+
+/* md5 routine */
+
+$distsums = file('md5sums');
+foreach ($distsums as $null => $distsum_line) {
+	$distsum = substr($distsum_line, 0, 32);
+	$filetocheck = rtrim(substr($distsum_line, 34));
+	if ($filetocheck == "./md5sums" || $filetocheck == "./ajfork.tar.gz") { continue; }
+
+	$sumfound = md5_file($filetocheck);
+	if ($sumfound == $distsum || !file_exists($filetocheck)) { 
+		$results[$filetocheck] = "OK";
+		} 
+	else { 
+		$results[$filetocheck] = "FAIL";
+		}
+
+	}
+
+
+foreach ($results as $file => $status) {
+	if ($status == "FAIL") {
+		echo "<span style=\"color: red\";>$file</span> is<strong> corrupt</strong>!<br />";
+		}
+}
+
+if (array_search("FAIL", $results)) {
+	echo "<p>This either means that your download got corrupted, that your uploaded files are corrupted or that the files have been tampered with. 
+	You can try reuploading, and if that doesn't fix it, redownload aj-fork from the official site. Support for a site running with corrupted files 
+	is not available.</p>";
+}
+
+else {
+	echo "<p>All your files seem to be healthy. That's a good thing ;)</p>";
+}
+  echo'</td></tr></table>
+  <input type=hidden name=action value=doconfig>
+ 	<input type=submit value="Proceed with Installation &gt;&gt;">';
+}
+// ********************************************************************************
+// Do Configure
+// ********************************************************************************
+elseif($action == "doconfig")
+{
+
+	$url  = preg_replace( "'/index.php'", "", $HTTP_SERVER_VARS['HTTP_REFERER']);
+	$url  = preg_replace( "'\?(.*)'", "", $url);
+    if(substr("$url", -1) == "/"){ $url = substr($url, 0, -1); }
+
+
+	echo'<h1> Important Configuration</h1>
+	<p>Please fill in the required information before proceeding</p>
+	
+<table width="673" height="100%" cellpadding="0">
+  <td width="671" colspan="2">
+  <tr>
+    <td width="222" bgcolor="#F7F6F4" > Full URL to CuteNews directory:
+    <td bgcolor="#F7F6F4" ><input name=url value="'.$url.'" size=38 type=text>
+      should start with Http://
+  </tr>
+  <tr>
+    <td width="222" bgcolor="#F7F6F4" > URL to the file you plan to include CN in:
+    <td bgcolor="#F7F6F4" ><input name=urlhome value="'.$url.'/example.php" size=38 type=text>
+      should start with Http://
+  </tr>
+  <tr>
+    <td >
+    
+    <td >
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    Administrator Username:
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_username" >
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    Password:
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_password1"> <b>REMEMBER</b> your password!
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    Nickname
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_nickname"> (optional)
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    Email
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_email">
+  </tr>
+  <tr>
+    <td >
+    
+    <td >
+  </tr>
+</table>
+<input type=hidden name=action value=doinstall>
+<input type=submit value="Finish installation &gt;&gt;">
+';
+}
+// ********************************************************************************
+// Do Install
+// ********************************************************************************
+elseif($action == "doinstall")
+{
+	if(!$reg_username or !$reg_password1 or !$url){ die("Bugger!<br /> You either forgot to fill in one or more required fields, or the passwords didn't match"); }
+	$reg_password = md5(md5($reg_password1));
+
+	$users_file = fopen("./data/users.db.php", "w") or die("Sorry mate, but the installer cannot write to the file <b>./data/users.db.php</b>,<br />please check whether the file exists and/or is properly CHMOD`ed");
+	fwrite($users_file, "<?PHP die(\"You don't have access to open this file.\"); ?>\n");
+	fwrite($users_file, time()."|1|$reg_username|$reg_password|$reg_nickname|$reg_email|0|0|||||||||\n");
+	fclose($users_file);
+
+$config = <<<HTML
+<?PHP
+
+//System Configurations
+
+\$config_version_name = "$aj_version";
+
+\$config_version_id = "$aj_buildid";
+
+\$config_http_script_dir = "$url";
+
+\$config_http_home_url = "$urlhome";
+
+\$config_skin = "default";
+
+\$config_cn_lang = "inc/lang/en.visible.php";
+
+\$config_smilies = "smile, sad, grin, wink, laugh, evil, angry";
+
+\$config_commentexcerpt = "90";
+
+\$config_date_adjust = "0";
+
+\$config_timestamp_active = "l d F Y";
+
+\$config_timestamp_comment = "d F h:i";
+
+\$config_date_headerformat = "l d F";
+
+\$config_date_header = "No";
+
+\$config_update_edit_time = "no";
+
+\$config_reverse_active = "no";
+
+\$config_use_avatar = "no";
+
+\$config_full_popup = "no";
+
+\$config_full_popup_string = "HEIGHT=400,WIDTH=650,resizable=yes,scrollbars=yes";
+
+\$config_auto_wrap = "55";
+
+\$config_flood_time = "10";
+
+\$config_reverse_comments = "yes";
+
+\$config_only_registered_comment = "no";
+
+\$config_allow_url_instead_mail = "yes";
+
+\$config_comments_spamprotection = "yes";
+
+\$config_comments_pagination = "Yes";
+
+\$config_comments_pagination_number = "10";
+
+\$config_admin_template = "registered";
+
+\$config_comments_popup = "no";
+
+\$config_comments_popup_string = "HEIGHT=400,WIDTH=650,resizable=yes,scrollbars=yes";
+
+?>
+HTML;
+
+
+	$con_file = fopen("./data/config.php", "w") or die("Sorry mate, but the installer cannot write to file <b>./data/config.php</b>,<br />please check whether the file exists and/or is properly CHMOD`ed");
+	fwrite($con_file, $config);
+	fclose($con_file);
+
+    $path = str_replace( '\\', '/', getcwd() );
+    echo'<h1> Installation Finished</h1><br />
+    <p>Your installation of AJ-Fork was successfully completed.<br />
+	We now recommend you recheck the <a href="README.htm">README file</a> where the basics of maintaining an AJ-Fork site is explained.<br />
+	You should also stop by the <a href="http://ajfork.berlios.de/forum/">official AJ-Fork forums</a> and our sister site, 
+	<a href="http://cutenews.com/forum/">the official Cutenews forums</a>, but make sure you read 
+	<a href="http://ajfork.berlios.de/faq/">the official FAQ</a> and try <a href="http://ajfork.berlios.de/forum/search.php">searching the forums</a> 
+	before asking for help. Thank you!</p>
+
+	<p><strong>Note</strong>: you should now delete ./inc/install.mdu for security reasons</p>
+
+<p>If you\'re already familiar with AJ-Fork, you can go to the <a href="index.php">login page</a> we\'ve prepared for you.</p>
+    ';
+}
+// ********************************************************************************
+// Start Installation Wizard
+// ********************************************************************************
+else{
+	$browser = $_SERVER['HTTP_USER_AGENT'];
+	if (stristr($browser, "msie")) {
+		$okbrowser = "no";
+		if (stristr($browser, "opera")) {
+			$okbrowser = "yes";
+			}
+		}
+	$phpver = phpversion();
+	if (phpversion() < "4.3.0") { 
+		echo'<h1>Welcome to the CuteNews AJ-Fork Installer</h1><br />
+	<p>
+	Sorry to have to say this, but the version of PHP running on your server is too old to run AJ-Fork. You need <strong>at least</strong> PHP 4.3.0.
+	</p>
+    ';
+	}
+	elseif ($okbrowser != "no") { 
+	echo'<h1>Welcome to the '.$aj_version.' <small>('.$aj_buildid.')</small> installer!</h1><br />
+	<p>
+	Your PHP Version: '.$phpver.' (OK)<br />
+	Your Browser: '.$_SERVER["HTTP_USER_AGENT"].' (OK)<br />
+	</p>
+	<p>Looks like you\'ve got everything needed to start installing AJ-Fork. <br />
+	This wizard will guide you through a few installation steps/checks and configure an admin user for you.</p><p>
+	</p>
+    <input type=hidden name=action value="chmod_check">
+	<input type=submit value="Start Installation &gt;&gt;">
+    ';
+	}
+	else {
+	echo '<h1>Welcome to the AJ-Fork Installer</h1><br />
+	<p>Unfortunately your browser (internet explorer) isn\'t modern enough to use AJ-Fork.
+	You can do one of two things to avoid this message:</p>
+	<ol>
+		<li>Upgrade to a <a href="http://www.mozilla.org/">Modern Browser</a>, or</li>
+		<li>Use another, less browser-intensive publishing tool like <a href="http://www.wordpress.org">Wordpress</a>.</li>
+	</ol>
+	<p>You really should do do option #1 in any case.</p>
+	';
+	}
+	
+}
+
+?>
+<!--MAIN area-->
+	<!--/SELF-->
+		</div>
+		<br style="clear:both;"/>
+		</div>
+		
+
+	</div>
+
+	</body>
+	</html>

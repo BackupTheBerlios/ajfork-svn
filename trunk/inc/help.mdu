@@ -1,0 +1,317 @@
+<?PHP
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Our Help Sections
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+$help_sections = array();
+
+//----------------------------------
+// Including the News
+//----------------------------------
+$help_sections["including"] = <<<HTML
+<p>Including News? See the <a href="readme.htm">Readme</a> for basic info on including news.</p>
+HTML;
+
+//----------------------------------
+// All possible variables while including
+//----------------------------------
+$help_sections["variables"] = <<<HTML
+<h1>Variables for use when including news</h1>
+<p>This is a list of all possible variables you are allowed to use when including news or archives:</p>
+
+<pre>&lt;?PHP
+<strong>\$cnum = &quot;X&quot;;</strong>
+<strong>\$number = &quot;X&quot;;</strong>
+<strong>\$template = &quot;NAME&quot;;</strong>
+<strong>\$static = TRUE;</strong>
+<strong>\$category = &quot;ID&quot;;</strong>
+<strong>\$start_from = &quot;NUMBER&quot;;</strong>
+
+include(&quot;path/to/show_news.php&quot;);
+?&gt;</pre>
+
+<p>\$number : How many articles to show on one page<br />
+\$template : The template that should be used in the next include(show_news.php)<br />
+\$static : The following include will act like a static page<br />
+\$category : What category/categories to show articles from (comma-seperated list)<br />
+\$start_from : Show news starting from the n'th latest entry. Must be used in conjunction with \$start_from<br />
+<br />
+All of the above variables are optional.</p>
+HTML;
+
+//----------------------------------
+// Using Multiple Includes
+//----------------------------------
+$help_sections["multiple_includes"] = <<<HTML
+<h1>Using Multiple Includes on One Page</h1>
+<p>Now we'll look at a situation where you want to use more than one include on a single page. Say you want to show 
+five headlines (using the template named &quot;headlines&quot;) followed by your active news.</p>
+
+<p>By default, just using two simple includes will confuse CuteNews as to where the clicked headline should be displayed - right where you clicked 
+the headline or where you have your news? The solution to this problem is to use the variable <strong>$static = TRUE;</strong> before including the headlines. When you use
+this variable, CuteNews won't display any result where you used it.</p>
+
+<p>Here's the solution to the problem:</p>
+
+<pre>
+<u>Latest 5 Headlines:</u>:
+&lt;?PHP
+\$static = TRUE;
+\$number = "5";
+\$template = "Headlines";
+include("path/to/show_news.php");
+?&gt;
+
+<u>News:</u>
+&lt;?PHP
+include("path/to/show_news.php");
+?&gt;</pre>
+
+If you click a headline while using this code, the News-area will be updated to show the article you clicked on, while the latest five headlines 
+will still be shown on top of it.
+HTML;
+
+//----------------------------------
+// Users Section
+//----------------------------------
+$help_sections["users"] = <<<HTML
+<h1>Understanding User Levels</h1>
+<p>For better security and control over your users there are four types of user-levels implemented in CuteNews.
+Each user-level has a set of default permissions, and these permissions can not be changed.
+</p><p>
+The user-levels are as follows:</p>
+<ol>
+<li><strong>Administrators</strong> - Admins can do anything they want: edit other peoples posts, comments, ban users, edit system configurations
+	and everything else. Don't give another person admin-access unless you really trust him or her.</li>
+<li><strong>Editors</strong> - Editors can post news and edit all posts.</li>
+<li><strong>Journalists</strong> - Journalists can only post and edit their own articles.</li>
+<li><strong>Commenters</strong> - Commenters can only change their own user-info. Nothing else. They can comment, though, and their name is protected so nobody else can comment using their name.</li>
+</ol>
+Only administrators are able to add users.
+HTML;
+
+//----------------------------------
+// Categories Section
+//----------------------------------
+$help_sections["categories"] = <<<HTML
+<h1>What categories are and how they are used</h1>
+<p>Categories are used to organize articles. When adding a new category, it will appear in the "Add News" section, 
+so you can select which category posts should be in (this is optional). When adding a new category, you'll get to type in its name and optionally an icon 
+to be used by it. An ID number will be set for the new category, and this ID is used when using include scripts to show news from this category only.<br />
+<strong>Here's an example:</strong></p>
+<pre>&lt;?PHP
+\$category = &quot;<strong>2</strong>&quot;;
+include(&quot;path/to/show_news.php&quot;);
+?&gt;</pre>
+
+<p>The above PHP code included on your page will display all news from the category with ID 2. If you for example have 5 
+categories and want to display news on one page from only 3 of the categories, you can use the following code:</p>
+
+<pre>&lt;?PHP
+\$category = &quot;<strong>2</strong>,<strong>3</strong>,<strong>5</strong>&quot;;
+include(&quot;path/to/show_news.php&quot;);<br />
+?&gt;</pre>
+
+<p>The above code will display all news from categories with ID 2, 3 and 5 only. If you do <strong>not</strong> use \$category = "&lt;ID&gt;";, 
+CuteNews will display the news from all categories. The category icon can be shown together with your news, and to do this you would 
+put {category-icon} in your news templates.</p>
+HTML;
+
+//----------------------------------
+// Templates Section
+//----------------------------------
+$help_sections["templates"] = <<<HTML
+<h1>Understanding Templates</h1>
+<p>Templates are used to easily affect the way news are displayed. You can view the different parts of the template that is used for 
+different parts of your news-look. For example the &quot;Active News&quot; part of the default template is used to modify the look of the 
+active news, while &quot;Full Story&quot; affects the way your full story is displayed and so on. The templates consist of a mix of 
+HTML and variables. These variables should be documented for each template section in the Edit Templates-screen.</p>
+
+<p>Lets take the &quot;Active News&quot; section as an example:<br />
+When you expand this part, a list of allowed variables for this part will be displayed on top, followed by the text area where you do the 
+actual template editing. One very common and easy variable is <strong>{title}</strong>. Wherever you put this variable, it will be replaced by the 
+actual title of your news.</p>
+
+<p>You can have more than one template. This is useful if you want to include news with different looks in different places. After 
+creating additional templates you can use the following code when including news to specify which template should be used for the following 
+include:</p>
+
+<pre>&lt;?PHP
+\$template = &quot;my_test_template&quot;;
+include(&quot;path/to/show_news.php&quot;);<br />
+?&gt;</pre>
+
+<p>With the above code, all news will be shown using the template named &quot;my_test_template&quot; If you don't specify what template to use, 
+all news will use the Default template. The Default template can be edited, but not deleted.</p>
+HTML;
+
+//----------------------------------
+// Archives Section
+//----------------------------------
+$help_sections["archives"] = <<<HTML
+<h1>Explaining Archives and Their Usage</h1>
+<p>When you send your news to the archive, CuteNews will automatically create a new archive file under the ./archives/ folder with extension .arch. 
+The news you selected in Edit News will then be moved from news.txt to this file. The archived news will no longer be displayed through show_news.php 
+, but rather from show_archives.php, where all available archives are neatly listed. CuteNews does not have built-in functionality for moving archived news 
+back to to news.txt, so the only way to do this is by manually opening the archive file and copying its content back to news.txt.</p>
+
+<p>If you send all your active news to the archive, there won't be any active news left to display, but if you used $number = &quot;x&quot; in your 
+include-code, CuteNews will automatically show the &quot;x&quot; latest articles from the archives.</p>
+
+<p>Archiving is optional and you might never use it, but it is useful if you have many articles and 
+want to organize them. You should archive some of your articles when you have more than 3000 active.</p>
+HTML;
+
+//----------------------------------
+// Xfields Section
+//----------------------------------
+$help_sections["Understanding XFields"] = <<<HTML
+<h1>Understanding XFields</h1>
+<p>
+  With XFields, you can add custom fields to your CuteNews installation. These
+  fields are like &quot;Title&quot;, &quot;Avatar URL&quot;,
+  &quot;Short Story&quot; and &quot;Full Story&quot;. You might
+  say: &quot;So, why is this addon so powerfull?&quot;. Well with this addon,
+  CuteNews will be even more flexible.
+</p>
+<p>
+  For example: For a clan site, you need an page where all
+  matches are displayed on. You might want to do this with CuteNews. Your table
+  always need the same layout, so make XFields and use them in your templates.
+  Now you can just make fields for &quot;Enemy&quot;, &quot;Server IP&quot;,
+  etc.
+</p>
+<p>
+  Another example: If you're writing news posts about new games released, you
+  could have a default place for screenshots, but don't want to put the HTML
+  code in your news post everytime, you could use XFields. You might just put
+  the screenshot code in your templates, and in your following news posts, just
+  fill in the XField for the screenshot with the filename and it will show up as
+  you did before, but a lot easier.
+</p>
+<p>
+  Final example: If you have a site, made in two languages and you just want to
+  use one CuteNews news post in two languages, you could use XFields. Just make
+  one or two multiline XFields and an title XField. Now use them in diffrent
+  templates. In your site just use the diffrent templates, and you will get the
+  posts in the proper language.
+</p>
+<p>
+  This addon was made by <a href="mailto:smk2@xs4all.nl">SMKiller2</a>.
+</p>
+HTML;
+
+$help_sections["Configuring XFields"] = <<<HTML
+<h1>Creating and editing XFields</h1>
+<p>
+  These are the fields that should be filled in when you edit or add a XField:
+</p>
+<p>
+  <b>Name:</b> The internal name the XField should use. This should be unique
+  for each XField and is not displayed anywhere.
+</p>
+<p>
+  <b>Description:</b> The description showed when adding or editing news.
+</p>
+<p>
+  <b>Category:</b> Select the category of the news item where the XField should
+  appear. If you select custom, another field appears where you can select
+  multiple categories.
+</p>
+<p>
+  <b>Type:</b> Select the behavoir of the XField. You can shoose between three
+  diffrent types.
+</p>
+<p>
+  <b>Default:</b> You will only get this field when you have selected either
+  &quot;Multi Line&quot; or &quot;Single Line&quot; as type. You may enter a
+  default value for the XField here.
+</p>
+<p>
+  <b>Options:</b> You will only get this field when you have selected
+  &quot;Dropdown Listbox&quot; as type. You may enter all options that should
+  appear in this field here. You cannot use two exacly the same options.
+</p>
+<p>
+  <b>Optional:</b> You will only get this checkbox when you have selected either
+  &quot;Multi Line&quot; or &quot;Single Line&quot; as type. You can select
+  whether the field is optional or not here.
+</p>
+<p>
+  
+</p>
+<h1>Configuring Templates for Xfields-usage</h1>
+<p>
+  You can use the values entered in the XFields in your templates, just use the
+  following tags:
+</p>
+<p>
+  <b>[xfvalue_NAME]:</b> This will output the XField with the same name as
+  provided in the tag as NAME.
+</p>
+<p>
+  eg. My current mood is: &amp;quot;[xfvalue_mood]&amp;quot;.<br />
+  Will display: My current mood is: &quot;happy&quot;. When you entered it in
+  the XField. But note that if the XField is optional and you haven't entered a
+  value, it will show: My current mood is: &quot;&quot;.
+</p>
+<p>
+  <b>[xfgiven_NAME]...[/xfgiven_NAME]:</b> This is only supported for optional
+  XFields. It will only show the code between the tags if the XField is filled
+  with a value. Otherwise it won't show anything.
+</p>
+<p>
+  eg. [xfgiven_mood] My current mood is:
+  &amp;quot;[xfvalue_mood]&amp;quot;. [/xfgiven_mood]<br />
+  Will display: My current mood is: &quot;happy&quot;. When you entered
+  &quot;happy&quot; in the XField. If you haven't entered anything in the
+  XField, nothing will be shown.
+</p>
+<p>
+  This addon was made by <a href="mailto:smk2@xs4all.nl">SMKiller2</a>.
+</p>
+HTML;
+
+$help_sections["XFields Custom Category"] = <<<HTML
+<h1>Explaining the custom Xfield category option</h1>
+<p>
+  When you select custom from the category listbox, a new field will show up. In
+  this field, you can select multiple categories to use, just seperate them with
+  commas. Make sure that you only use the ids of the categories, not the
+  category names! You can find the category ids in the
+  &quot;<a href="$PHP_SELF?mod=categories" target="_new">Edit
+  Categories</a>&quot; section of your options panel.
+</p>
+<p>
+  Eg. &quot;1,2,3&quot; or &quot;1,4&quot;.
+</p>
+HTML;
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Load the specified section in PopUp Window
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+ $help_sections = run_filters('help-sections', $help_sections);
+ 
+if(isset($section)){
+	if(!isset($help_sections["$section"])){ die("Can not find the specified section <strong>$section</strong>"); }
+	echo"<HTML>
+	<head>
+    <style type=\"text/css\" title=\"default ajfork\" media=\"screen\">@import \"skins/default.css\";</style>
+    <TITLE>HELP - $section</TITLE>
+    </head>
+    <BODY>
+    <div id=\"popup\">
+		". $help_sections["$section"] ."
+    </div></BODY></HTML>";
+}
+
+else{
+
+	echoheader("question", "Internal Help System");
+    foreach($help_sections as $null => $help_section){
+    	echo"$help_section<br /><br />";
+    }
+
+	echofooter();
+}
+?>

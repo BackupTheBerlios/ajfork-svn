@@ -1,0 +1,214 @@
+<?PHP
+$result="";
+if($member_db[1] != 1){ msg("error", "Access Denied", "You don't have permission to edit categories"); }
+
+// ********************************************************************************
+// Add Category
+// ********************************************************************************
+if($action == "add")
+{
+    $cat_name = htmlspecialchars(stripslashes($cat_name));
+    if(!$cat_name){ msg("error","Error !!!","Please enter name of the category", "javascript:history.go(-1)"); }
+    $cat_icon = preg_replace("/ /", "", $cat_icon);
+    if($cat_icon == "(optional)"){ $cat_icon = ""; }
+	if($cat_template == "Default") { $cat_template = ""; }
+
+    $big_num = file("./data/cat.num.php");
+    $big_num = $big_num[0];
+    if(!$big_num or $big_num == ""){ $big_num = 1; }
+
+    $all_cats = file("./data/category.db.php");
+    foreach($all_cats as $null => $cat_line)
+    {
+		$cat_arr = explode("|", $cat_line);
+        if($cat_arr[1] == $cat_name){ msg("error", "Error !!!", "Category with this name already exist", "?mod=categories"); }
+        if($cat_arr[0] == $big_num){ $big_num = 33; }
+    }
+    $new_cats = fopen("./data/category.db.php", "a");
+    $cat_name = stripslashes( preg_replace(array("'\|'",), array("&#124",), $cat_name) );
+	fwrite($new_cats, "$big_num|$cat_name|$cat_icon|||$cat_template||\n");
+	fclose($new_cats);
+    $big_num ++;
+
+    $num_file = fopen("./data/cat.num.php", "w");
+    fwrite($num_file, $big_num);
+    fclose($num_file);
+}
+// ********************************************************************************
+// Remove Category
+// ********************************************************************************
+elseif($action == "remove")
+{
+	if(!$catid){ msg("error","Error !!!","No category ID", "$PHP_SELF?mod=categories"); }
+
+    $old_cats = file("./data/category.db.php");
+    $new_cats = fopen("./data/category.db.php", "w");
+
+    foreach($old_cats as $null => $old_cats_line){
+    	$cat_arr = explode("|", $old_cats_line);
+	    if($cat_arr[0] != $catid){
+			fwrite($new_cats, $old_cats_line);
+        }
+    }
+	fclose($new_cats);
+}
+// ********************************************************************************
+// Edit Category
+// ********************************************************************************
+elseif($action == "edit")
+{
+	if(!$catid){ msg("error","Error !!!","No category ID", "$PHP_SELF?mod=categories"); }
+
+    $all_cats = file("./data/category.db.php");
+    foreach($all_cats as $null => $cat_line){
+    	$cat_arr = explode("|", $cat_line);
+	    if($cat_arr[0] == $catid){
+
+$msg=<<<HTML
+        <form action=$PHP_SELF?mod=categories method=post>
+  <table border="0" width="421" >
+    <tr>
+      <td width="64" >Name</td>
+      <td width="341" ><input value="$cat_arr[1]" type=text name=cat_name></td>
+    </tr>
+    <tr>
+      <td width="64" >Icon</td>
+      <td width="341" ><input value="$cat_arr[2]" type=text name=cat_icon></td>
+    </tr>
+    <tr>
+      <td width="64" >Default template</td>
+      <td width="341" >
+HTML;
+	$templates_list = list_templates();
+	$msg .= makeDropDown($templates_list, "cat_template", "Default");
+
+$msg.=<<<HTML
+</td>
+    </tr><!-- template dropdown magic here please -->
+    <tr>
+      <td width="64" ></td>
+      <td width="341" ><input type=submit value="Save Changes"</td>
+    </tr>
+  </table>
+  <input type=hidden name=action value=doedit>
+  <input type=hidden name=catid value=$catid>
+  </form>
+HTML;
+
+        msg("options", "Edit Category", $msg);
+
+        }
+    }
+}
+// ********************************************************************************
+// DO Edit Category
+// ********************************************************************************
+elseif($action == "doedit")
+{
+    $cat_name = htmlspecialchars(stripslashes($cat_name));
+    if(!$catid){ msg("error","Error !!!","No category ID", "$PHP_SELF?mod=categories"); }
+    if($cat_name == ""){ msg("error", "Error !!!", "Category name can not be blank", "javascript:history.go(-1)"); }
+
+    $old_cats = file("./data/category.db.php");
+    $new_cats = fopen("./data/category.db.php", "w");
+    foreach($old_cats as $null => $cat_line){
+    	$cat_arr = explode("|", $cat_line);
+	    if($cat_arr[0] == $catid){
+			fwrite($new_cats, "$catid|$cat_name|$cat_icon|||$cat_template||\n");
+        }else{
+			fwrite($new_cats, "$cat_line");
+        }
+    }
+    fclose($new_cats);
+}
+// ********************************************************************************
+// List all Categories
+// ********************************************************************************
+echoheader("options", "Categories");
+echo<<<HTML
+<div id="main_boxcontent">
+	<div class="boxcontent_box">
+	<h3>Add a category</h3>
+
+<div id="cat_help">
+<img border="0" src="skins/images/help_small.gif">
+<a onClick="javascript:Help('categories')" href="#">Categories and their use</a></div>
+<br />
+
+<div style="border: 1px solid #eee; background: #fff; -moz-border-radius: 5px;">
+ <form method=post action="$PHP_SELF">
+<table>
+<tr><td>Name</td><td><input type=text name=cat_name></td></tr>
+<tr><td>Icon URL</td><td><input onFocus="this.select()" value="(optional)" type=text name=cat_icon></td></tr>
+<tr><td>Default Template</td><td>
+HTML;
+
+	$templates_list = list_templates();
+	echo makeDropDown($templates_list, "cat_template", "Default");
+
+echo<<<HTML
+</td>
+</tr><tr><td></td><td><input type=submit value="  Add Category  ">
+<input type="hidden" name="mod" value="categories" />
+<input type="hidden" name="action" value="add" /></td>
+</tr>
+</table></form></div>
+
+</div>
+</div>
+HTML;
+
+
+$all_cats = file("./data/category.db.php");
+$count_categories = 0;
+foreach($all_cats as $null => $cat_line)
+{
+    if($i%2 != 0){ $bg_NOT_IN_USE = "class=\"alternate\""; }else{ $bg = ""; }
+    $i++;
+    $cat_arr = explode("|", $cat_line);
+    $cat_arr[1] = stripslashes( preg_replace(array("'\"'", "'\''"), array("&quot;", "&#039;"), $cat_arr[1]) );
+    $cat_help_names[] = $cat_arr[1];
+    $cat_help_ids[] = $cat_arr[0];
+    $result .= "
+    <tr>
+      <td $bg ><b>$cat_arr[0]</b></td>
+      <td $bg >$cat_arr[1]</td>
+      <td $bg >";
+      if($cat_arr[2] != ""){ $result .= "<img border=0 src=\"$cat_arr[2]\" height=\"40\" width=\"40\" alt=\"$cat_arr[2]\"/>"; }
+      else{ $result .= "---"; }
+	if($cat_arr[5] != "") { $result .= "</td><td $bg>$cat_arr[5]"; }
+	else { $result .= "</td><td $bg>---"; }
+
+      $result .= "</td>
+      <td $bg ><a href=\"$PHP_SELF?mod=categories&action=edit&catid=$cat_arr[0]\">[edit]</a> <a href=\"$PHP_SELF?mod=categories&action=remove&catid=$cat_arr[0]\">[delete]</a></td>
+    </tr>";
+	$count_categories ++;
+}
+
+if($count_categories == 0){
+    echo"<table><tr>
+	<td>
+    <p align=center><br><b>You havn't defined any categories yet</b><br>
+       categories are optional and you can write your news without having categories<br>
+    </tr>
+    </table>";
+}else{
+	echo"
+  <table width=70% height=100%>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Icon</th>
+      <th>Template</th>
+      <th>Action</th>
+    </tr>";
+
+    echo $result;
+
+    echo"</table>";
+}
+
+echo"
+</table>";
+echofooter();
+?>

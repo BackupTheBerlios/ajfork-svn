@@ -1,0 +1,274 @@
+<?PHP
+//If member access level is commenter, redirect him to personal options
+if($member_db[1] == 4 and $action == "dologin"){ header("Location: $config_http_script_dir/index.php?mod=options&action=personal"); exit; }
+
+
+echoheader("home", "Welcome");
+
+    if(!is_readable("./data/archives")){ die("Error !!!<br />Can not open directory ./archives for reading, check if it exists or is properly CHMOD'ed"); }
+    if(!is_readable("./data/news.txt")){ die("Error !!!<br />Can not open file news.txt for reading, check if it exists or is properly CHMOD'ed"); }
+    if(!is_readable("./data/comments.txt")){ die("Error !!!<br />Can not open file comments.txt for reading, check if it exists or is properly CHMOD'ed"); }
+
+
+// Some Stats
+    $todaynews = 0;
+    $count_comments = 0;
+    $count_my_news = 0;
+    $count_new_news = 0;
+    $news_db = file("./data/news.txt");
+     foreach ($news_db as $null => $line)
+     {
+      $item_db = explode("|",$line);
+      $itemdate = date("d/m/y",$item_db[0]);
+      if($itemdate == date("d/m/y")) {
+      	$todaynews++;
+      	if($item_db[1] == $member_db[2]) $count_my_news++;
+        if(($item_db[0] > $member_db[9]) and ($member_db[9] != '')) $count_new_news++;
+      }
+     }
+    $stats_news = count( $news_db );
+    $stats_users = count( file("./data/users.db.php") ) - 1;
+    $stats_archives = 0;
+    $handle = opendir("./data/archives");
+	while (FALSE !== ($file = readdir($handle)))
+	{
+	if( preg_match("/.news.arch/",$file) ){$stats_archives++;}
+	}
+	closedir($handle);
+    $stats_news_size = formatsize(filesize("./data/news.txt"));
+    $stats_comments_size = formatsize(filesize("./data/comments.txt"));
+
+	// Count Comments
+	$all_comments = file("./data/comments.txt");
+	foreach($all_comments as $null => $news_comments){
+		$single_news_comments = explode("|>|", $news_comments);
+	    $individual_comments = explode("||", $single_news_comments[1]);
+	    $count_comments += count($individual_comments) - 1;
+	}
+// Define Welcome Message
+    echo"
+    <SCRIPT LANGUAGE=\"JavaScript\">
+	<!-- Begin
+	datetoday = new Date();
+	timenow=datetoday.getTime();
+	datetoday.setTime(timenow);
+	thehour = datetoday.getHours();
+	if 		(thehour < 9 ) 	display = \"Morning\";
+	else if (thehour < 12) 	display = \"Day\";
+	else if (thehour < 17) 	display = \"Afternoon\";
+	else if (thehour < 20) 	display = \"Evening\";
+	else display = \"Night\";
+	var greeting = (\"Good \" + display);
+	document.write(greeting);
+	//  End -->
+	</script>
+
+     $member_db[2]";
+
+    if($todaynews != 1){ $s = "s"; }
+    if($member_db[1] != 4){
+    	if($stats_users > 1){
+        	$rand_msg[] = ", we have <strong>$count_new_news</strong> new articles since your last login";
+        	$rand_msg[] = ", we have <strong>$count_new_news</strong> new articles since your last login";
+        	$rand_msg[] = ", we have <strong>$count_new_news</strong> new articles since your last login";
+        }
+	    if($todaynews == 0){
+			$rand_msg[] = ", we don't have new articles today";
+			$rand_msg[] = ", we don't have new articles today, the first one can be yours.";
+		}
+        elseif($count_my_news == 0){
+        	if($todaynews == 1){
+				$rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s} but it is not yours";
+            }else{
+				$rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s} but <strong>$count_my_news</strong> of them are yours";
+			}
+        }
+        elseif($count_my_news == $todaynews){
+        	if($count_my_news == 1){
+				$rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s} and you wrote it";
+            }else{
+				$rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s} and you wrote all of them";
+				$rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s} and all are yours";
+				$rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s}, want to <a href=\"$PHP_SELF?mod=addnews&action=addnews\">add</a> some more?";
+			}
+        }
+        else{
+			if($count_my_news == 1){ $rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s}, <strong>1</strong> of them is yours"; }
+			else{ $rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s}, <strong>$count_my_news</strong> of them are yours"; }
+        }
+		$rand_msg[] = ", are you in a mood of <a href=\"$PHP_SELF?mod=addnews&action=addnews\">adding</a> some news?";
+        $rand_msg[] = ", today we have <strong>$todaynews</strong> new article{$s}, from total <strong>$stats_news</strong>";
+        if($member_db[9] != ""){
+        	$rand_msg[] = ", your last login was on ".date("d M Y H:i:s", $member_db[9]);
+        	$rand_msg[] = ", your last login was on ".date("d M Y H:i:s", $member_db[9]);
+		}
+
+        $rand_msg[] = "";
+
+        srand((double) microtime() * 1000000);
+		echo $rand_msg[rand(0, count($rand_msg)-1)]."<br />Last known IP used by you: <small><a href=\"http://www.ripe.net/perl/whois?searchtext=$member_db[10]\" title=\"Get more information about this ip\">$member_db[10]</a></small><br /><br />";
+	}
+
+    if($member_db[1] == 1){
+echo "<h1>Latest comments</h1>";
+# add latest comments
+$maxlen = "60";
+$lcomments_number = "10";
+$cutepath = ".";
+echo "<ul id=\"mainmdu_latestcommentslist\">";
+$lctemplate = '
+<li class="main_lcomment" onclick="location.href=\'?mod=editnews&amp;action=editnews&amp;id={newsid}#{comid}\';">
+<small style="color: #888;">For &quot;{title}&quot;</small><br />
+	<a href="?mod=editnews&amp;action=editnews&amp;id={newsid}#{comid}">{name}</a>: 
+	{comment}<div class="main_lcomment_links">{links}</div>
+</li>
+';
+	$latest_comments = array_fill(1, $lcomments_number, array('newsid'=>'0','comid'=>'0','name'=>'','mail'=>'','ip'=>'','comment'=>''));
+	if (eregi("\?", $site_url)) { $modifier = "&amp;"; } else { $modifier = "?"; }
+
+    function check_latest_comment($lcomment_line, $newsid) {
+    	global $latest_comments;
+        $tmp_latest_comments = $latest_comments;
+        $lcomment_arr = explode("|", $lcomment_line);
+        foreach($latest_comments as $key=>$latest_comment) {
+
+            if($latest_comment['comid'] < $lcomment_arr[0]) {
+                $previous = $latest_comments[$key];
+                
+                foreach($latest_comments as $my_key=>$latest_comment_arr) {
+                	if($key < $my_key){
+                    	$current = $latest_comments[$my_key];
+                    	$latest_comments[$my_key] = $previous;
+                    	$previous = $current;
+                    	}
+					}
+
+                $latest_comments[$key] = array(
+                'newsid'	=> trim($newsid),
+                'comid'		=> trim($lcomment_arr[0]),
+                'name'		=> trim($lcomment_arr[1]),
+                'mail'		=> trim($lcomment_arr[2]),
+                'ip'		=> trim($lcomment_arr[3]),
+                'comment'	=> trim($lcomment_arr[4]),);
+            	}
+        	}
+    	}
+
+    $all_comments = file("./data/comments.txt");
+    foreach($all_comments as $null => $lcomment_line) {
+		$lcomment_line_arr = explode("|>|", $lcomment_line);
+        $newsid = $lcomment_line_arr[0];
+        $lcomment_arr = explode("||", $lcomment_line_arr[1]);
+		foreach($lcomment_arr as $null => $lsingle_comment) {	
+            check_latest_comment($lsingle_comment, $newsid);
+			}
+   		}
+    echo "<!-- Latest $lcomments_number comments from any article displayed here -->\n";
+    $cc = 1;
+    foreach($latest_comments as $null => $lcomment) {
+    	// linkelements  	
+    	$config_commentexcerpt = $config_commentexcerpt * 1.2;
+    	if ($lcomment['name'] == "") { continue; }
+		$output = $lctemplate;
+	    $output = str_replace("{name}", $lcomment['name'], $output);
+	    $output = str_replace("{mail}", $lcomment['mail'], $output);
+	    $output = str_replace("{ip}", $lcomment['ip'], $output);
+	    $parententry = aj_PostInfo($lcomment["newsid"], "./data/news.txt");
+	    preg_match_all('/<a\s[^>]*\s*href=\"(.*?)\"/i', $lcomment['comment'], $links_arr);
+
+		if ($links_arr[1]) {
+			$linlistcomment = "Link urls in comment:<br /><ul class=\"lcommentlinklist\">";
+			foreach ($links_arr[1] as $null => $theurl) {
+				$linlistcomment .= "<li>$theurl</li>";
+				}
+			$linlistcomment .= "</ul>";
+			
+	    	$output = str_replace("{links}", $linlistcomment, $output);
+		    unset($linlistcomment);
+		    }
+		    
+		else { $output = str_replace("{links}", "", $output); }
+		$lcomment['comment'] = stripslashes(strip_tags($lcomment['comment']));
+		$lcomment['comment'] = preg_replace("'\[(.*?)\](.*?)\[/(.*?)\]'i","\\2",$lcomment['comment']);
+		$lcomment['comment'] = substr($lcomment['comment'], "0", $config_commentexcerpt);
+	    $output = str_replace("{comment}", $lcomment['comment'], $output);
+	    $output = str_replace("{title}", $parententry["title"], $output);
+	    $output = str_replace("{date}", date($config_timestamp_comment, $lcomment['comid']), $output);
+	    $output = str_replace("{newsid}", $lcomment['newsid'], $output);
+	    $output = str_replace("{comid}", $lcomment['comid'], $output);
+        echo "$output\n";
+        if ($cc == $lcomments_number) { break 1; }
+        $cc++;
+    	}
+    echo "<!-- All tags and BBcode killed. --></ul>";
+
+# add latest comments
+echo "
+<div id=\"main_boxcontent\">
+	<div class=\"boxcontent_box\">
+	<h3>Statistics</h3>
+
+              <p>Active News: 
+              $stats_news</p>
+
+              <p>Active Comments: 
+              $count_comments</p>
+
+              <p>Archives: 
+              $stats_archives</p>
+
+              <p>Users: 
+              $stats_users</p>
+
+              <p>News.txt Size: 
+              $stats_news_size</p>
+
+              <p>Comments.txt Size: 
+              $stats_comments_size</p>
+
+
+	</div>
+
+
+	<div class=\"boxcontent_box\">
+	<h3>System check</h3>
+              <p>Can write to news.txt: ";
+
+              if(is_writable("./data/news.txt")){ echo "<span class=\"safe\">Yes</span>"; }
+              else{ echo "<span class=\"warning\">No</span>"; }
+
+echo "              </p><p>Can write to archives dir: ";
+
+              if(is_writable("./data/archives")){ echo "<span class=\"safe\">Yes</span>"; }
+              else{ echo "<span class=\"warning\">No</span>"; }
+
+echo "              </p><p>Can write to users.db.php: ";
+
+              if(is_writable("./data/users.db.php")){ echo "<span class=\"safe\">Yes</span>"; }
+              else{ echo "<span class=\"warning\">No</span>"; }
+
+echo "              </p><p>Can write to comments.txt: ";
+              
+		if(is_writable("./data/comments.txt")){ echo "<span class=\"safe\">Yes</span>"; }
+		else{ echo "<span class=\"warning\">No</span>"; }
+
+echo "              </p><p>Can write to data/plugins/: ";
+              
+		if(is_writable("./data/plugins")){ echo "<span class=\"safe\">Yes</span>"; }
+		else{ echo "<span class=\"warning\">No</span>"; }
+
+echo "              </p><p>inc/install.mdu deleted: ";
+              
+		if(!file_exists("./inc/install.mdu")){ echo "<span class=\"safe\">Yes</span>"; }
+		else{ echo "<span class=\"warning\">No</span>"; }
+
+run_actions('system-check');
+	echo "</p></div>
+</div>
+
+			  ";
+    }
+  
+
+echofooter();
+?>

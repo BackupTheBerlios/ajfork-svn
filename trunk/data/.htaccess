@@ -1,0 +1,12 @@
+# ajfork .htaccess measures. Deny all direct attempts.
+
+Order Allow,Deny
+Deny from all
+
+IndexIgnore *
+
+# Tell people what's going on here...
+ErrorDocument 403 "<h1>AJ-Fork says: Not allowed.</h1><p>If you are the admin of this site and want to browse these files directly, you'll need to delete the .htaccess file contained herein."
+
+# Default data encoding
+AddDefaultCharset utf-8
