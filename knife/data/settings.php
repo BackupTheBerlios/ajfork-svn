@@ -34,33 +34,34 @@ Latest comment by: {latestcomment}<br />
 
 {extended}
 <p>views: {views}</p>
+</div>
+</div>
+
+<div style="background: #333; padding: 3px; border-bottom: 5px solid #fffeee;">
+<h2>Comments</h2>
 </div>',
         'comment' => '<div class="comment">
 <div class="commentheader">
-Comment posted {date} by <a href="{url}">{author}</a> (<a href="mailto:{mail}">@</a>)
+<a href="{url}">{author}</a> <small>({date} - <a href="mailto:{mail}">@</a> {reply})</small>
 </div>
 {parentquote}
 {comment}
 </div>',
         'quote' => '<blockquote><p>Quoting <strong>{name}</strong>:</p>{quote}</blockquote>',
-        'commentform' => '<h1>Add comment?</h1>
+        'commentform' => '<fieldset><legend>Add comment?</legend>
 <input type="text" name="comment[parent]" /> Parent<br />
 <input type="text" name="comment[name]" /> Name<br />
 <input type="text" name="comment[email]" /> Email<br />
 <input type="text" name="comment[url]" /> URL<br /><br />
 Comment <small>(allowed html: {allowedtags})</small><br />
 <textarea name="comment[content]" rows="7" cols="50"></textarea>
-<input type="submit" name="comment[submit]" value="Add" />',
+<p><input type="submit" name="comment[submit]" value="Add" /></p>
+</fieldset>',
       ),
       2 => 
       array (
         'name' => 'NotDefault',
-        'listing' => '<div class="article" style="margin-bottom: 40px;">
-<h1>{title}</h1>
-<strong>Posted by {author} in {category} ({date}) - {friendlylink} | {link}</strong>
-<div class="article_text">
-{content}notdefault
-</div>',
+        'listing' => '<li>[friendlylink]{title}[/friendlylink]</li>',
         'view' => '<div class="article" style="margin-bottom: 40px;">
 <h1>{title}</h1>
 <strong>{date}</strong>
@@ -70,6 +71,7 @@ Comment <small>(allowed html: {allowedtags})</small><br />
 {extended}
 </div>',
         'comment' => '',
+        'quote' => '',
         'commentform' => '',
       ),
     ),

@@ -92,7 +92,7 @@ include(KNIFE_PATH.'/plugins/kses.php');
 			$output = str_replace("{date}", date("d/m/y H:i", $commentid), $output);
 			$output = str_replace("{url}", $comment[url], $output);
 			$output = str_replace("{email}", $comment[mail], $output);
-			$output .= '<a href="'.$_SERVER[PHP_SELF].'?replyto='.$commentid.'">reply</a>';
+			$output = str_replace("{reply}", '<a href="'.$_SERVER[PHP_SELF].'?replyto='.$commentid.'">reply</a>', $output);
 			echo $output;
 			$i++;
 		}
@@ -179,7 +179,7 @@ include(KNIFE_PATH.'/plugins/kses.php');
 		#	Show the comment form
 		#
 		
-		$output = '<form method="post" style="margin-top: 20px; padding: 15px; border: 1px solid #999;">';
+		$output = '<form method="post">';
 		$output .= $template[commentform];
 		$output = str_replace("{allowedtags}", kses_filter("gettags"), $output);
 		$output .= '</form>';

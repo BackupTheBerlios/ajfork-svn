@@ -2178,6 +2178,19 @@ Rewrite javascript. Fixed classes.',
         'content' => 'Posting a comment with configurable urls   
 v.0.0.1',
       ),
+      1109634821 => 
+      array (
+        'parentcid' => '1109622475',
+        'name' => 'Øivind',
+        'email' => '',
+        'url' => '',
+        'ip' => '127.0.0.1',
+        'browser' => 'Mozilla/5.0 (X11; U; Linux i686; nb-NO; rv:1.7.5) Gecko/20050221 Firefox/1.0 (Ubuntu) (Ubuntu package 1.0+dfsg.1-6ubuntu1)',
+        'content' => 'Dynamically quoting a comment...
+
+This comment itself has <strong>two</strong> paragraphs and one  
+html-tag allowed by kses (strong).',
+      ),
     ),
     1109627134 => 
     array (

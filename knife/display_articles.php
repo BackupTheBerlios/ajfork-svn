@@ -1,27 +1,3 @@
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>knife</title>
-<style type="text/css">
-.comment {
-background: #fafef1;
-color: #333;
-}
-.commentheader {
-background: #fff;
-color: #999;
-}
-blockquote {
-padding: 5px;
-border-left: 5px solid #333;
-margin-left: 20px;
-background: #fff;
-}
-
-</style>
-</head>
-<body>
-
 <?php
 
 	if (!defined( "KNIFE_PATH" )) {
@@ -36,7 +12,7 @@ background: #fff;
 	
 	include_once(KNIFE_PATH.'/inc/functions.php');
 	include_once(KNIFE_PATH.'/plugins/markdown.php');
-	
+
 	$pathinfo_array = explode("/",$_SERVER[PATH_INFO]);
 	$commentsclass = new KComments;
 	$Userclass = new KUsers;
@@ -58,18 +34,20 @@ $timestamp = 0;
 	
 	$allusers = $Userclass->getusers();
 	
-	$template = $alltemplates[1];
+	if ($template) {
+		$template = $alltemplates[$template];
+		}
+	else { $template = $alltemplates[1]; }
 	
-	$amount = $_GET[amount] ? $_GET[amount] : "5";			#FIXME
+	if (!$amount && isset($_GET[amount])) { $amount = $_GET[amount]; }			#FIXME
 	if (!$cat && isset($_GET[cat])) { $cat = "$_GET[cat]"; }
-	$from = $_GET[from];
+	if (!$from && isset($_GET[from])) { $from = "$_GET[from]"; }
 	
 	
 	$allarticles = $KAclass->listarticles($amount, $from);
 	
 	if (!$_GET[k] and !$pathinfo_array[1] and !$_GET[display] or $static) {
 	
-	echo "<div>";
 	$i = 0;
 	
 	# set the number of articles to display
@@ -190,7 +168,6 @@ $timestamp = 0;
 			break 1;
 			}
 		}
-	echo "</div>";
 	}
 	
 	elseif (($_GET[k] or $pathinfo_array[1]) and !$static) {
@@ -201,6 +178,8 @@ $timestamp = 0;
 	elseif ($_GET[display] == "documentation") {
 		include("documentation.php");
 		}
+		
+	if ($debug) {
 				echo " (debug mode)<br /><pre>";
 				print_r($_GET);
 				echo "\n\n-----------&lt;- get  | post   -&gt;---------------\n\n";
@@ -208,8 +187,6 @@ $timestamp = 0;
 				echo "\n\n-----------&lt;- post | cookie -&gt;---------------\n\n;";
 				print_r($_COOKIE);
 				echo "</pre>";
+				}
 		
 ?>
-
-</body>
-</html>

@@ -11,7 +11,7 @@ $array = array (
         'author' => 'eruin',
         'lastedit' => '',
         'category' => '0',
-        'views' => 7,
+        'views' => 25,
       ),
       1109615976 => 
       array (
@@ -33,7 +33,7 @@ Jepp
         'author' => 'eruin',
         'lastedit' => '',
         'category' => '2, 7',
-        'views' => 88,
+        'views' => 119,
       ),
       1109123090 => 
       array (
@@ -41,11 +41,11 @@ Jepp
 $from = article number to display from
 
 Mer?',
-        'title' => 'URL variables (GET) usable in display_articles.php',
+        'title' => 'Usable URL variables',
         'author' => 'eruin',
-        'lastedit' => 'eruin',
+        'lastedit' => '',
         'category' => '3',
-        'views' => 192,
+        'views' => 207,
       ),
       1108939031 => 
       array (
@@ -79,7 +79,7 @@ Forresten, Philip: Beezewax skal spille i Bergen snart :)
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 0,
+        'views' => 1,
       ),
       1107397778 => 
       array (
@@ -111,7 +111,7 @@ Det var to år siden. Juli 2003. Jeg var på min to måneder lange sommerferie f
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 0,
+        'views' => 17,
       ),
       1107096123 => 
       array (
@@ -187,7 +187,7 @@ En ting som er kult med <a href="http://akam.no/art.php?artikkelid=4161">mitt ny
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 0,
+        'views' => 1,
       ),
       1104770786 => 
       array (
@@ -1131,7 +1131,7 @@ Var bare det jeg ville si.',
         'author' => 'rilmith',
         'lastedit' => 'rilmith',
         'category' => '3',
-        'views' => 0,
+        'views' => 42,
       ),
     ),
   ),
