@@ -1,4 +1,14 @@
 # Changelog
+	
+	[tue 15 feb]
+	
+	New: Preview feature foundation in write.php
+	
+	[mon 14 feb]
+	
+	Fix: Edit list has better category listing
+	Fix: Edit screen has better category handling
+	Fix: Display_articles being modularized
 
 	[sat 12 feb]
 	

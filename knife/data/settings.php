@@ -126,16 +126,6 @@ Sju
     ),
     'categories' => 
     array (
-      0 => 
-      array (
-        'name' => 'Blogg',
-        'template' => '',
-      ),
-      1 => 
-      array (
-        'name' => 'PHP',
-        'template' => '',
-      ),
       2 => 
       array (
         'name' => 'Webdesign',
@@ -146,14 +136,19 @@ Sju
         'name' => 'About knife',
         'template' => '',
       ),
-      4 => 
-      array (
-        'name' => 'TemplateTesting',
-        'template' => '',
-      ),
       5 => 
       array (
         'name' => 'TempTesttwo',
+        'template' => '1',
+      ),
+      6 => 
+      array (
+        'name' => 'PHP',
+        'template' => '1',
+      ),
+      7 => 
+      array (
+        'name' => 'Life',
         'template' => '1',
       ),
     ),

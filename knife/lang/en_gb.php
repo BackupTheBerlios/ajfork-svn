@@ -33,6 +33,8 @@ $lang->menu_templates			= 'templates';
 $lang->menu_categories			= 'categories';
 $lang->menu_setup				= ' setup';
 
+
+$lang->dashboard_moduletitle	= 'Dashboard';
 $lang->dashboard_Statistics		= 'Statistics';
 $lang->dashboard_Articles		= 'Articles';
 $lang->dashboard_Users			= 'Number of users';

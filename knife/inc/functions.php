@@ -238,9 +238,14 @@ function c_login($gusername, $gpassword, $cookie=FALSE, $glanguage=FALSE) {
 
 function i18n( $messageid ) {
 	global $lang;
-	return $lang->$messageid;
+	if ($lang->$messageid) {
+		return $lang->$messageid;
+		}
+	else {
+		$return = 'i18n-'.$messageid;
+		return $return;
+		}
 }
-
 
 function available_languages($ffl) {
 	$languages = $ffl[file];

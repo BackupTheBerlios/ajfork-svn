@@ -1,7 +1,7 @@
 <?php
 /*
 
-	Filename: nb_no
+	Filename: nb_no.php
 	Language National: Norsk Bokmål
 	Language International: Norwegian
 	Version: 0.1.1
@@ -32,6 +32,8 @@ $lang->menu_templates			= 'maler';
 $lang->menu_categories			= 'kategorier';
 $lang->menu_setup				= '-oppsett';
 
+
+$lang->dashboard_moduletitle	= 'Skrivebord';
 $lang->dashboard_Statistics		= 'Statistikk';
 $lang->dashboard_Articles		= 'Artikler';
 $lang->dashboard_Users			= 'Antall brukere';
@@ -53,6 +55,7 @@ $lang->edit_module_edit			= 'Rediger';
 $lang->edit_module_list			= 'Rediger artikler';
 $lang->edit_save				= 'Lagre endringer';
 $lang->edit_quickerase			= 'Slett';
+$lang->edit_lastedit			= 'Sist redigert av';
 
 $lang->options_moduletitle		= 'Alle innstillinger';
 

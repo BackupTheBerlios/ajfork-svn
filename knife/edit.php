@@ -21,9 +21,16 @@ if ($_GET[id] && !$_POST[id] && !$_GET[action]) {
 	# form stuff here
 	
 	# set up category checkboxes
+	$editcats = explode(", ", $editentry[category]);
+		foreach ($editcats as $catkey => $catvalue) {
+			$newcats["$catvalue"] = $catvalue;
+			}
+			
 	foreach ($currentcats as $catid => $catinfo) {
-		$catformfields .= "<input type=\"checkbox\" name=\"article[category][]\" id=\"catbox$catid\" value=\"$catid\" />
+		if (array_key_exists($catid, $newcats)) { $selected = 'checked="checked"'; }
+		$catformfields .= "<input $selected type=\"checkbox\" name=\"article[category][]\" id=\"catbox$catid\" value=\"$catid\" />
 							<label for=\"catbox$catid\">$catinfo[name]</label><br />";
+							unset ($selected);
 	}
 	
 $main_content .= '
@@ -63,7 +70,7 @@ $main_content .= '
 	<div class="div_extended">
 		<fieldset>
 			<legend>'.i18n("write_category").'</legend>
-			<input value="'.$editentry[category].'" type="text" id="edit_article_category" value="General" name="article[category]" />
+			'.$catformfields.'
 		</fieldset>
 	</div>
 	</form>
@@ -85,6 +92,7 @@ if ($_POST[id] && !$_POST[editlist][submit]) {
 	$_POST[article][content] = sanitize_variables($_POST[article][content]);
 	$_POST[article][title] = sanitize_variables($_POST[article][title]);
 	$_POST[article][category] = sanitize_variables($_POST[article][category]);
+	$savecats = implode(", ", $_POST[article][category]);
 
 	# Put the posted and santitized stuff into an array for saving
 	$data = array(
@@ -93,7 +101,7 @@ if ($_POST[id] && !$_POST[editlist][submit]) {
 		"title" 	=> stripslashes($_POST[article][title]),
 		"author" 	=> stripslashes($oldart[author]),
 		"lastedit"	=> stripslashes($check[user]),
-		"category" 	=> stripslashes($_POST[article][category]),
+		"category" 	=> stripslashes($savecats),
 		);
 # hook to add custom fields here.
 #	$data = run_filters('admin-new-savedata', $data);
@@ -134,20 +142,30 @@ if (!$_GET[id] && !$_POST[editlist]) {
 			<th style=\"text-align: right;\">".i18n("generic_actions")."</th>
 		</tr>";
 	foreach($allarticles as $date => $article) {
-	
-	$catarray = explode(", ", $article[category]);
 
+	$catarray = explode(", ", $article[category]);
+	$catamount = count($catarray);
+	
+	if($catamount == 1) { 
+		$catrowcontent = $allcats[$article[category]][name]; 
+		}
+
+	else {
 	# Replace the category numbers with their names
 		foreach ($catarray as $null => $thiscatid) {
 			$thiscatinfo = $allcats[$thiscatid];
 			$catarray[$null] = $thiscatinfo[name];
 			}
-	$thiscatnamelisting = implode(", ", $catarray);
+		
+		$thiscatnamelisting = implode(", ", $catarray);
+		$catrowcontent = "<acronym title=\"$thiscatnamelisting\">$article[category]</acronym>";
+		}
+		
 	$main_content .= "<tr>
-			<td><a href=\"?panel=edit&amp;id=$date\">$article[title]</a></td>
+			<td><a href=\"?panel=edit&amp;id=$date\">$one $article[title]</a></td>
 			<td>".date("d/m/y", $date)."</td>
-			<td><acronym title=\"$thiscatnamelisting\">$article[category]</acronym></td>
-			<td>$article[author]</td>
+			<td>$catrowcontent</td>
+			<td title=\"".i18n("edit_lastedit")." $article[lastedit]\">$article[author]</td>
 			<td style=\"text-align: right;\"><span class=\"delete\"><a href=\"?panel=edit&amp;id=$date&amp;action=delete\" title=\"".i18n("edit_quickerase")." $article[title] ?\">X</a></span> <input type=\"checkbox\" name=\"id[]\" value=\"$date\" /></td>
 		</tr>";	
 	}

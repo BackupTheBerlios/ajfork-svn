@@ -30,15 +30,10 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 	
 		$check = c_login($_POST[username], $_POST[password], "", $_POST[language]);
 		if ($check[status] == "verified") {
-			$statusmessage = i18n("login_YouAre").$check[nickname];
 			$c_md5password = md5($check[password]);
 			setcookie("kusername", $check[user], time()+3600);
 			setcookie("kmd5password", $c_md5password, time()+3600);	
 			setcookie("klanguage", $check[language]);
-			}
-		
-		else {
-			$statusmessage = "Sorry, $check[user], but I couldn't verify you...";
 			}
 		}
 		
@@ -46,14 +41,8 @@ if (($_POST[username] and $_POST[password]) or ($_COOKIE["kusername"] && $_COOKI
 	
 			$check = c_login($_COOKIE["kusername"], $_COOKIE["kmd5password"], "yes", $_COOKIE["klanguage"]);
 		if ($check[status] == "verified") {
-			$statusmessage = i18n("login_YouAre").$check[nickname];
 			$c_md5password = md5($check[password]);
-			}
-		
-		else {
-			$statusmessage = "Sorry, $check[user], but I couldn't verify you...";
-			}
-		
+			}		
 		}
 	
 	}
@@ -493,7 +482,21 @@ th {
 .templates_options {
 	width: 210px;
 	}
+	
+	
+	
+/* 
+	Hidden layers
+*/
+
+#markdown_help {
+	display: none;
+	}
+
 </style>
+
+<script type="text/javascript" src="inc/utility.js"></script>
+
 </head>
 
 <body>

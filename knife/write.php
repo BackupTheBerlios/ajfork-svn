@@ -5,7 +5,7 @@ $moduletitle = i18n("write_mainmodtitle");
 	$dataclass = new ArticleStorage('storage');
 	$currentcats = $settingsclass->settings['categories'];
 	
-if($_POST[article]) {
+if($_POST[article] && !$_POST[preview]) {
 
 	$now = time();
 
@@ -36,6 +36,31 @@ if($_POST[article]) {
 	$statusmessage = i18n("generic_article"). " &quot;$data[title]&quot; ". i18n("write_published");
 }
 
+
+#
+#	If preview
+#
+
+if ($_POST[preview]) {
+
+	include("plugins/markdown.php");
+	$main_content = '
+	
+	<div id="article_preview_wrapper">
+		<div class="div_normal">
+			<fieldset>
+				<legend>Article content preview:</legend>	
+			'.Markdown($_POST[article][content]).'
+			</fieldset>
+		</div>
+	
+	</div>';
+
+}
+
+#
+#	If nothing
+#
 
 if (!$_POST[article]) {
 
@@ -69,7 +94,7 @@ if (!$_POST[article]) {
 		</p>
 		</fieldset>
 		<p>
-			<input type="submit" value="'.i18n("write_publish").'" />
+			<input type="submit" name="preview" value="'.i18n("generic_preview").'" /><input type="submit" value="'.i18n("write_publish").'" />
 		</p>
 	</div>
 	
@@ -88,7 +113,18 @@ if (!$_POST[article]) {
 		$main_content .= $ext_extended .'
 		
 	</div>
-	</form>
+	
+	<div class="div_extended">
+		<fieldset>
+			<legend onclick="toggleDisplay(\'markdown_help\');">Markdown Help <small>(click)</small></legend>
+				<div id="markdown_help">
+					<p>here is some nice markdown<br />syntax help 
+					for you... say thanks!</p>
+				</div>
+		</fieldset>
+	</div>	
+</form>
+
 </div>';
 	
 	}

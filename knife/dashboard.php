@@ -1,6 +1,7 @@
 <?php
 
-$moduletitle = "Dashboard";
+$moduletitle = i18n("dashboard_moduletitle");
+$statusmessage = i18n("login_YouAre").$check[nickname];
 
 	$templates = $settingsdatabase->settings['templates'];
 	$articledatabase = new ArticleStorage('storage');
@@ -28,6 +29,7 @@ $moduletitle = "Dashboard";
 	#
 	#	TODO. Remove later.
 	#
+   
 	
 	$main_content .= "
 	<div class=\"div_normal\">
