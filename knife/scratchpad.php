@@ -21,7 +21,7 @@ Features
 	Photoblogging capability
 			(exif support)
 			
-			
+	display_articles needs a wrapper that can destroy variables and do basic config
 			
 			
 			
